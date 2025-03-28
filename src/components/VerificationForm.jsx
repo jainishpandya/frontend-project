@@ -26,13 +26,13 @@ function VerificationForm(props) {
         try {
             axios.defaults.baseURL = await "http://localhost:3000/";
             const params = JSON.stringify({
-                "userId": userId,
-                "code": code
+                "id": userId,
+                "token": code
             });
             const config = {
                 headers: { 'content-type': 'application/json' }
             }
-            const { data } = await axios.post("/user/verify", params, config);
+            const { data } = await axios.post("/api/v1/auth/verify", params, config);
 
             if (data.success) {
                 console.log(data);

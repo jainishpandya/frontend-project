@@ -61,8 +61,10 @@ function Form(props) {
                 headers: { 'content-type': 'application/json' }
             }
 
-            const { data } = await axios.post("/user/signin", params, config);
+            const { data } = await axios.post("/api/v1/auth/login", params, config);
 
+            console.log(data);
+            
             if (data.userId && data.success) {
                 sendToParent(data.userId)
                 console.log(data);
@@ -78,7 +80,7 @@ function Form(props) {
             <p className='font-medium text-md text-navyblue pe-5'>Get access to the world of endless imagination.</p>
             <div className='mt-4'>
                 <div>
-                    <label className='text-md font-medium text-navyblue'>Email</label>
+                    <label className='text-md font-medium text-navyblue'>Email hell</label>
                     <input
                         className='email w-full bg-white text-navyblue rounded-xl px-4 py-3 mt-1 '
                         placeholder='Email'
