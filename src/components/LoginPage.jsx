@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Form from './Form'
 import VerificationForm from './VerificationForm'
 import book1 from "../assets/book-1.png"
