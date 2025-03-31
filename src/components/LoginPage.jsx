@@ -6,9 +6,17 @@ import book2 from "../assets/book-2.png"
 import book3 from "../assets/book-3.png"
 import loginAsset from "../assets/LoginScreenAsset.png"
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function LoginPage() {
     const [userId, setUserId] = useState();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("userInfo"));
+    
+        if (user) navigate("/home");
+      }, [navigate]);
    
     const handleVerification = (param) => {
         setUserId(param)

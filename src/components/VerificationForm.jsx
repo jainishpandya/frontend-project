@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function VerificationForm(props) {
 
     const [code, setCode] = useState();
     const [userId, setUserId] = useState(props.userId);
+
+    const navigate = useNavigate();
 
     const [codeError, setCodeError] = useState();
 
@@ -36,7 +39,8 @@ function VerificationForm(props) {
 
             if (data.success) {
                 console.log(data);
-                window.location.href = '/dashboard';
+                localStorage.setItem("userInfo", JSON.stringify(data.user))
+                navigate('/home');
             }
         } catch (error) {
             console.log("error" + error);
