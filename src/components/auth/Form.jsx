@@ -61,7 +61,7 @@ function Form(props) {
                 headers: { 'content-type': 'application/json' }
             }
 
-            const { data } = await axios.post("/api/v1/auth/login", params, config);
+            const { data } = await axios.post("/login", params, config);
 
             console.log(data);
             

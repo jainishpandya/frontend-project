@@ -18,7 +18,7 @@ function Homepage() {
     if (!userInfo){
     navigate("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [navigate]);
 
   return (

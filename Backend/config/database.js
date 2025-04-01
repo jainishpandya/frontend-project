@@ -1,8 +1,16 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from "sequelize";
+import config from "./config.js";
+import process from 'process';
 
-const env = process.env.NODE_ENV || 'development';
-const config = require('./config')
+const env = process.env.NODE_ENV || "development";
 
-const sequelize = new Sequelize(config[env]);
+if (!config[env]) {
+    throw new Error(`Config for environment "${env}" not found.`);
+}
 
-module.exports = sequelize;
+const sequelize = new Sequelize(config[env].database, config[env].username, config[env].password, {
+    host: config[env].host,
+    dialect: config[env].dialect
+});
+
+export default sequelize;
