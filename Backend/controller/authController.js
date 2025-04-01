@@ -1,13 +1,18 @@
-const crypto = require('crypto');
-const { Sequelize } = require("sequelize");
-const user = require("../db/models/user")
-const bcrypt = require('bcrypt');
-const { param } = require("../route/authRoute");
-const { transporter, mailOptions } = require('../config/nodemailer');
-const { verificationCode, setupaccount } = require('../templates/emailtemplates');
-const { generateToken } = require('../jwt');
+import crypto from 'crypto';
+import { Sequelize } from 'sequelize';
+import user from '../db/models/user.js';
+import bcrypt from 'bcrypt';
+// import { param } from '../route/authRoute.js';
+import { transporter, mailOptions } from '../config/nodemailer.js';
+import { verificationCode, setupaccount } from '../templates/emailtemplates.js';
+import { generateToken } from '../jwt.js';
+import process from 'process';
 
-const signup = async (req, res, next) => {
+
+
+
+
+const signup = async (req, res) => {
     const body = req.body;
 
     if (!['1', '2'].includes(body.userType)) {
@@ -238,4 +243,4 @@ const mfa = async (req, res) => {
 }
 
 
-module.exports = { signup, login, setPassword, mfa }; 
+export { signup, login, setPassword, mfa }; 

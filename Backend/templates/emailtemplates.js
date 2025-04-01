@@ -1,6 +1,5 @@
-exports.verificationCode = (code) => {
-  return (
-    `
+export const verificationCode = (code) => {
+  return `
 <!DOCTYPE html>
 <html lang="en">
 <head> 
@@ -13,7 +12,7 @@ exports.verificationCode = (code) => {
     <h1 style="color: white; margin: 0;">Verify Your Email</h1>
   </div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <p>hello, PersonName</p>
+    <p>Hello, PersonName</p>
     <p>Thank you for signing up! Your verification code is: </p>
     <div style="text-align: center; margin: 30px 0;">
       <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #4CAF50;">${code}</span>
@@ -28,13 +27,12 @@ exports.verificationCode = (code) => {
   </div>
 </body>
 </html>
-` )
-}
+`;
+};
 
-exports.setupaccount = (resetURL) => {
-  return (
-    ` 
-    <!DOCTYPE html>
+export const setupaccount = (resetURL) => {
+  return `
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -46,9 +44,9 @@ exports.setupaccount = (resetURL) => {
     <h1 style="color: white; margin: 0;">Set Password</h1>
   </div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <p>hello </p>
-    <p>We received a request to Set your password. If you didn't make this request, please ignore this email.</p>
-    <p>To Set your password, click the button below:</p>
+    <p>Hello,</p>
+    <p>We received a request to set your password. If you didn't make this request, please ignore this email.</p>
+    <p>To set your password, click the button below:</p>
     <div style="text-align: center; margin: 30px 0;">
       <a href="${resetURL}" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Set Password</a>
     </div>
@@ -60,6 +58,5 @@ exports.setupaccount = (resetURL) => {
   </div>
 </body>
 </html>
-`
-  )
-}
+`;
+};
