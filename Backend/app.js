@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config({path: `${process.cwd()}/.env`})
 const cors = require('cors')
 const authRouter = require("./route/authRoute");
+const clubRouter = require("./route/ClubRoute")
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.get('/' , (req, res) => {
 // all routes will be here
 
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/club', clubRouter)
 
 // Error handler
 
