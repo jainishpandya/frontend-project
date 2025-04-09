@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config({path: `${process.cwd()}/.env`})
 const cors = require('cors')
+const { connectToDB } = require('./utils/dbConnect');
 const authRouter = require("./route/authRoute");
 const clubRouter = require("./route/ClubRoute")
 
@@ -34,6 +35,14 @@ app.use('*', (req, res, next) => {
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-    console.log(`server is running on ${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`server is running on ${port}`);
+// });
+
+(async () => {
+    await connectToDB(); // ✅ Check DB before starting server
+  
+    app.listen(port, () => {
+      console.log(`🚀 Server running on http://localhost:${port}`);
+    });
+  })();
