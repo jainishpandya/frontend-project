@@ -1,4 +1,4 @@
-exports.verificationCode = (code) => {
+const verificationCode = (code) => {
   return (
     `
 <!DOCTYPE html>
@@ -31,7 +31,7 @@ exports.verificationCode = (code) => {
 ` )
 }
 
-exports.setupaccount = (resetURL) => {
+const setupaccount = (resetURL) => {
   return (
     ` 
     <!DOCTYPE html>
@@ -63,3 +63,7 @@ exports.setupaccount = (resetURL) => {
 `
   )
 }
+
+
+
+export default {verificationCode, setupaccount}

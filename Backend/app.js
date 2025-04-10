@@ -1,9 +1,9 @@
-const express = require('express');
-require('dotenv').config({path: `${process.cwd()}/.env`})
-const cors = require('cors')
-const { connectToDB } = require('./utils/dbConnect');
-const authRouter = require("./route/authRoute");
-const clubRouter = require("./route/ClubRoute")
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import connectToDB  from './utils/dbConnect.js';
+import authRouter from "./route/authRoute.js";
+import clubRouter from "./route/ClubRoute.js";
 
 const app = express();
 

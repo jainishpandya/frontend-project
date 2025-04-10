@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from "jsonwebtoken"
 
 const jwtAuthMiddleware = ( req, res, next ) => {
 
@@ -26,4 +26,4 @@ const generateToken = (userData) => {
     return jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: 30})
 }
 
-module.exports = { jwtAuthMiddleware, generateToken}
+export default {jwtAuthMiddleware, generateToken};

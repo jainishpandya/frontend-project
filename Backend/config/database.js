@@ -1,8 +1,10 @@
-const { Sequelize } = require('sequelize');
+import Sequelize from 'sequelize';
+import config from './config.js';
+
 
 const env = process.env.NODE_ENV || 'development';
-const config = require('./config')
+
 
 const sequelize = new Sequelize(config[env]);
 
-module.exports = sequelize;
+export default sequelize;

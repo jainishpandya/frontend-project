@@ -1,8 +1,8 @@
 'use strict';
-const { Model, Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../../config/database');
+import { Model, Sequelize, DataTypes } from 'sequelize';
+import sequelize from '../../config/database.js';
 
-module.exports = sequelize.define('user',{
+const user = sequelize.define('user',{
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -53,3 +53,6 @@ module.exports = sequelize.define('user',{
   modelName: 'user',
   
 });
+
+
+export default user;

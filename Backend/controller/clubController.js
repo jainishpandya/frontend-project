@@ -1,6 +1,6 @@
-const { Op } = require("sequelize");
-const club = require("../db/models/club");
-const cloudinary = require("../utils/cloudinary");
+import { Op } from 'sequelize';
+import club from '../db/models/club.js';
+import cloudinary from "../utils/cloudinary.js";
 
 const createClub = async (req, res) => {
     try {
@@ -173,4 +173,4 @@ const listClub = async (req, res) => {
 
 
 
-module.exports = { createClub, editClub, listClub, deleteClub, reviveClub};
+export default {createClub, editClub, listClub, deleteClub, reviveClub};

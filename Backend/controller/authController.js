@@ -1,11 +1,11 @@
-const crypto = require('crypto');
-const { Sequelize } = require("sequelize");
-const user = require("../db/models/user")
-const bcrypt = require('bcrypt');
-const { param } = require("../route/authRoute");
-const { transporter, mailOptions } = require('../config/nodemailer');
-const { verificationCode, setupaccount } = require('../templates/emailtemplates');
-const { generateToken } = require('../jwt');
+import crypto from 'crypto';
+import { Sequelize } from 'sequelize';
+import user from '../db/models/user.js';
+import bcrypt from 'bcrypt';
+import { transporter, mailOptions } from '../config/nodemailer.js';
+import emailTemplate from '../templates/emailtemplates.js';
+import jwt from '../jwt.js';
+
 
 const signup = async (req, res, next) => {
     const body = req.body;
@@ -54,7 +54,7 @@ const signup = async (req, res, next) => {
         newUser.email,
         "Welcome to BookCircle",
         `Your Account is Created in BookCircle Application. Set Your Password to Login`,
-        setupaccount(process.env.FRONTEND_URL + '/set-password?token='+ setPasswordToken)
+        emailTemplate.setupaccount(process.env.FRONTEND_URL + '/set-password?token='+ setPasswordToken)
     );
     transporter.sendMail(emailOptions, (error, info) => {
         if (error) {
@@ -161,7 +161,7 @@ const login = async (req, res) => {
                             response.email,
                             "Verification Code",
                             `Your verification token is ${verificationToken}`,
-                            verificationCode(verificationToken)
+                            emailTemplate.verificationCode(verificationToken)
                         );
                         transporter.sendMail(emailOptions, (error, info) => {
                             if (error) {
@@ -221,7 +221,7 @@ const mfa = async (req, res) => {
                     id: result.id,
                     email: result.email
                 }
-                const token = await generateToken(payload)
+                const token = await jwt.generateToken(payload)
 
                 res.status(200).json({ success: true, message: "Login Successful ", token: token, user: result });
             } else {
@@ -237,5 +237,4 @@ const mfa = async (req, res) => {
     }
 }
 
-
-module.exports = { signup, login, setPassword, mfa }; 
+export default {signup, login, setPassword, mfa};
