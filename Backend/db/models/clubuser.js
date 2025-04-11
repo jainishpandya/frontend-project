@@ -27,7 +27,7 @@ const club_user = sequelize.define('club_user', {
     },
   },
   role: {
-    type: DataTypes.ENUM('ClubAdmin', 'User'),
+    type: DataTypes.ENUM('0', '1','2'),
     allowNull: false,
   },
   createdAt: {
