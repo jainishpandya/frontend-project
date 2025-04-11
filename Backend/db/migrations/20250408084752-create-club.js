@@ -1,12 +1,10 @@
-'use strict';
-
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up (queryInterface, Sequelize) {
+export default {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('club', {
       id: {
         allowNull: false,
-        autoIncrement:true,
+        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
@@ -35,10 +33,11 @@ module.exports = {
       },
       deletedAt: {
         type: Sequelize.DATE
-      },
-    })
+      }
+    });
   },
-  async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('club')
+
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('club');
   }
 };
