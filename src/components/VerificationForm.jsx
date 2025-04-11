@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import ClubSelection from './ClubSelection';
 
 function VerificationForm(props) {
 
@@ -40,7 +41,7 @@ function VerificationForm(props) {
             if (data.success) {
                 console.log(data);
                 localStorage.setItem("userInfo", JSON.stringify(data.user))
-                navigate('/home');
+                navigate("/club-selection");
             }
         } catch (error) {
             console.log("error" + error);

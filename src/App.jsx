@@ -4,6 +4,7 @@ import LandingPage from './components/LandingPage'
 import Navbar from './components/Navbar'
 import { Route, Router, Routes } from 'react-router-dom'
 import Homepage from './components/Homepage'
+import ClubSelection from './components/ClubSelection'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route exact path='/' Component={LandingPage} />
         <Route path='/signin' Component={LoginPage} />
         <Route path='/home' Component={Homepage} />
+        <Route path='/club-selection' Component={ClubSelection} />
       </Routes>
     </>
   )

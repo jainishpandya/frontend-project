@@ -1,0 +1,44 @@
+import { useNavigate } from "react-router-dom";
+import React from "react";
+import ClubDropdown from "./ClubDropdown";
+
+function ClubSelection() {
+  const navigate = useNavigate();
+  const handleClubselect = (selectedClub) => {
+    console.log("Selected Club:", selectedClub);
+  };
+
+  return (
+    <div className="flex items-center justify-center w-full h-screen p-3">
+      {/* Left Side */}
+      <div className="w-full lg:w-full h-full flex flex-col items-center bg-white py-3 px-2">
+        <div
+          className="bg-lightblue items-center w-full py-6 px-4 text-2xl font-bold text-navyblue rounded-2xl mb-4"
+          style={{ height: "auto" }}
+        >
+          BookCircle
+        </div>
+
+        <div className=" flex items-center justify-center bg-lightblue w-full h-screen mt-4py-4 px-2 rounded-2xl">
+          <div className="items-center text-navyblue  w-full max-w-md">
+            <p className="font-bold text-lg">Select Club</p>
+            <p className="text-navyblue text-base">
+              Get access to a world where imagination never stops
+            </p>
+
+            <ClubDropdown onSelect={handleClubselect} />
+
+            <button
+              onClick={() => navigate("/home")}
+              className="w-full bg-navyblue text-white  mt-2 rounded-lg p-3 hover:bg-opacity-90 transition "
+            >
+              Enter
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ClubSelection;
