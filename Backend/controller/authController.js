@@ -16,7 +16,7 @@ const signup = async (req, res, next) => {
             message: "Invalid user Types"
         });
     }
-
+ 
     const response = await user.findOne({
         where: {
             email: body.email
@@ -36,6 +36,7 @@ const signup = async (req, res, next) => {
         userType: body.userType,
         name: body.name,
         email: body.email,
+        phone_no: body.phone_no
     })
 
     if (!newUser) {
@@ -54,7 +55,7 @@ const signup = async (req, res, next) => {
         newUser.email,
         "Welcome to BookCircle",
         `Your Account is Created in BookCircle Application. Set Your Password to Login`,
-        emailTemplate.setupaccount(process.env.FRONTEND_URL + '/set-password?token='+ setPasswordToken)
+        emailTemplate.setupaccount(process.env.FRONTEND_URL + '/set-password?token='+ setPasswordToken, newUser.name)
     );
     transporter.sendMail(emailOptions, (error, info) => {
         if (error) {
@@ -161,7 +162,7 @@ const login = async (req, res) => {
                             response.email,
                             "Verification Code",
                             `Your verification token is ${verificationToken}`,
-                            emailTemplate.verificationCode(verificationToken)
+                            emailTemplate.verificationCode(verificationToken, response.name)
                         );
                         transporter.sendMail(emailOptions, (error, info) => {
                             if (error) {
