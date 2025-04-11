@@ -1,61 +1,47 @@
-'use strict';
-import { Model, DataTypes } from 'sequelize';
+// models/club_user.js
+
+import { DataTypes } from 'sequelize';
 import sequelize from '../../config/database.js';
 
-const club_user = sequelize.define('club_User', {
+const club_user = sequelize.define('club_user', {
   id: {
-    allowNull: false,
-    autoIncrement: true,
+    type: DataTypes.INTEGER,
     primaryKey: true,
-    type: DataTypes.INTEGER
-  },
-  UserID: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: 'User',
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
-  },
-  ClubID: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: 'Club',
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
-  },
-  Role: {
-    type: DataTypes.ENUM
-  },
-  CreatedAt: {
+    autoIncrement: true,
     allowNull: false,
-    type: DataTypes.DATE
   },
-  UpdatedAt: {
+  user_id: {
+    type: DataTypes.INTEGER,
     allowNull: false,
-    type: DataTypes.DATE
-  }
+    references: {
+      model: 'user',
+      key: 'id',
+    },
+  },
+  club_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'club',
+      key: 'id',
+    },
+  },
+  role: {
+    type: DataTypes.ENUM('ClubAdmin', 'User'),
+    allowNull: false,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
 }, {
-  paranoid: true,
   freezeTableName: true,
   modelName: 'club_user',
 });
 
-// Define associations
-club_user.associate = (models) => {
-  // BelongsTo associations
-  club_user.belongsTo(models.User, {
-    foreignKey: 'UserID',
-    as: 'user'
-  });
-  
-  club_user.belongsTo(models.Club, {
-    foreignKey: 'ClubID',
-    as: 'club'
-  });
-};
-
 export default club_user;
+
