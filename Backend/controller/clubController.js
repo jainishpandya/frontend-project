@@ -149,8 +149,9 @@ const listClub = async (req, res) => {
             where: {
                 club_name: { [Op.iLike]: `%${search}%` }
             },
-            offset: page * limit,
-            limit: limit
+            order: [['club_name', 'ASC']],
+            limit: limit,
+            offset: page * limit
         })
 
         const response = {

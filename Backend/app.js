@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectToDB  from './utils/dbConnect.js';
 import authRouter from "./route/authRoute.js";
 import clubRouter from "./route/ClubRoute.js";
+import userRouter from "./route/userRoute.js";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.get('/' , (req, res) => {
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/club', clubRouter)
+app.use('/api/v1/user', userRouter)
 
 // Error handler
 
@@ -35,14 +37,10 @@ app.use('*', (req, res, next) => {
 
 const port = process.env.PORT || 3000;
 
-// app.listen(port, () => {
-//     console.log(`server is running on ${port}`);
-// });
-
 (async () => {
-    await connectToDB(); // ✅ Check DB before starting server
+    await connectToDB(); // Check DB before starting server
   
     app.listen(port, () => {
-      console.log(`🚀 Server running on http://localhost:${port}`);
+      console.log(` Server running on http://localhost:${port}`);
     });
   })();
