@@ -17,6 +17,8 @@ const club_user = sequelize.define('club_user', {
       model: 'user',
       key: 'id',
     },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   club_id: {
     type: DataTypes.INTEGER,
@@ -25,9 +27,15 @@ const club_user = sequelize.define('club_user', {
       model: 'club',
       key: 'id',
     },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   role: {
+<<<<<<< HEAD:Backend/db/models/club_user.js
     type: DataTypes.ENUM('0','1','2'),
+=======
+    type: DataTypes.ENUM('0', '1','2'),
+>>>>>>> suhani-new:Backend/db/models/clubuser.js
     allowNull: false,
   },
   createdAt: {
@@ -44,3 +52,4 @@ const club_user = sequelize.define('club_user', {
 });
 
 export default club_user;
+
