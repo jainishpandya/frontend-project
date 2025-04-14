@@ -31,11 +31,8 @@ const club_user = sequelize.define('club_user', {
     onUpdate: 'CASCADE',
   },
   role: {
-<<<<<<< HEAD:Backend/db/models/club_user.js
     type: DataTypes.ENUM('0','1','2'),
-=======
-    type: DataTypes.ENUM('0', '1','2'),
->>>>>>> suhani-new:Backend/db/models/clubuser.js
+
     allowNull: false,
   },
   createdAt: {
