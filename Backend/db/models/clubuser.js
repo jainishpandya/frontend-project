@@ -17,6 +17,8 @@ const club_user = sequelize.define('club_user', {
       model: 'user',
       key: 'id',
     },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   club_id: {
     type: DataTypes.INTEGER,
@@ -25,6 +27,8 @@ const club_user = sequelize.define('club_user', {
       model: 'club',
       key: 'id',
     },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   role: {
     type: DataTypes.ENUM('0', '1','2'),
