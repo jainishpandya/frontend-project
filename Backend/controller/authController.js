@@ -7,7 +7,7 @@ import emailTemplate from '../templates/emailtemplates.js';
 import jwt from '../jwt.js';
 
 
-const signup = async (req, res, next) => {
+const signup = async (req, res) => {
     const body = req.body;
 
     if (!['1', '2'].includes(body.userType)) {
@@ -41,7 +41,7 @@ const signup = async (req, res, next) => {
 
     if (!newUser) {
         return res.status(400).json({
-            status: "fail",
+            success: false,
             message: "failed to create the user",
         });
     }

@@ -2,37 +2,17 @@
 
 import { DataTypes } from 'sequelize';
 import sequelize from '../../config/database.js';
+import book from './book.js';
 
-const club_user = sequelize.define('club_user', {
+const clubuser = sequelize.define('clubuser', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  user_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'user',
-      key: 'id',
-    },
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  },
-  club_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'club',
-      key: 'id',
-    },
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  },
   role: {
     type: DataTypes.ENUM('0','1','2'),
-
     allowNull: false,
   },
   createdAt: {
@@ -45,8 +25,11 @@ const club_user = sequelize.define('club_user', {
   },
 }, {
   freezeTableName: true,
-  modelName: 'club_user',
+  modelName: 'clubuser',
 });
 
-export default club_user;
 
+clubuser.hasMany(book);
+clubuser.hasMany(review);
+
+export default clubuser;

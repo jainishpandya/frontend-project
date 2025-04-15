@@ -1,29 +1,17 @@
 'use strict';
 import {Model, Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../../config/database.js';
-import clubuser from './clubuser.js';
 
-const club = sequelize.define('club',{
+
+const category = sequelize.define('category',{
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  club_name: {
+  CategoryName: {
     type: DataTypes.STRING
-  },
-  club_contact_email: {
-    type: DataTypes.STRING
-  },
-  club_thumbnail_url: {
-    type: DataTypes.STRING
-  },
-  club_location: {
-    type: DataTypes.STRING
-  },
-  club_status: {
-    type: DataTypes.BOOLEAN
   },
   createdAt: {
     allowNull: false,
@@ -39,10 +27,10 @@ const club = sequelize.define('club',{
 }, {
   paranoid: true,
   freezeTableName: true,
-  modelName: 'club',
+  modelName: 'category',
   
 });
 
-club.belongsToMany(user, {through: clubuser});
+category.belongsToMany(book);
 
-export default club;
+export default category;

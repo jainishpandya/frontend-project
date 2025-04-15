@@ -1,6 +1,8 @@
 'use strict';
 import { Model, Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../../config/database.js';
+import clubuser from './clubuser.js';
+import club from './club.js';
 
 const user = sequelize.define('user',{
   id: {
@@ -8,9 +10,6 @@ const user = sequelize.define('user',{
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER
-  },
-  userType: {
-    type: DataTypes.ENUM('0','1','2')
   },
   name: {
     type: DataTypes.STRING
@@ -54,5 +53,7 @@ const user = sequelize.define('user',{
   
 });
 
+user.belongsToMany(club, {through: clubuser});
+club.belongsToMany(user, {through: clubuser});
 
 export default user;
