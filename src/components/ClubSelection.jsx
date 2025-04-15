@@ -29,7 +29,7 @@ function ClubSelection() {
             <ClubDropdown onSelect={handleClubselect} />
 
             <button
-              onClick={() => navigate("/home")}
+              onClick={() => navigate("/dashboard")}
               className="w-full bg-navyblue text-white  mt-2 rounded-lg p-3 hover:bg-opacity-90 transition "
             >
               Enter
