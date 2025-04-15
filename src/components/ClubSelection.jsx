@@ -13,16 +13,16 @@ function ClubSelection() {
       {/* Left Side */}
       <div className="w-full lg:w-full h-full flex flex-col items-center bg-white py-3 px-2">
         <div
-          className="bg-lightblue items-center w-full py-6 px-4 text-2xl font-bold text-navyblue rounded-2xl mb-4"
+          className="bg-br-blue-light items-center w-full py-6 px-4 text-2xl font-bold text-br-blue-medium rounded-2xl mb-4"
           style={{ height: "auto" }}
         >
           BookCircle
         </div>
 
-        <div className=" flex items-center justify-center bg-lightblue w-full h-screen mt-4py-4 px-2 rounded-2xl">
-          <div className="items-center text-navyblue  w-full max-w-md">
+        <div className=" flex items-center justify-center bg-br-blue-light w-full h-screen mt-4py-4 px-2 rounded-2xl">
+          <div className="items-center text-br-blue-medium  w-full max-w-md">
             <p className="font-bold text-lg">Select Club</p>
-            <p className="text-navyblue text-base">
+            <p className="text-br-blue-medium text-base">
               Get access to a world where imagination never stops
             </p>
 
@@ -30,7 +30,7 @@ function ClubSelection() {
 
             <button
               onClick={() => navigate("/home")}
-              className="w-full bg-navyblue text-white  mt-2 rounded-lg p-3 hover:bg-opacity-90 transition "
+              className="w-full bg-br-blue-medium text-white  mt-2 rounded-lg p-3 hover:bg-opacity-90 transition "
             >
               Enter
             </button>
