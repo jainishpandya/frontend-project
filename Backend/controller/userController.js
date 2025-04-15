@@ -61,5 +61,27 @@ const userDetail = async (req, res) => {
     }
 };
 
+const setProfilePic = async (req, res) => {
+    try {
+        const { userId } = req.body;
+
+        const findUser = await user.findByPk(userId);
+
+        if (!findUser) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+    } catch (error) {
+        console.error('Error fetching user details:', error);
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+    }
+}
+
 
 export default { listusers, userDetail };

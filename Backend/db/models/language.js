@@ -1,6 +1,7 @@
 'use strict';
 import {Model, Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../../config/database.js';
+import book from './book.js';
 
 
 const language = sequelize.define('language',{
@@ -31,6 +32,9 @@ const language = sequelize.define('language',{
   
 });
 
-language.belongsToMany(book);
+language.associate = function(models) {
+  // associations can be defined here
+  language.hasMany(models.book, {foreignKey: 'languageId'});
+}
 
 export default language;

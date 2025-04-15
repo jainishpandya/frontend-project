@@ -11,6 +11,24 @@ const clubuser = sequelize.define('clubuser', {
     autoIncrement: true,
     allowNull: false,
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'user',
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+  },
+  clubId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'club',
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+  },
   role: {
     type: DataTypes.ENUM('0','1','2'),
     allowNull: false,
@@ -28,8 +46,10 @@ const clubuser = sequelize.define('clubuser', {
   modelName: 'clubuser',
 });
 
-
-clubuser.hasMany(book);
-clubuser.hasMany(review);
+clubuser.associate = function(models) {
+  // associations can be defined here
+  clubuser.belongsTo(models.user, { foreignKey: 'userId' });
+  clubuser.belongsTo(models.club, { foreignKey: 'clubId' });
+}
 
 export default clubuser;

@@ -1,6 +1,8 @@
 'use strict';
 import {Model, Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../../config/database.js';
+import book from './book.js';
+
 
 
 const category = sequelize.define('category',{
@@ -31,6 +33,9 @@ const category = sequelize.define('category',{
   
 });
 
-category.belongsToMany(book);
+category.associate = function(models) {
+  // associations can be defined here
+  category.hasMany(models.book, {foreignKey: 'categoryId'});
+};
 
 export default category;

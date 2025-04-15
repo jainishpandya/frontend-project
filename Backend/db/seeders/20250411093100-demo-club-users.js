@@ -2,52 +2,52 @@
 
 export default {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('club_user', [
+    await queryInterface.bulkInsert('clubuser', [
       // User 1 is ClubAdmin of Club 1
       {
-        user_id: 1,
-        club_id: 1,
-        role: 'ClubAdmin',
+        userId: 1,
+        clubId: 1,
+        role: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       // User 1 is also a regular User in the same club
       {
-        user_id: 1,
-        club_id: 1,
-        role: 'User',
+        userId: 2,
+        clubId: 2,
+        role: '0',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       // User 2 is a User in Club 1
       {
-        user_id: 2,
-        club_id: 1,
-        role: 'User',
+        userId: 3,
+        clubId: 3,
+        role: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       // User 3 is a ClubAdmin in Club 2
       {
-        user_id: 3,
-        club_id: 2,
-        role: 'ClubAdmin',
+        userId: 4,
+        clubId: 4,
+        role: '2',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       // User 4 is a User in Club 3
       {
-        user_id: 4,
-        club_id: 3,
-        role: 'User',
+        userId: 5,
+        clubId: 5,
+        role: '2',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       // User 5 is a ClubAdmin in Club 3
       {
-        user_id: 5,
-        club_id: 3,
-        role: 'ClubAdmin',
+        userId: 6,
+        clubId: 6,
+        role: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -55,6 +55,6 @@ export default {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('club_user', null, {});
+    await queryInterface.bulkDelete('clubuser', null, {});
   }
 };

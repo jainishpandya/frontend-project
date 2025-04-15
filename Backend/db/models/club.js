@@ -43,6 +43,11 @@ const club = sequelize.define('club',{
   
 });
 
-club.belongsToMany(user, {through: clubuser});
+// Define associations
+club.associate = function(models) {
+  // associations can be defined here
+  club.belongsToMany(models.user, {through: models.clubuser});
+};
+
 
 export default club;

@@ -1,5 +1,5 @@
 'use strict'
-import { Model, sequelize, DataTypes } from 'sequelize';
+import { Model, Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../../config/database.js';
 import clubuser from './clubuser.js';
 import category from './category.js';
@@ -27,7 +27,7 @@ const book = sequelize.define('book', {
     clubuserId: {
         type: DataTypes.INTEGER,
         REFERENCES: {
-            model: clubuser,
+            model: 'clubuser',
             key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -36,14 +36,14 @@ const book = sequelize.define('book', {
     categoryId: {
         type: DataTypes.INTEGER,
         REFERENCES: {
-            model: category,
+            model: 'category',
             key: 'id'
         }
     },
     languageId: {
         type: DataTypes.INTEGER,
         references: {
-            model: language,
+            model: 'language',
             key: 'id'
         }
     },
@@ -60,8 +60,13 @@ const book = sequelize.define('book', {
     }
 });
 
-book.belongsTo(clubuser, {foreignKey: 'clubuserId'});
-book.hasMany(category, {foreignKey: 'categoryId'});
-book.hasMany(language, {foreignKey: 'languageId'});
+
+book.associate = function (models) {
+    // associations can be defined here
+    book.hasMany(models.review, { foreignKey: 'bookId' });
+    book.belongsTo(models.clubuser, { foreignKey: 'clubuserId' });
+    book.belongsTo(models.category, { foreignKey: 'categoryId' });
+    book.belongsTo(models.language, { foreignKey: 'languageId' });
+}
 
 export default book;

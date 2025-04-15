@@ -10,5 +10,6 @@ router.post('/editclub', clubController.editClub);
 router.get('/listclub', clubController.listClub);
 router.post('/deleteclub', clubController.deleteClub);
 router.post('/reviveclub', clubController.reviveClub);
+router.get('/listmember', clubController.memberList);
 
 export default router;

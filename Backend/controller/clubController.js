@@ -1,12 +1,12 @@
 import { Op } from 'sequelize';
 import club from '../db/models/club.js';
+import user from '../db/models/user.js';
 import cloudinary from "../utils/cloudinary.js";
+import clubuser from '../db/models/clubuser.js';
 
 const createClub = async (req, res) => {
     try {
         const { club_name, club_contact_email, club_location } = req.body;
-        
-        
         
         const findClub = await club.findOne({
             where: {
@@ -172,6 +172,50 @@ const listClub = async (req, res) => {
     }
 }
 
+const memberList = async(req, res) => {
+    try {
+        const page = parseInt(req.query.page) - 1 || 0;
+        const limit = parseInt(req.query.limit) || 5;
+        const search = req.query.search || "";
+        const { clubId } = req.body;
+
+        
+
+        const { count, rows: users } = await user.findAndCountAll({
+            include: [
+                {
+                        model: clubuser,
+                        where: { clubId: clubId },
+                        attributes: ['clubId', 'role', 'createdAt', 'updatedAt'],
+                    },
+            ],
+            where: {
+                name: { [Op.iLike]: `%${search}%` }
+            },
+            attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'setPasswordToken', 'setPasswordTokenExpiry','verificationToken', 'verificationTokenExpiry', 'deletedAt'] },
+            order: [['name', 'ASC']],
+            limit: limit,
+            offset: page * limit,
+        })
+
+        const response = {
+            success: true,
+            page: page + 1,
+            limit,
+            total: count,
+            listuser: users
+        };
+
+        res.status(200).json(response);
+
+    } catch (error) {
+        console.log('Club Member Listing Error', error);
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        })
+    }
+}
 
 
-export default {createClub, editClub, listClub, deleteClub, reviveClub};
+export default {createClub, editClub, listClub, deleteClub, reviveClub, memberList};

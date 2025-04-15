@@ -11,6 +11,9 @@ const user = sequelize.define('user',{
     primaryKey: true,
     type: DataTypes.INTEGER
   },
+  profile_image: {
+    type: DataTypes.STRING
+  },
   name: {
     type: DataTypes.STRING
   },
