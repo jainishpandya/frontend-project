@@ -28,8 +28,8 @@ function Dashboard() {
       <div>
         <Sidebar barstate={open} barstatechange={setOpen} />
       </div>
-      <div className={'w-full'}>
-        <div className={'w-full h-screen p-3 bg-sky-200 space-y-3'}>
+      <div className={'w-full bg-br-blue-light'}>
+        <div className={'w-full h-screen p-3 color space-y-3'}>
           <Header />
           <div className='flex items-center justify-between space-x-3'>
           <div className="flex-1">
