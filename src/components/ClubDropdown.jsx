@@ -20,22 +20,22 @@ const ClubDropdown = ({ onSelect }) => {
     <div className="relative w-full max-w-md">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full border bg-white border-gray-300 rounded-lg px-4 py-3 text-left text-navyblue font-semibold flex justify-between items-center"
+        className="w-full border bg-br-white border-gray-300 rounded-lg px-4 py-3 text-left text-br-blue-medium font-semibold flex justify-between items-center"
       >
         {selected ? selected.label : "Select a club"}
-        <ChevronDown className="h-5 w-5 text-navyblue" />
+        <ChevronDown className="h-5 w-5 text-br-blue-medium" />
       </button>
 
       {isOpen && (
-        <ul className="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+        <ul className="absolute z-10 mt-1 w-full bg-br-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
           {options.map((option) => (
             <li
               key={option.value}
               onClick={() => handleSelect(option)}
-              className="px-4 py-3 cursor-pointer hover:bg-lightblue transition-colors"
+              className="px-4 py-3 cursor-pointer hover:bg-br-blue-light transition-colors"
             >
               <div className="flex justify-between items-center">
-                <span className="font-semibold text-navyblue">
+                <span className="font-semibold text-br-blue-medium">
                   {option.label}
                 </span>
                 <span className="text-sm text-gray-500">{option.role}</span>
