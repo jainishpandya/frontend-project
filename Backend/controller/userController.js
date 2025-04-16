@@ -1,9 +1,9 @@
 import { Op } from 'sequelize';
 import user from '../db/models/user.js';
-import User from '../db/models/user.js';
+import cloudinary from '../utils/cloudinary.js';
 
 const listusers = async (req, res) => {
-    try{
+    try {
         const page = parseInt(req.query.page) - 1 || 0;
         const limit = parseInt(req.query.limit) || 5;
         const search = req.query.search || "";
@@ -25,7 +25,7 @@ const listusers = async (req, res) => {
         };
         res.status(200).json(response);
 
-    }catch(error){
+    } catch (error) {
         console.error('Error fetching users: ', error);
         res.status(500).json({
             success: false,
@@ -36,9 +36,9 @@ const listusers = async (req, res) => {
 
 const userDetail = async (req, res) => {
     try {
-        const user_id = req.params.id;
+        const userId = req.params.id;
 
-        const userDetails = await user.findByPk(user_id);
+        const userDetails = await user.findByPk(userId);
 
         if (!userDetails) {
             return res.status(404).json({
@@ -61,19 +61,33 @@ const userDetail = async (req, res) => {
     }
 };
 
-const setProfilePic = async (req, res) => {
+const setProfileImage = async (req, res) => {
     try {
         const { userId } = req.body;
 
-        const findUser = await user.findByPk(userId);
+        console.log("USER Id : ", userId);
+        
+        const findUser = await user.findOne({
+    where:{id: parseInt(userId)}});
 
         if (!findUser) {
+            console.log("User not found : ", findUser);
             return res.status(404).json({
                 success: false,
                 message: "User not found"
             });
         }
 
+        const upload = await cloudinary.uploadFile(req.file.path, "bookcircle/profile", userId);
+        console.log("Upload : ", upload);
+        
+        findUser.profile_image = upload.url;
+        await findUser.save();
+        res.status(200).json({
+            success: true,
+            message: "Profile picture updated successfully",
+            profile_image: findUser.profile_image
+        });
     } catch (error) {
         console.error('Error fetching user details:', error);
         res.status(500).json({
@@ -84,4 +98,4 @@ const setProfilePic = async (req, res) => {
 }
 
 
-export default { listusers, userDetail };
+export default { listusers, userDetail, setProfileImage };

@@ -6,10 +6,11 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET_KEY
 })
 
-const uploadFile = async(filePath) => {
+const uploadFile = async(filePath, folderPath, id) => {
     try {
         const result = await cloudinary.uploader.upload(filePath, {
-            folder: 'bookcircle/club'
+            folder: folderPath,
+            public_id: id + "_" + Date.now(),
         });
         console.log(result);
         return result;
@@ -18,4 +19,5 @@ const uploadFile = async(filePath) => {
         
     }
 }
-export default { cloudinary , uploadFile };
+
+ export default { cloudinary , uploadFile};
