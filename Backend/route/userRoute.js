@@ -7,5 +7,6 @@ const router = express.Router();
 router.get('/listusers', userController.listusers);
 router.get('/userDetail/:id', userController.userDetail);
 router.post('/setprofile', upload.single("file"), userController.setProfileImage);
+router.get('/clubList/', userController.clubList);
 
 export default router;

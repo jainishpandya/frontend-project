@@ -1,6 +1,13 @@
+/* eslint-disable no-unused-vars */
 import { Op } from 'sequelize';
 import user from '../db/models/user.js';
+<<<<<<< HEAD
 import cloudinary from '../utils/cloudinary.js';
+=======
+import User from '../db/models/user.js';
+import clubuser from '../db/models/clubuser.js';
+import club from '../db/models/club.js';
+>>>>>>> 21a7d9d0fc57bd3a9c3075a3d843a56456b0f19a
 
 const listusers = async (req, res) => {
     try {
@@ -96,6 +103,50 @@ const setProfileImage = async (req, res) => {
         });
     }
 }
+const clubList = async(req, res) => {
+    try {
+        const page = parseInt(req.query.page) - 1 || 0;
+        const limit = parseInt(req.query.limit) || 5;
+        const search = req.query.search || "";
+        const { userId } = req.body;
+
+        
+
+        const { count, rows: clubs } = await user.findAndCountAll({
+            include: [
+                {
+                        model: clubuser,
+                        where: { userId: userId },
+                        attributes: ['clubId', 'role'],
+                    },
+            ],
+            where: {
+                name: { [Op.iLike]: `%${search}%` }
+            },
+            attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'setPasswordToken', 'setPasswordTokenExpiry','verificationToken', 'verificationTokenExpiry', 'deletedAt'] },
+            order: [['name', 'ASC']],
+            limit: limit,
+            offset: page * limit,
+        })
+
+        const response = {
+            success: true,
+            page: page + 1,
+            limit,
+            total: count,
+            listclubs: clubs
+        };
+
+        res.status(200).json(response);
+
+    } catch (error) {
+        console.log('Club Member Listing Error', error);
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        })
+    }
+}
 
 
-export default { listusers, userDetail, setProfileImage };
+export default { listusers, userDetail,clubList, setProfileImage };
