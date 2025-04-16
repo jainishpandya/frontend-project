@@ -3,6 +3,7 @@ import { Op } from 'sequelize';
 import user from '../db/models/user.js';
 import cloudinary from '../utils/cloudinary.js';
 import clubuser from '../db/models/clubuser.js';
+import club from '../db/models/club.js';
 
 const listusers = async (req, res) => {
     try {
