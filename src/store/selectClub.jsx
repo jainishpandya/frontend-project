@@ -6,7 +6,7 @@ const useSelectClub = () => {
   const [roles, setRoles] = useState([]);
 
   const fetchInfo = async () => {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("id");
     if (!userId) {
       console.error("No userId found in localStorage");
       return;

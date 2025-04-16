@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react"; // Optional icon
+import useSelectClub from "../store/selectClub";
 
 const ClubDropdown = ({ onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  const options = [
-    { label: "Helios Reading Club", role: "Member", value: " " },
-    { label: "ISCON Heights Readers", role: "Club Admin", value: " " },
-  ];
+  const { labels, roles } = useSelectClub();
+
+  const options = [{ label: labels, role: roles, value: " " }];
 
   const handleSelect = (option) => {
     setSelected(option);
