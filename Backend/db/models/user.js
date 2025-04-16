@@ -56,7 +56,7 @@ const user = sequelize.define('user',{
   
 });
 
-user.belongsToMany(club, {through: clubuser});
-club.belongsToMany(user, {through: clubuser});
+// user.belongsToMany(club, {through: clubuser});
+// club.belongsToMany(user, {through: clubuser});
 
 export default user;

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
+import cloudinary from '../utils/cloudinary.js';
 import { Op } from 'sequelize';
 import user from '../db/models/user.js';
-import cloudinary from '../utils/cloudinary.js';
 import clubuser from '../db/models/clubuser.js';
 import club from '../db/models/club.js';
 
@@ -104,26 +104,36 @@ const clubList = async(req, res) => {
         const page = parseInt(req.query.page) - 1 || 0;
         const limit = parseInt(req.query.limit) || 5;
         const search = req.query.search || "";
-        const { userId } = req.body;
+        const { userId } = req.params;
         const { clubId } = req.body;
 
-        
+        if (!userId) {
+            return res.status(400).json({
+                success: false,
+                message: "User ID is required"
+            });
+        }
 
-        const { count, rows: clubs } = await user.findAndCountAll({
+        //Json Structure
+        const includeOptions = {
+            model: clubuser,
+            where: { userId: userId },
+            attributes: ['clubId', 'role'],
             include: [
                 {
-                        model: clubuser,
-                        where: { userId: userId },
-                        attributes: ['clubId', 'role'],
-                        include: [
-                            {
-                            model: club,
-                            where:{ id: clubId},
-                            attributes: ['id', 'club_name'],
-                        }
-                    ]
-                },
-            ],
+                    model: club,
+                    attributes: ['id', 'club_name'],
+                }
+            ]
+        };
+        
+        
+        if (clubId) {
+            includeOptions.include[0].where = { id: clubId };
+        }
+
+        const { count, rows: clubs } = await user.findAndCountAll({
+            include: [includeOptions],
             where: {
                 name: { [Op.iLike]: `%${search}%` }
             },
@@ -152,5 +162,4 @@ const clubList = async(req, res) => {
     }
 }
 
-
-export default { listusers, userDetail,clubList, setProfileImage };
+export default { listusers, userDetail, clubList, setProfileImage };

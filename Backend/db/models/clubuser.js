@@ -46,10 +46,10 @@ const clubuser = sequelize.define('clubuser', {
   modelName: 'clubuser',
 });
 
-clubuser.associate = function(models) {
-  // associations can be defined here
-  clubuser.belongsTo(models.user, { foreignKey: 'userId' });
-  clubuser.belongsTo(models.club, { foreignKey: 'clubId' });
-}
+// clubuser.associate = function(models) {
+//   // associations can be defined here
+//   clubuser.belongsTo(models.user, { foreignKey: 'userId' });
+//   clubuser.belongsTo(models.club, { foreignKey: 'clubId' });
+// }
 
 export default clubuser;
