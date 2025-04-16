@@ -7,7 +7,7 @@ export default {
 
     const users = [
       {
-        name: 'One & Only Ekansh',
+        name: 'Ekansh',
         email: 'ekansh@example.com',
         password: await bcrypt.hash('password1', saltRounds),
         phone_no: '1234567890',
@@ -15,7 +15,7 @@ export default {
         updatedAt: new Date()
       },
       {
-        name: 'Jainish Khan',
+        name: 'Jainish',
         email: 'jainu@example.com',
         password: await bcrypt.hash('password2', saltRounds),
         phone_no: '2345678901',
@@ -23,7 +23,7 @@ export default {
         updatedAt: new Date()
       },
       {
-        name: 'Suhani The OG Developer',
+        name: 'Suhani',
         email: 'charlie@example.com',
         password: await bcrypt.hash('password3', saltRounds),
         phone_no: '3456789012',
@@ -31,16 +31,16 @@ export default {
         updatedAt: new Date()
       },
       {
-        name: 'Rishi',
-        email: 'rishi@example.com',
+        name: 'Manish',
+        email: 'manish@example.com',
         password: await bcrypt.hash('password4', saltRounds),
         phone_no: '4567890123',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        name: 'Khushbu',
-        email: 'khushbu@example.com',
+        name: 'Shraddha',
+        email: 'shraddha@example.com',
         password: await bcrypt.hash('password5', saltRounds),
         phone_no: '5678901234',
         createdAt: new Date(),
