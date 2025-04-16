@@ -5,6 +5,8 @@ import bcrypt from 'bcrypt';
 import { transporter, mailOptions } from '../config/nodemailer.js';
 import emailTemplate from '../templates/emailtemplates.js';
 import jwt from '../jwt.js';
+import clubuser from '../db/models/clubuser.js';
+import club from '../db/models/club.js';
 
 
 const signup = async (req, res) => {
@@ -16,7 +18,7 @@ const signup = async (req, res) => {
             message: "Invalid user Types"
         });
     }
- 
+
     const response = await user.findOne({
         where: {
             email: body.email
@@ -44,6 +46,29 @@ const signup = async (req, res) => {
             success: false,
             message: "failed to create the user",
         });
+    } else {
+        const clubExists = await club.findByPk(body.clubId);
+
+        if (!clubExists) {
+            await newUser.destroy();
+            return res.status(400).json({
+                success: false,
+                message: "club doesn't exists",
+            });
+        }
+        const clubuserAssociation = await clubuser.create({
+            userId: newUser.id,
+            clubId: body.clubId,
+            role: body.role
+        })
+
+        if (!clubuserAssociation) {
+            await newUser.destroy();
+            return res.status(400).json({
+                success: false,
+                message: "failed to create the user",
+            });
+        }
     }
 
     const setPasswordToken = await crypto.randomBytes(32).toString("hex");
@@ -55,7 +80,7 @@ const signup = async (req, res) => {
         newUser.email,
         "Welcome to BookCircle",
         `Your Account is Created in BookCircle Application. Set Your Password to Login`,
-        emailTemplate.setupaccount(process.env.FRONTEND_URL + '/set-password?token='+ setPasswordToken, newUser.name)
+        emailTemplate.setupaccount(process.env.FRONTEND_URL + '/set-password?token=' + setPasswordToken, newUser.name)
     );
     transporter.sendMail(emailOptions, (error, info) => {
         if (error) {
@@ -63,19 +88,12 @@ const signup = async (req, res) => {
         }
         console.log("Email Sent Successfully", info.response);
     })
-    // verificationToken = await Math.floor(100000 + Math.random() * 900000).toString()
-
-    // newUser.verificationToken = verificationToken;
-    // newUser.verificationTokenExpiry = Date.now() + 24 * 60 * 60 * 1000
 
     const verify = newUser.save();
 
     if (!verify) {
-
-
         res.status(400).json({ status: "fail", message: "Internal Server Error" });
     }
-
 
     return res.status(201).json({
         status: "success",
@@ -127,7 +145,7 @@ function generate6DigitRandomNumber() {
     const min = 100000;
     const max = 999999;
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+}
 
 
 const login = async (req, res) => {
@@ -210,12 +228,12 @@ const mfa = async (req, res) => {
             }
         })
         if (result) {
-            
+
             result.verificationToken = null;
             result.verificationTokenExpiry = null;
-            
+
             const response = await result.save();
-            
+
             if (response) {
 
                 const payload = {
@@ -238,4 +256,4 @@ const mfa = async (req, res) => {
     }
 }
 
-export default {signup, login, setPassword, mfa};
+export default { signup, login, setPassword, mfa };
