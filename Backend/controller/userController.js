@@ -1,13 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { Op } from 'sequelize';
 import user from '../db/models/user.js';
-<<<<<<< HEAD
 import cloudinary from '../utils/cloudinary.js';
-=======
-import User from '../db/models/user.js';
 import clubuser from '../db/models/clubuser.js';
-import club from '../db/models/club.js';
->>>>>>> 21a7d9d0fc57bd3a9c3075a3d843a56456b0f19a
 
 const listusers = async (req, res) => {
     try {
