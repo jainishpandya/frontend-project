@@ -91,6 +91,7 @@ const clubList = async(req, res) => {
         const limit = parseInt(req.query.limit) || 5;
         const search = req.query.search || "";
         const { userId } = req.body;
+        const { clubId } = req.body;
 
         
 
@@ -100,7 +101,14 @@ const clubList = async(req, res) => {
                         model: clubuser,
                         where: { userId: userId },
                         attributes: ['clubId', 'role'],
-                    },
+                        include: [
+                            {
+                            model: club,
+                            where:{ id: clubId},
+                            attributes: ['id', 'club_name'],
+                        }
+                    ]
+                },
             ],
             where: {
                 name: { [Op.iLike]: `%${search}%` }
