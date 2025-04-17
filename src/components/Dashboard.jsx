@@ -32,15 +32,15 @@ function Dashboard() {
         <div className={'w-full h-screen p-3 color space-y-3'}>
           <Header />
           <div className='flex items-center justify-between space-x-3'>
-          <div className="flex-1">
-            <Databox number={7} label="Books Read"/>
-          </div>
-          <div className="flex-1">
-          <Databox number={10} label="Books Listed"/>
-          </div>
-          <div className="flex-1">
-          <Databox number={3} label="Books Borrowed"/>
-          </div>
+            <div className="flex-1">
+              <Databox number={7} label="Books Read" />
+            </div>
+            <div className="flex-1">
+              <Databox number={10} label="Books Listed" />
+            </div>
+            <div className="flex-1">
+              <Databox number={3} label="Books Borrowed" />
+            </div>
           </div>
           Homepage
         </div>
