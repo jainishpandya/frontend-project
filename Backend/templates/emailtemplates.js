@@ -13,7 +13,7 @@ const verificationCode = (code, username) => {
     <h1 style="color: white; margin: 0;">Verify Your Email</h1>
   </div>
   <div style="background-color: #E0E8F0; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius:0px 0px 12px 12px;">
-    <p>hello, ${username}</p>
+    <p>hello, <b>${username} </b></p>
     <p>Thank you for signing up! Your verification code is: </p>
     <div style="text-align: center; margin: 30px 0;">
       <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #162546;">${code}</span>
@@ -46,7 +46,7 @@ const setupaccount = (resetURL, username) => {
     <h1 style="color: white; margin: 0;">Set Password</h1>
   </div>
   <div style="background-color: #E0E8F0; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius:0px 0px 12px 12px;">
-    <p>hello  ${username}</p>
+    <p>hello  <b>${username}</b></p>
     <p>We received a request to Set your password. If you didn't make this request, please ignore this email.</p>
     <p>To Set your password, click the button below:</p>
     <div style="text-align: center; margin: 30px 0;">

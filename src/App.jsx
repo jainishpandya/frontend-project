@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import LoginPage from "./components/LoginPage";
 import LandingPage from "./components/LandingPage";

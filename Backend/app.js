@@ -3,13 +3,18 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectToDB  from './utils/dbConnect.js';
 
-import user from './db/models/user.js';
-import club from './db/models/club.js';
-import clubuser from './db/models/clubuser.js';
 
 import authRouter from "./route/authRoute.js";
 import clubRouter from "./route/ClubRoute.js";
 import userRouter from "./route/userRoute.js";
+
+import user from './db/models/user.js';
+import club from './db/models/club.js';
+import clubuser from './db/models/clubuser.js';
+import { initialiseAssociations } from './db/models/associations.js';
+
+
+initialiseAssociations();
 
 const app = express();
 
