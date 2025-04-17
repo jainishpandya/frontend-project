@@ -10,6 +10,19 @@
   --color-br-gray-dark: #B5B5B5;
 }
 
+@theme {
+  --animate-fadein: fade-in 6s ease-in;
+  @keyframes fade-in {
+    0%,
+     {
+      opacity: 0%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
+}
+
 body {
   font-family: Roboto, sans-serif;
   background-color: #ffffff;

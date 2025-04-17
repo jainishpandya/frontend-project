@@ -7,9 +7,10 @@ import { Route, Router, Routes } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import ClubSelection from "./components/ClubSelection";
 import BookListing from "./components/BookListing";
-import ScreenHeading from "./components/ScreenHeading";
 import ActionBar from "./components/ActionBar";
 import Button from "./components/Button";
+import Homepage from "./components/Homepage";
+import MyBooks from "./components/MyBooks";
 
 function App() {
   return (
@@ -17,9 +18,13 @@ function App() {
       <Routes>
         <Route exact path="/" Component={LoginPage} />
         <Route path="/signin" Component={LoginPage} />
-        <Route path="/dashboard" Component={Dashboard} />
-        <Route path="/club-selection" Component={ClubSelection} />
-        <Route path="/book-listing" Component={BookListing} />
+
+        <Route path="/home" Component={Homepage}>
+          <Route index element={<Dashboard />} />
+          <Route path="club-selection" element={<ClubSelection />} />
+          <Route path="book-listing" element={<BookListing />} />
+          <Route path="book-transactions" element={<MyBooks />} />
+        </Route>
       </Routes>
     </>
   );

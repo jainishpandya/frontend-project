@@ -24,27 +24,18 @@ function Dashboard() {
   }, [navigate]);
 
   return (
-    <div className='w-full flex'>
-      <div>
-        <Sidebar barstate={open} barstatechange={setOpen} />
-      </div>
-      <div className={'w-full bg-br-blue-light'}>
-        <div className={'w-full h-screen p-3 color space-y-3'}>
-          <Header />
-          <div className='flex items-center justify-between space-x-3'>
-            <div className="flex-1">
-              <Databox number={7} label="Books Read" />
-            </div>
-            <div className="flex-1">
-              <Databox number={10} label="Books Listed" />
-            </div>
-            <div className="flex-1">
-              <Databox number={3} label="Books Borrowed" />
-            </div>
-          </div>
-          Homepage
+    <div className='w-full h-auto flex'>
+      dashboard
+      <div className='flex w-full items-center justify-between space-x-3'>
+        <div className="flex-1">
+          <Databox number={7} label="Books Read" />
         </div>
-        <Footer />
+        <div className="flex-1">
+          <Databox number={10} label="Books Listed" />
+        </div>
+        <div className="flex-1">
+          <Databox number={3} label="Books Borrowed" />
+        </div>
       </div>
     </div>
   )
