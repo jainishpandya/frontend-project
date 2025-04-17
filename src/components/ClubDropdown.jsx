@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import useSelectClub from "../store/selectClub";
@@ -14,14 +15,30 @@ const ClubDropdown = ({ onSelect }) => {
     error,
   } = useSelectClub();
 
-  // Create options from the labels and roles arrays
-  const options = labels.map((label, index) => ({
-    value: label,
-    label: label,
-    role: roles[index] || "Member",
-    // Include the original club data if needed by the parent component
-    clubData: data[index] || {},
-  }));
+  useEffect(() => {
+    if (labels.length > 0) {
+      console.log({ value: labels, label: labels, role: roles });
+    }
+  }, [labels, roles]);
+
+  const options = labels.map((label, index) => {
+    const roleCode = roles[index];
+    const role =
+      roleCode === "0"
+        ? "Super Admin"
+        : roleCode === "1"
+        ? "Admin"
+        : roleCode === "2"
+        ? "Member"
+        : "No Role Assigned";
+
+    return {
+      value: label,
+      label: label,
+      role,
+      clubData: data[index] || {},
+    };
+  });
 
   const handleSelect = (option) => {
     setSelected(option);

@@ -13,20 +13,22 @@ const useSelectClub = () => {
     const extractedLabels = [];
     const extractedRoles = [];
 
-    data.listclubs.forEach((item) => {
+    // let i = data.listclubs.length;
+
+    data.listclubs[0].clubusers.forEach((item) => {
       console.log("item : ", item); // Log the item for debugging
-      if (item.clubusers && item.clubusers.length > 0) {
+      if (item.club) {
         // Assuming the club name is stored somewhere in the club object
-        console.log("club Name : ", item.clubusers[0]?.club?.club_name); // Log the item for debugging
-        extractedLabels.push(item.clubusers[0]?.club?.club_name || "Unknown Club");
-        console.log("club Name : ", item.clubusers[0]?.role);
-        extractedRoles.push(item.clubusers[0]?.role || "Member");
+        console.log("club Name : ", item.club?.club_name); // Log the item for debugging
+        extractedLabels.push(item.club?.club_name || "Unknown Club");
+        console.log("club Name : ", item.role);
+        extractedRoles.push(item.role || "Member");
       }
     });
 
     setLabels(extractedLabels);
     setRoles(extractedRoles);
-  }
+  };
 
   const fetchInfo = async () => {
     setIsLoading(true);
@@ -41,12 +43,11 @@ const useSelectClub = () => {
     try {
       const url = `http://localhost:3000/api/v1/user/clublist/${userId}`;
       console.log("URL:", url); // Log the URL for debugging
-      
+
       const response1 = await axios.get(url).then(function (response) {
         console.log("Response from axios:", response.data);
         setData(response.data);
-    });
-     
+      });
     } catch (error) {
       console.error("Error fetching club list:", error);
       setError("Error fetching club list");
