@@ -15,7 +15,7 @@ function LoginPage() {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
 
-    if (user) navigate("/dashboard");
+    if (user) navigate("/home");
   }, [navigate]);
 
   const handleVerification = (param) => {
