@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import useSelectClub from "../store/selectClub";
+import useSelectClub from "../../store/selectClub";
 
 const ClubDropdown = ({ onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);

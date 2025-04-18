@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
-import ClubDropdown from "./ClubDropdown";
-import { login } from "../redux/slices/user/userSlice";
+import ClubDropdown from "../ClubSelection/ClubDropdown";
+import { login } from "../../redux/slices/user/userSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 

@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
-import Databox from './Databox';
 import Footer from './Footer';
-import Dashboard from './Dashboard'
-import BookListing from './BookListing';
+import { useSelector } from 'react-redux';
 
 function Homepage() {
     const [user, setUser] = useState();
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
-  
+
+    const [activeOption, setActiveOption] = useState("Dashboard");
+    
+    const userdata = useSelector((state) => state.user);
   
   
     useEffect(() => {
@@ -23,17 +24,21 @@ function Homepage() {
       if (!token) {
         navigate("/");
       }
+
+      if(!userdata.isLoggedIn){
+        navigate("/")
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
   
     return (
       <div className='w-full h-fit flex'>
         <div>
-          <Sidebar barstate={open} barstatechange={setOpen} />
+          <Sidebar barstate={open} barstatechange={setOpen} activeOption={activeOption} setActiveOption={setActiveOption} />
         </div>
         <div className={'w-full bg-br-blue-light'}>
           <div className={'w-full h-fit p-4 color space-y-4'}>
-            <Header />
+            <Header setActiveOption={setActiveOption} />
             <div className='main-content'>
                 <Outlet />
             </div>

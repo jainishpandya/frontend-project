@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
 import Form from "./Form";
 import VerificationForm from "./VerificationForm";
-import book1 from "../assets/book-1.png";
-import book2 from "../assets/book-2.png";
-import book3 from "../assets/book-3.png";
-import loginAsset from "../assets/LoginScreenAsset.png";
+import loginAsset from "../../assets/LoginScreenAsset.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../redux/slices/user/userSlice";
+
 
 function LoginPage() {
 

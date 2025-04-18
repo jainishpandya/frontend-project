@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import Footer from './Footer';
-import Databox from './Databox';
+import Sidebar from '../Homepage/Sidebar';
+import Header from '../Homepage/Header';
+import Footer from '../Homepage/Footer';
+import Databox from '../Databox';
 
 function Dashboard() {
   const [user, setUser] = useState();

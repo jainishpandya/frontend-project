@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from './Header'
+import Header from './Homepage/Header'
 import ScreenHeading from './ScreenHeading'
 import SearchBar from './SearchBar'
 import ActionBar from './ActionBar'
