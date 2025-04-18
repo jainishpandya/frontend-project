@@ -41,6 +41,7 @@ const clubuser = sequelize.define('clubuser', {
     type: DataTypes.DATE,
     allowNull: false,
   },
+  
 }, {
   freezeTableName: true,
   modelName: 'clubuser',

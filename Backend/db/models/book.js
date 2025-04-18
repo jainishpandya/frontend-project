@@ -15,11 +15,11 @@ const book = sequelize.define('book', {
     title: {
         type: DataTypes.STRING
     },
-    Author: {
+    author: {
         type: DataTypes.STRING
     },
     ISBN: {
-        type: DataTypes.INTEGER
+        type: DataTypes.BIGINT
     },
     IsAvailable: {
         type: DataTypes.BOOLEAN
@@ -57,8 +57,15 @@ const book = sequelize.define('book', {
     },
     deletedAt: {
         type: DataTypes.DATE
+    },
+       
+    },
+    {
+        tableName:'book',
+        timestamps: false
     }
-});
+    
+);
 
 
 book.associate = function (models) {

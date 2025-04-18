@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
@@ -39,6 +40,7 @@ export default {
         allowNull: false,
         type: Sequelize.DATE
       },
+      
     });
 
     await queryInterface.addConstraint('clubuser', {

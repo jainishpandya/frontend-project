@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route exact path="/" Component={LoginPage} />
         <Route path="/signin" Component={LoginPage} />
-        <Route path="club-selection" element={ClubSelection} />
+        <Route path="club-selection" Component={ClubSelection} />
 
         <Route path="/home" Component={Homepage}>
           <Route index element={<Dashboard />} />

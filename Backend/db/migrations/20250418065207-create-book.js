@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
@@ -17,7 +18,7 @@ export default{
         type: Sequelize.STRING
       },
       ISBN: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       IsAvailable: {
         type: Sequelize.BOOLEAN
@@ -63,3 +64,4 @@ export default{
     await queryInterface.dropTable('book');
   }
 };
+
