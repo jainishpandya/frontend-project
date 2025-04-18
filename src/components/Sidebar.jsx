@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom'
 function Sidebar(props) {
     
   return (
-    <div className={`${props.barstate ? "w-64 p-5" : "w-24 p-4"} bg-br-blue-medium h-screen  pt-4 relative duration-900 ease-in-out`}>
+    <div className={`${props.barstate ? "w-64 p-5" : "w-24 p-4"} bg-br-blue-medium h-full  pt-4 relative duration-900 ease-in-out`}>
 
         <div className='flex gap-x-4 items-center text-br-white px-5 py-5' onClick={() => {props.barstatechange(!props.barstate)}}>
         <Menu  />

@@ -27,18 +27,18 @@ function Homepage() {
     }, [navigate]);
   
     return (
-      <div className='w-full flex'>
+      <div className='w-full h-fit flex'>
         <div>
           <Sidebar barstate={open} barstatechange={setOpen} />
         </div>
         <div className={'w-full bg-br-blue-light'}>
-          <div className={'w-full h-screen p-3 color space-y-3'}>
+          <div className={'w-full h-fit p-4 color space-y-4'}>
             <Header />
             <div className='main-content'>
                 <Outlet />
             </div>
-          <Footer />
         </div>
+          <Footer />
       </div>
       </div>
     )

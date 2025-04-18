@@ -13,7 +13,7 @@ function Dashboard() {
 
   return (
     <div className='w-full h-auto flex'>
-      <div className='flex w-full items-center justify-between space-x-3'>
+      <div className='flex w-full items-center justify-between space-x-4'>
         <div className="flex-1">
           <Databox number={7} label="Books Read" />
         </div>

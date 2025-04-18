@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 import {Model, Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../../config/database.js';

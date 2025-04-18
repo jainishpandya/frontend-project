@@ -13,7 +13,7 @@ const ActionBar = () => {
 
     return (
         <div className='relative'>
-            <div className='flex p-3 items-center space-x-3 bg-white rounded-t-lg'>
+            <div className='flex p-3 items-center space-x-3 bg-white rounded-t-2xl'>
                 <SearchBar placeholder="Search by Title, Author"/>
                 <div className='h-full flex-none'>
                     <Button 
@@ -28,7 +28,7 @@ const ActionBar = () => {
 
             {isSortByOpen && (
                 <div className="fixed inset-0 z-40"> 
-                    <div className="absolute right-3 top-39 z-50 bg-white shadow-lg rounded-lg">
+                    <div className="absolute right-4 top-60 z-50 bg-white shadow-lg rounded-lg">
                         <SortBy />
                     </div>
                     <div 
