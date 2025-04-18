@@ -10,6 +10,7 @@ import BookListing from "./components/BookListing";
 import ScreenHeading from "./components/ScreenHeading";
 import ActionBar from "./components/ActionBar";
 import Button from "./components/Button";
+import book from "./store/book";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/dashboard" Component={Dashboard} />
         <Route path="/club-selection" Component={ClubSelection} />
         <Route path="/book-listing" Component={BookListing} />
+        <Route path="/book" Component={book} />
       </Routes>
     </>
   );
