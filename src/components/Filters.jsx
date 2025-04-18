@@ -90,12 +90,12 @@ const handleStatusChange = (value) => {
     };
 
     return (
-        <div className='h-full w-71 flex flex-col bg-white p-5 rounded-b-lg shadow-md'>
+        <div className='h-full w-71 flex flex-col bg-white p-5 rounded-b-2xl'>
             <h1 className='font-bold text-lg flex-none'>Filters</h1>
 
-            <div className='flex-1 mt-4 space-y-4'>
+            <div className=' flex-1 mt-4 space-y-4 '>
                 {/* Status Filters */}
-                <div className='space-y-2'>
+                <div className='space-y-2 h-35'>
                     <div 
                         className='flex items-center justify-between bg-white rounded-lg sticky top-0 bg-white z-10 cursor-pointer'
                         onClick={() => setIsStatusVisible(!isStatusVisible)}
@@ -121,26 +121,28 @@ const handleStatusChange = (value) => {
                 </div>
 
                 {/* Categories Filters */}
-                <div className='space-y-2'>
+                <div className='space-y-2 '>
                     <div 
                         className='flex items-center justify-between bg-white rounded-lg sticky top-0 bg-white z-10 cursor-pointer'
                         onClick={() => setIsCategoriesVisible(!isCategoriesVisible)}
-                    >
+                        >
                         <h2 className='font-semibold'>Categories</h2>
                         <FaSortDown className={`transform transition-transform duration-200 ${isCategoriesVisible ? '' : 'rotate-180'}`} />
                     </div>
                     <hr className="border-t-2 border-br-gray-light" />
                     {isCategoriesVisible && (
                         <div className='flex flex-col space-y-2 p-3'>
+                            <div className='flex flex-col h-86 overflow-y-auto'>
                             {Categories_Options.map(option => (
                                 <Checkbox
-                                    key={option.id}
-                                    label={option.label}
-                                    checked={selectedCategories[option.id] || false}
-                                    onChange={handleCategoryChange(option.id)}
+                                key={option.id}
+                                label={option.label}
+                                checked={selectedCategories[option.id] || false}
+                                onChange={handleCategoryChange(option.id)}
                                 />
                             ))}
-                        </div>
+                            </div>
+                    </div>
                     )}
                 </div>
 
@@ -156,6 +158,7 @@ const handleStatusChange = (value) => {
                     <hr className="border-t-2 border-br-gray-light" />
                     {isLanguagesVisible && (
                         <div className='flex flex-col space-y-2 p-3'>
+                            <div className='flex flex-col h-78 overflow-y-auto'>
                             {Languages_Options.map(option => (
                                 <Checkbox
                                     key={option.id}
@@ -164,6 +167,7 @@ const handleStatusChange = (value) => {
                                     onChange={handleLanguageChange(option.id)}
                                 />
                             ))}
+                            </div>
                         </div>
                     )}
                 </div>

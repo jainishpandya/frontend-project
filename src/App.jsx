@@ -19,17 +19,13 @@ function App() {
       <Routes>
         <Route exact path="/" Component={LoginPage} />
         <Route path="/signin" Component={LoginPage} />
-        <Route path="club-selection" element={ClubSelection} />
+        <Route path="/club-selection" Component={ClubSelection} />
 
         <Route path="/home" Component={Homepage}>
           <Route index element={<Dashboard />} />
           <Route path="book-listing" element={<BookListing />} />
           <Route path="book-transactions" element={<MyBooks />} />
         </Route>
-        <Route path="/dashboard" Component={Dashboard} />
-        <Route path="/club-selection" Component={ClubSelection} />
-        <Route path="/book-listing" Component={BookListing} />
-        <Route path="/book" Component={book} />
       </Routes>
     </>
   );

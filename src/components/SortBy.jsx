@@ -3,7 +3,7 @@ import Button from './Button';
 
 const SortBy = () => {
   return (
-    <div className="w-fit p-5 px-8 bg-white rounded-lg shadow-md space-y-3">
+    <div className="w-fit p-5 px-8 bg-white rounded-b-2xl shadow-md space-y-3">
       <h1 className="text-xl font-bold">Sort By</h1>
 
       <hr class="border-t-2 border-br-gray-light" />
