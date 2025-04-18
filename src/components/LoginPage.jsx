@@ -8,15 +8,18 @@ import book3 from "../assets/book-3.png";
 import loginAsset from "../assets/LoginScreenAsset.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../redux/slices/user/userSlice";
 
 function LoginPage() {
+
   const [userId, setUserId] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("userInfo"));
+    const token = JSON.parse(localStorage.getItem("token"));
 
-    if (user) navigate("/home");
+    if (token) navigate("/");
   }, [navigate]);
 
   const handleVerification = (param) => {

@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+:root {
+  /* Border Radius */
+  --br-radius: 1rem;  /* This is equivalent to Tailwind's 2xl (16px) */ 
+}
+
 @theme {
   --color-br-blue-light: #E0E8F0;
   --color-br-blue-regular:#162546;

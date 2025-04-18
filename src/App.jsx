@@ -11,13 +11,13 @@ import ActionBar from "./components/ActionBar";
 import Button from "./components/Button";
 import Homepage from "./components/Homepage";
 import MyBooks from "./components/MyBooks";
-import book from "./store/book";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" Component={LoginPage} />
+        <Route exact path="/" Component={ClubSelection} />
         <Route path="/signin" Component={LoginPage} />
         <Route path="club-selection" Component={ClubSelection} />
 
@@ -25,11 +25,8 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="book-listing" element={<BookListing />} />
           <Route path="book-transactions" element={<MyBooks />} />
+          <Route path="profile" element={<ProfilePage />} />
         </Route>
-        <Route path="/dashboard" Component={Dashboard} />
-        <Route path="/club-selection" Component={ClubSelection} />
-        <Route path="/book-listing" Component={BookListing} />
-        <Route path="/book" Component={book} />
       </Routes>
     </>
   );

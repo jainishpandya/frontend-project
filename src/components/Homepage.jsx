@@ -15,29 +15,30 @@ function Homepage() {
   
   
     useEffect(() => {
-      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      setUser(userInfo);
-  
-      console.log(userInfo)
-      if (!userInfo) {
+      const token = localStorage.getItem("token");
+      console.log(localStorage.getItem('token'));
+      
+      console.log(token);
+      
+      if (!token) {
         navigate("/");
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
   
     return (
-      <div className='w-full flex'>
+      <div className='w-full h-fit flex'>
         <div>
           <Sidebar barstate={open} barstatechange={setOpen} />
         </div>
         <div className={'w-full bg-br-blue-light'}>
-          <div className={'w-full h-screen p-3 color space-y-3'}>
+          <div className={'w-full h-fit p-4 color space-y-4'}>
             <Header />
             <div className='main-content'>
                 <Outlet />
             </div>
-          <Footer />
         </div>
+          <Footer />
       </div>
       </div>
     )

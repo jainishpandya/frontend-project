@@ -7,9 +7,9 @@ import Filter from './Filters'
 
 const BookListing = () => {
   return (
-    <div className='w-full h-full space-y-3 p-3 bg-br-blue-light'>
+    <div className='w-full h-fit space-y-3 bg-br-blue-light'>
       <ScreenHeading pageTitle="Book Listing" />
-      <div className='space-y-1'>
+      <div className='h-fit space-y-1 overflow-hidden'>
         <ActionBar />
         <Filter />
       </div>

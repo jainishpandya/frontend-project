@@ -4,6 +4,7 @@ import { Op } from 'sequelize';
 import user from '../db/models/user.js';
 import clubuser from '../db/models/clubuser.js';
 import club from '../db/models/club.js';
+import jwt from '../jwt.js';
 
 const listusers = async (req, res) => {
     try {
@@ -39,8 +40,18 @@ const listusers = async (req, res) => {
 
 const userDetail = async (req, res) => {
     try {
-        const userId = req.params.id;
+        const token = req.body.token;
 
+        if (!token) {
+            return res.status(400).json({
+                success: false,
+                message: "Token is required"
+            });
+        }
+        // Verify the token
+        
+        const userId = jwt.getUserIdFromToken(token)
+        console.log("User ID : ", userId);
         const userDetails = await user.findByPk(userId);
 
         if (!userDetails) {
