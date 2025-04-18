@@ -90,12 +90,12 @@ const handleStatusChange = (value) => {
     };
 
     return (
-        <div className='h-full w-71 flex flex-col bg-white p-5 rounded-b-2xl'>
+        <div className='h-full w-71 flex flex-col bg-white p-5 rounded-b-[var(--br-radius)]'>
             <h1 className='font-bold text-lg flex-none'>Filters</h1>
 
             <div className=' flex-1 mt-4 space-y-4 '>
                 {/* Status Filters */}
-                <div className='space-y-2 h-35'>
+                <div className='space-y-2'>
                     <div 
                         className='flex items-center justify-between bg-white rounded-lg sticky top-0 bg-white z-10 cursor-pointer'
                         onClick={() => setIsStatusVisible(!isStatusVisible)}
