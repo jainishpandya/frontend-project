@@ -16,9 +16,9 @@ function LoginPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("userInfo"));
+    const token = JSON.parse(localStorage.getItem("token"));
 
-    if (user) navigate("/club-selection");
+    if (token) navigate("/");
   }, [navigate]);
 
   const handleVerification = (param) => {
