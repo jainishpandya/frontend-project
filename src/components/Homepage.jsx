@@ -15,11 +15,12 @@ function Homepage() {
   
   
     useEffect(() => {
-      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      setUser(userInfo);
-  
-      console.log(userInfo)
-      if (!userInfo) {
+      const token = localStorage.getItem("token");
+      console.log(localStorage.getItem('token'));
+      
+      console.log(token);
+      
+      if (!token) {
         navigate("/");
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -20,10 +20,19 @@ const jwtAuthMiddleware = ( req, res, next ) => {
         res.status(401).json({error: "Invalid token"});
     }
 }
-
+// Function to get user ID from token
+const getUserIdFromToken = (token) => {
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        return decoded.id;
+    } catch (error) {
+        console.error("Error decoding token:", error);
+        return null;
+    }
+}
 // Fucntion to generate JWT token 
 const generateToken = (userData) => {
-    return jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: 30})
+    return jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: '30d'})
 }
 
-export default {jwtAuthMiddleware, generateToken};
+export default {jwtAuthMiddleware, getUserIdFromToken, generateToken};
