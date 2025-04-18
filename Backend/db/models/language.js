@@ -10,7 +10,7 @@ const language = sequelize.define('language',{
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGERconsole.log('Language model defined');
   },
   LanguageName: {
     type: DataTypes.STRING

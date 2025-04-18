@@ -5,7 +5,7 @@ const Button = ({ children, onClick, className , type = "button" }) => {
       <button
         type={type}
         onClick={onClick}
-        className={className}
+        className={`cursor-pointer ${className}`}
       >
         {children}
       </button>

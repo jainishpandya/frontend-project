@@ -7,9 +7,10 @@ import { Route, Router, Routes } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import ClubSelection from "./components/ClubSelection";
 import BookListing from "./components/BookListing";
-import ScreenHeading from "./components/ScreenHeading";
 import ActionBar from "./components/ActionBar";
 import Button from "./components/Button";
+import Homepage from "./components/Homepage";
+import MyBooks from "./components/MyBooks";
 import book from "./store/book";
 
 function App() {
@@ -18,6 +19,13 @@ function App() {
       <Routes>
         <Route exact path="/" Component={LoginPage} />
         <Route path="/signin" Component={LoginPage} />
+        <Route path="club-selection" element={ClubSelection} />
+
+        <Route path="/home" Component={Homepage}>
+          <Route index element={<Dashboard />} />
+          <Route path="book-listing" element={<BookListing />} />
+          <Route path="book-transactions" element={<MyBooks />} />
+        </Route>
         <Route path="/dashboard" Component={Dashboard} />
         <Route path="/club-selection" Component={ClubSelection} />
         <Route path="/book-listing" Component={BookListing} />
