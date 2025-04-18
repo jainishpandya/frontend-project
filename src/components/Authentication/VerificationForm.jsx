@@ -45,6 +45,17 @@ function VerificationForm(props) {
         localStorage.setItem("userId", data.user.id);
         localStorage.setItem("token", data.token);
         navigate("/");
+
+        const userId = data.user.id;
+
+        const response = await axios.get(`/api/v1/user/clublist/${userId}`);
+        const clubData = response.data;
+
+        localStorage.setItem("clubuserId", JSON.stringify(clubData));
+
+        console.log(clubData.listclubs[0].clubusers[0].id);
+
+        navigate("/club-selection");
       }
     } catch (error) {
       console.log("error" + error);

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import Form from "./Form";
 import VerificationForm from "./VerificationForm";

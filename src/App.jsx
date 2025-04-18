@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route exact path="/" Component={ClubSelection} />
         <Route path="/signin" Component={LoginPage} />
-        
+        <Route path="club-selection" Component={ClubSelection} />
 
         <Route path="/home" Component={Homepage}>
           <Route index element={<Dashboard />} />
