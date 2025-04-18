@@ -1,9 +1,58 @@
 import { useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
 import ClubDropdown from "./ClubDropdown";
+import { login } from "../redux/slices/user/userSlice";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 function ClubSelection() {
   const navigate = useNavigate();
+  
+  const dispatch = useDispatch();
+
+  const getUserData = async () => {
+    try {
+      
+      const token = localStorage.getItem("token");
+
+      if(token){
+        console.log("Token:", token);
+
+        axios.defaults.baseURL = "http://localhost:3000/";
+        const params = JSON.stringify({
+          "token": token,
+        });
+        const config = {
+            headers: { 'content-type': 'application/json' }
+        };
+
+        const { data } = await axios.post("/api/v1/user/userdetail", params, config);
+
+        console.log(data)
+        if (data.success) {
+                console.log(data);
+        
+                dispatch(login({
+                  id: data.user.id,
+                  name: data.user.name,
+                  email: data.user.email,
+                  phone_no: data.user.phone_no,
+                  profile_image: data.user.profile_image,
+                }))
+        }
+      } else {
+        navigate("/signin");
+      }
+      
+    } catch (error) {
+      console.log("Error fetching user Details:", error);
+    }
+  }
+
+  useEffect(() => {
+      getUserData();
+    }, [navigate]);
+
   const handleClubselect = (selectedClub) => {
     console.log("Selected Club:", selectedClub);
   };

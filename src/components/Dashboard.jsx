@@ -11,18 +11,6 @@ function Dashboard() {
   const [open, setOpen] = useState(true);
 
 
-
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    setUser(userInfo);
-
-    console.log(userInfo)
-    if (!userInfo) {
-      navigate("/");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate]);
-
   return (
     <div className='w-full h-auto flex'>
       <div className='flex w-full items-center justify-between space-x-4'>
