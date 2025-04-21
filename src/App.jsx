@@ -8,6 +8,7 @@ import BookListing from "./components/BookListing";
 import Homepage from "./components/Homepage/Homepage";
 import MyBooks from "./components/MyBooks";
 import ProfilePage from "./components/ProfilePage";
+import BookGrid from "./components/BookGrid";
 
 function App() {
   return (
@@ -16,10 +17,12 @@ function App() {
         <Route exact path="/" Component={ClubSelection} />
         <Route path="/signin" Component={LoginPage} />
         <Route path="club-selection" Component={ClubSelection} />
+        <Route path="book-grid" Component={BookGrid} />
 
         <Route path="/home" Component={Homepage}>
           <Route index element={<Dashboard />} />
           <Route path="book-listing" element={<BookListing />} />
+
           <Route path="book-transactions" element={<MyBooks />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
