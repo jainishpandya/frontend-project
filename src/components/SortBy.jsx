@@ -1,7 +1,11 @@
 import React from 'react';
 import Button from './Button';
 
-const SortBy = () => {
+const SortBy = ({onClose}) => {
+  const handleSeeResults = () => {
+    // Add any sorting logic here
+    onClose(); // Close the dropdown
+  };
   return (
     <div className="w-49 p-5 px-8 bg-white rounded-[var(--br-radius)] space-y-3">
       <h1 className="text-xl font-bold">Sort By</h1>
@@ -69,7 +73,8 @@ const SortBy = () => {
         </div>
       </div>
 
-      <Button className="bg-br-blue-medium text-white px-2 py-2 rounded-lg transition hover:bg-br-blue-dark w-full">
+      <Button className="bg-br-blue-medium text-white px-2 py-2 rounded-lg transition hover:bg-br-blue-dark w-full"
+       onClick={handleSeeResults}>
         See Results
       </Button>
     </div>

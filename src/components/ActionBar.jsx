@@ -11,11 +11,15 @@ const ActionBar = () => {
         setIsSortByOpen(!isSortByOpen);
     };
 
+    const handleClose = () => {
+        setIsSortByOpen(false);
+    };
+
     return (
         <div className='relative'>
             <div className='flex p-3 items-center space-x-3 bg-white rounded-t-[var(--br-radius)]'>
                 <SearchBar placeholder="Search by Title, Author"/>
-                <div className='relative h-full flex-none'> {/* Added relative positioning */}
+                <div className='relative h-full flex-none'> 
                     <Button 
                         className="bg-br-gray-dark text-lg text-black font-bold px-3 py-1 rounded-lg transition duration-200 w-28 h-full flex items-center justify-between space-x-1" 
                         onClick={handleSortClick}
@@ -28,7 +32,7 @@ const ActionBar = () => {
                     {isSortByOpen && (
                         <>
                             <div className="right-0 w-auto absolute top-full mt-4 z-50 bg-white shadow-lg rounded-lg">
-                                <SortBy />
+                                <SortBy onClose={handleClose}/>
                             </div>
                             <div 
                                 className="fixed inset-0 z-40" 

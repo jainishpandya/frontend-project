@@ -90,7 +90,7 @@ const handleStatusChange = (value) => {
     };
 
     return (
-        <div className='h-full w-71 flex flex-col bg-white p-5 rounded-b-[var(--br-radius)]'>
+        <div className='h-251 w-71 flex flex-col bg-white p-5 rounded-bl-[var(--br-radius)]'>
             <h1 className='font-bold text-lg flex-none'>Filters</h1>
 
             <div className=' flex-1 mt-4 space-y-4 '>
@@ -103,7 +103,7 @@ const handleStatusChange = (value) => {
                         <h2 className='font-semibold'>Status</h2>
                         <FaSortDown className={`transform transition-transform duration-200 ${isStatusVisible ? '' : 'rotate-180'}`} />
                     </div>
-                    <hr className="border-t-2 border-br-gray-light" />
+                    <hr className="border-t-2 border-br-black" />
                     {isStatusVisible && (
                         <div className='flex flex-col space-y-2 p-3'>
                             {Status_Options.map(option => (
@@ -129,10 +129,10 @@ const handleStatusChange = (value) => {
                         <h2 className='font-semibold'>Categories</h2>
                         <FaSortDown className={`transform transition-transform duration-200 ${isCategoriesVisible ? '' : 'rotate-180'}`} />
                     </div>
-                    <hr className="border-t-2 border-br-gray-light" />
+                    <hr className="border-t-2 border-br-black" />
                     {isCategoriesVisible && (
                         <div className='flex flex-col space-y-2 p-3'>
-                            <div className='flex flex-col h-86 overflow-y-auto'>
+                            <div className='flex flex-col h-80 overflow-y-auto'>
                             {Categories_Options.map(option => (
                                 <Checkbox
                                 key={option.id}
@@ -155,10 +155,10 @@ const handleStatusChange = (value) => {
                         <h2 className='font-semibold'>Languages</h2>
                         <FaSortDown className={`transform transition-transform duration-200 ${isLanguagesVisible ? '' : 'rotate-180'}`} />
                     </div>
-                    <hr className="border-t-2 border-br-gray-light" />
+                    <hr className="border-t-2 border-br-black" />
                     {isLanguagesVisible && (
                         <div className='flex flex-col space-y-2 p-3'>
-                            <div className='flex flex-col h-78 overflow-y-auto'>
+                            <div className='flex flex-col h-73 overflow-y-auto'>
                             {Languages_Options.map(option => (
                                 <Checkbox
                                     key={option.id}
