@@ -15,7 +15,7 @@ const BookListing = () => {
         <ActionBar />
         <div className='flex space-x-1'>
         <Filter />
-        <div className='space-y-1'>
+        <div className='space-y-1 w-full'>
         <BookGrid />
         <Pagination />
         </div>

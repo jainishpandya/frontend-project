@@ -7,7 +7,7 @@ const bookController = {
   bookDetails: async (req, res) => {
     try {
       const page = parseInt(req.query.page) - 1 || 0;
-      const limit = parseInt(req.query.limit) || 5;
+      const limit = parseInt(req.query.limit) || 10;
       const search = req.query.search || "";
       const { clubuserId } = req.params;
 
@@ -23,8 +23,9 @@ const bookController = {
       const bookByISBN = await book.findOne({
         where: {
           clubuserId: clubuserId
-        },
-        attributes: ['title', 'ISBN', 'author']
+        },  
+        attributes: ['title', 'ISBN', 'author'],
+
       });
 
       if (!bookByISBN) {
@@ -44,6 +45,7 @@ const bookController = {
           ]
         },
         attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+        order: [['title', 'ASC']],
         offset: page * limit,
         limit: limit
       });

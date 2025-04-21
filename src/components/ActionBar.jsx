@@ -28,7 +28,6 @@ const ActionBar = () => {
                         <FaSortAmountDown className="flex-none" /> 
                     </Button>
 
-                    {/* Repositioned dropdown */}
                     {isSortByOpen && (
                         <>
                             <div className="right-0 w-auto absolute top-full mt-4 z-50 bg-white shadow-lg rounded-lg">

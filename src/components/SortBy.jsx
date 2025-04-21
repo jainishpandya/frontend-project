@@ -3,8 +3,7 @@ import Button from './Button';
 
 const SortBy = ({onClose}) => {
   const handleSeeResults = () => {
-    // Add any sorting logic here
-    onClose(); // Close the dropdown
+    onClose(); 
   };
   return (
     <div className="w-49 p-5 px-8 bg-white rounded-[var(--br-radius)] space-y-3">
