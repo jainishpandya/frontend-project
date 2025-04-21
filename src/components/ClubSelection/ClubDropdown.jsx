@@ -3,11 +3,12 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import useSelectClub from "../../store/selectClub";
 
-const ClubDropdown = ({ onSelect }) => {
+const ClubDropdown = ({onSelect,  setClubId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
   const {
+    clubId = [],
     labels = [],
     roles = [],
     data = [],
@@ -17,9 +18,14 @@ const ClubDropdown = ({ onSelect }) => {
 
   useEffect(() => {
     if (labels.length > 0) {
-      console.log({ value: labels, label: labels, role: roles });
+      console.log({
+        value: labels,
+        label: labels,
+        role: roles,
+        clubId: clubId,
+      });
     }
-  }, [labels, roles]);
+  }, [labels, roles, clubId]);
 
   const options = labels.map((label, index) => {
     const roleCode = roles[index];
@@ -33,6 +39,7 @@ const ClubDropdown = ({ onSelect }) => {
         : "No Role Assigned";
 
     return {
+      clubId: clubId[index],
       value: label,
       label: label,
       role,
@@ -43,6 +50,8 @@ const ClubDropdown = ({ onSelect }) => {
   const handleSelect = (option) => {
     setSelected(option);
     setIsOpen(false);
+    localStorage.setItem("ClubId ", option.clubId);
+    setClubId(option.clubId);
     if (onSelect) onSelect(option);
   };
 

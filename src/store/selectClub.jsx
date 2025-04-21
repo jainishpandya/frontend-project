@@ -6,6 +6,7 @@ const useSelectClub = () => {
   const [data, setData] = useState([]);
   const [labels, setLabels] = useState([]);
   const [roles, setRoles] = useState([]);
+  const [clubId, setClubId] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -13,6 +14,7 @@ const useSelectClub = () => {
     // Extract club names and roles more safely
     const extractedLabels = [];
     const extractedRoles = [];
+    const extractedClubId = [];
 
     // let i = data.listclubs.length;
 
@@ -22,13 +24,16 @@ const useSelectClub = () => {
         // Assuming the club name is stored somewhere in the club object
         console.log("club Name : ", item.club?.club_name); // Log the item for debugging
         extractedLabels.push(item.club?.club_name || "Unknown Club");
-        console.log("club Name : ", item.role);
+        console.log("club role : ", item.role);
         extractedRoles.push(item.role || "Member");
+        console.log("club Id : ", item.club?.id);
+        extractedClubId.push(item.club?.id || "Unknown Club ID");
       }
     });
 
     setLabels(extractedLabels);
     setRoles(extractedRoles);
+    setClubId(extractedClubId);
   };
 
   const fetchInfo = async () => {
@@ -67,7 +72,7 @@ const useSelectClub = () => {
     }
   }, [data]);
 
-  return { labels, roles, isLoading, error, refetch: fetchInfo };
+  return { labels, roles, clubId, isLoading, error, refetch: fetchInfo };
 };
 
 export default useSelectClub;
