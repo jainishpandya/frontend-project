@@ -2,34 +2,41 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     id: -1,
-    name: '',
-    email: '',
-    location: '',
-    profile_image: '',
+    club_name: '',
+    club_contact_email: '',
+    club_thumbnail_url: '',
+    club_location: '',
+    club_status: false,
+    created_at: '',
+    isClubin: false
 }
 
-export const userSlice = createSlice({
-    name: 'user',
+export const clubSlice = createSlice({
+    name: 'club',
     initialState,
     reducers: {
-        login: (state, action) => {
-            state.id = action.payload.id
-            state.name = action.payload.name,
-            state.email = action.payload.email,
-            state.phone_no = action.payload.phone_no,
-            state.profile_image = action.payload.profile_image,
-            state.isLoggedIn = true;
+        clubin: (state, action) => {
+                state.id = action.payload.id
+                state.club_name = action.payload.club_name,
+                state.club_contact_email = action.payload.club_contact_email,
+                state.club_thumbnail_url = action.payload.club_thumbnail_url,
+                state.club_location = action.payload.club_location,
+                state.club_status = action.payload.club_status,
+                state.created_at = action.payload.createdAt,
+                state.isClubin = true;
         },
-        logout: (state) => {
-            state.id = -1;
-            state.name = '',
-            state.email = '',
-            state.phone_no = -1,
-            state.profile_image = '',
-            state.isLoggedIn = false;
+        clubout: (state) => {
+                state.id = -1,
+                state.club_name = '',
+                state.club_contact_email = '',
+                state.club_thumbnail_url = '',
+                state.club_location = '',
+                state.club_status = false,
+                state.created_at = '',
+                state.isClubin = false
         },
     },
 })
 
-export const { login, logout } = userSlice.actions;
-export default userSlice.reducer; 
+export const { clubin, clubout } = clubSlice.actions;
+export default clubSlice.reducer; 
