@@ -218,4 +218,29 @@ const memberList = async(req, res) => {
 }
 
 
-export default {createClub, editClub, listClub, deleteClub, reviveClub, memberList};
+const clubdetails = async (req, res) => {
+    try {
+        const clubId = req.body.clubId;
+
+        if (!clubId) {
+            return res.status(400).json({ success: false, message: "Club ID is required" });
+        }
+
+        const clubDetails = await club.findByPk(clubId)
+
+        if(clubDetails){
+            res.status(200).json({success: true, message: "Club Details Fetched Successfully", club: clubDetails})
+        } else {
+            res.status(404).json({success: false, message: "Club Not Found"})
+        }
+    } catch (error) {
+        console.error('Club Details Fetching Error: ', error);
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        })
+    }
+}
+
+
+export default {createClub, editClub, listClub, deleteClub, reviveClub, memberList, clubdetails};

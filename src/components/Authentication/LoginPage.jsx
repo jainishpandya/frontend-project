@@ -13,7 +13,7 @@ function LoginPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
 
     if (token) navigate("/");
   }, [navigate]);

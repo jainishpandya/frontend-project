@@ -50,7 +50,6 @@ const ClubDropdown = ({onSelect,  setClubId }) => {
   const handleSelect = (option) => {
     setSelected(option);
     setIsOpen(false);
-    localStorage.setItem("ClubId ", option.clubId);
     setClubId(option.clubId);
     if (onSelect) onSelect(option);
   };
