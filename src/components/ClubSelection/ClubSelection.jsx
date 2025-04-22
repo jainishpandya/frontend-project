@@ -6,16 +6,20 @@ import axios from "axios";
 
 function ClubSelection() {
   const navigate = useNavigate();
-  const [clubId, setClubId] = useState(0);
+  const [club, setClub] = useState(0);
 
   useEffect(() => {
-    console.log("this is use effect on club selection page line 16", clubId);
-  }, [clubId]);
+    console.log( "this is use effect on club selection page line 16", club);
+  }, [club]);
+
+
+  
 
   const handleSubmit = async () => {
-    console.log("Selected Club ID:", clubId);
-    if (clubId) {
-      await localStorage.setItem("clubId", clubId);
+    console.log("Selected Club ID:", club.clubId);
+    if (club) {
+      await localStorage.setItem("clubId", club.clubId);
+      await localStorage.setItem("Role", club.roleCode);
       navigate("/home");
     }
   };
@@ -49,7 +53,7 @@ function ClubSelection() {
               Get access to a world where imagination never stops
             </p>
 
-            <ClubDropdown onSelect={handleClubselect} setClubId={setClubId} />
+            <ClubDropdown onSelect={handleClubselect} setClub={setClub} />
 
             <button
               onClick={handleSubmit}
