@@ -115,9 +115,10 @@ function Homepage() {
     // fetch JWT token and clubId from local storage
     const token = localStorage.getItem("token");
     const clubId = localStorage.getItem("clubId");
+    const Role = localStorage.getItem("Role");
 
     // check if token and clubId are not present at local storage
-    if (!token && !clubId) {
+    if (!token || !clubId || !Role) {
       navigate("/");
     }
 
