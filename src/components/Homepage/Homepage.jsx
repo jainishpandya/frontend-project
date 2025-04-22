@@ -128,14 +128,14 @@ function Homepage() {
   }, []);
 
   return (
-    <div className='w-full h-fit flex'>
-      <div>
+    <div className='w-full h-fit flex overflow-hidden'>
+      <div className={`${open ? "w-64" : "w-24"} flex-shrink-0 transition-all duration-300`}>
         <Sidebar barstate={open} barstatechange={setOpen} activeOption={activeOption} setActiveOption={setActiveOption} />
       </div>
-      <div className={'w-full bg-br-blue-light'}>
-        <div className={'w-full h-fit p-4 color space-y-4'}>
+      <div className={'w-full bg-br-blue-light overflow-y-auto'}>
+        <div className={'w-full min-h-screen p-4 color space-y-4'}>
           <Header setActiveOption={setActiveOption} />
-          <div className='main-content'>
+          <div className='main-content flex-grow'>
             <Outlet />
           </div>
         </div>
