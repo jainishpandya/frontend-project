@@ -21,14 +21,15 @@ export const userSlice = createSlice({
             state.profile_image = action.payload.profile_image,
             state.isLoggedIn = true;
         },
-        logout: (state) => {
-            state.id = -1;
-            state.name = '',
-            state.email = '',
-            state.phone_no = -1,
-            state.profile_image = '',
-            state.isLoggedIn = false;
-        },
+        // logout: (state) => {
+        //     state.id = -1;
+        //     state.name = '',
+        //     state.email = '',
+        //     state.phone_no = -1,
+        //     state.profile_image = '',
+        //     state.isLoggedIn = false;
+        // },
+        logout: () => initialState,
     },
 })
 
