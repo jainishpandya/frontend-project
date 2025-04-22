@@ -8,13 +8,9 @@ function ClubSelection() {
   const navigate = useNavigate();
   const [clubId, setClubId] = useState(0);
 
-
   useEffect(() => {
-    console.log( "this is use effect on club selection page line 16", clubId);
+    console.log("this is use effect on club selection page line 16", clubId);
   }, [clubId]);
-
-
-  
 
   const handleSubmit = async () => {
     console.log("Selected Club ID:", clubId);
@@ -24,12 +20,9 @@ function ClubSelection() {
     }
   };
 
-  
-
   const handleClubselect = (selectedClub) => {
     console.log("Selected Club:", selectedClub);
   };
-
 
   useEffect(() => {
     const token = localStorage.getItem("token");
