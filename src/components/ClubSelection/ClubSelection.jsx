@@ -40,7 +40,7 @@ function ClubSelection() {
           style={{ height: "auto" }}
         >
           BookCircle
-        </div>
+        </div>  
 
         <div className=" flex items-center justify-center bg-br-blue-light w-full h-screen mt-4py-4 px-2 rounded-2xl">
           <div className="items-center text-br-blue-medium  w-full max-w-md">

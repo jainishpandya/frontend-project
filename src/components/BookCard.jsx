@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from './Button'
 import { FaStar } from 'react-icons/fa'
+import BookDetails from './BookDetails'
 
 const BookCard = ({ title, author, coverUrl, isAvailable, rating }) => {
   return (
@@ -33,9 +34,10 @@ const BookCard = ({ title, author, coverUrl, isAvailable, rating }) => {
           <Button 
             className={`w-full bg-br-blue-medium hover:bg-br-blue-dark 
               text-white py-2 rounded-lg transition-colors duration-200`}
-            disabled={!isAvailable}
+            disabled={!isAvailable} 
           >
-            {isAvailable ? 'Borrow Now' : 'Request To Borrow'}
+            {isAvailable ? 'Borrow Now' : 'Request To Borrow'};
+            onClick={BookDetails}
           </Button>
         </div>
       </div>
