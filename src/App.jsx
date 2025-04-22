@@ -8,7 +8,10 @@ import BookListing from "./components/BookListing";
 import Homepage from "./components/Homepage/Homepage";
 import MyBooks from "./components/MyBooks";
 import ProfilePage from "./components/ProfilePage";
-import BookGrid from "./components/BookGrid";
+import MemberList from "./components/Member/MemberList";
+import TransactionList from "./components/Transactions/TransactionList";
+import ReviewList from "./components/Review/ReviewList";
+import ClubList from "./components/Clubs/ClubList";
 
 function App() {
   return (
@@ -20,9 +23,14 @@ function App() {
 
         <Route path="/home" Component={Homepage}>
           <Route index element={<Dashboard />} />
-          <Route path="book-listing" element={<BookListing />} />
+          <Route path="books" element={<BookListing />} />
+          
+          <Route path="mybooks" element={<MyBooks />} />
 
-          <Route path="book-transactions" element={<MyBooks />} />
+          <Route path="members" element={<MemberList />} />
+          <Route path="transactions" element={<TransactionList />} />
+          <Route path="reviews" element={<ReviewList />} />
+          <Route path="clubs" element={<ClubList /> } />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
       </Routes>
