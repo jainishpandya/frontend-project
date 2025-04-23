@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import useSelectClub from "../../store/selectClub";
 
-const ClubDropdown = ({onSelect,  setClub }) => {
+const ClubDropdown = ({ onSelect, setClub }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
@@ -33,7 +33,7 @@ const ClubDropdown = ({onSelect,  setClub }) => {
       roleCode === "0"
         ? "Super Admin"
         : roleCode === "1"
-        ? "Admin"
+        ? "Club Admin"
         : roleCode === "2"
         ? "Member"
         : "No Role Assigned";
