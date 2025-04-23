@@ -12,6 +12,7 @@ import MemberList from "./components/Member/MemberList";
 import TransactionList from "./components/Transactions/TransactionList";
 import ReviewList from "./components/Review/ReviewList";
 import ClubList from "./components/Clubs/ClubList";
+import SetPassword from "./components/Authentication/SetPassword";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/" Component={ClubSelection} />
         <Route path="/signin" Component={LoginPage} />
         <Route path="club-selection" Component={ClubSelection} />
+        <Route path="/set-password" Component={SetPassword} />
 
         <Route path="/home" Component={Homepage}>
           <Route index element={<Dashboard />} />
