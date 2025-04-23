@@ -2,6 +2,7 @@ import React from 'react';
 import { Op } from 'sequelize';
 
 import book from '../db/models/book.js';
+import clubuser from '../db/models/clubuser.js';
 
 const bookController = {
   bookDetails: async (req, res) => {
@@ -67,6 +68,52 @@ const bookController = {
         message: "Internal Server Error"
       });
     }
+  },
+
+  // Add more methods as needed
+  AddBooks: async (req, res) => {
+      try {
+        const { title, author, ISBN, clubuserId, categoryId, languageId,  } = req.body;
+
+        if (!title || !author || !ISBN || !clubuserId || !categoryId || !languageId) {
+          return res.status(400).json({
+            success: false,
+            message: "All fields are required"
+          });
+        }
+
+        const findClubUser = await clubuser.findByPk(clubuserId);
+        if (!findClubUser) {
+          return res.status(404).json({
+            success: false,
+            message: "user not found"
+          });
+        }
+
+        const newBook = await book.create({
+          title: title,
+          author: author,
+          ISBN: ISBN,
+          clubuserId: clubuserId,
+          categoryId: categoryId,
+          languageId: languageId
+        });
+
+        if (newBook) {
+          return res.status(201).json({
+            success: true,
+            message: "Book added successfully",
+            book: newBook
+          });
+        }
+
+      } catch (error) {
+        console.error('Error adding book:', error);
+        res.status(500).json({
+          success: false,
+          message: "Internal Server Error"
+        });
+      }
   }
 };
 
