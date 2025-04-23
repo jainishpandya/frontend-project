@@ -110,6 +110,8 @@ const setProfileImage = async (req, res) => {
         });
     }
 }
+
+
 const clubList = async(req, res) => {
     try {
         const page = parseInt(req.query.page) - 1 || 0;
@@ -128,33 +130,20 @@ const clubList = async(req, res) => {
         }
 
         //Json Structure
-        const includeOptions = {
+        const { count, rows: clubs } = await clubuser.findAndCountAll({
             model: clubuser,
             where: { userId: userId },
             attributes: ['clubId', 'role'],
             include: [
                 {
                     model: club,
-                    attributes: ['id', 'club_name'],
+                    attributes: [ 'club_name'],
                 }
             ]
-        };
-        
-        
-        if (clubId) {
-            includeOptions.include[0].where = { id: clubId };
-        }
-
-        const { count, rows: clubs } = await user.findAndCountAll({
-            include: [includeOptions],
-            where: {
-                name: { [Op.iLike]: `%${search}%` }
-            },
-            attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'setPasswordToken', 'setPasswordTokenExpiry','verificationToken', 'verificationTokenExpiry', 'deletedAt'] },
-            order: [['name', 'ASC']],
-            limit: limit,
-            offset: page * limit,
         })
+        
+        
+        
 
         const response = {
             success: true,
