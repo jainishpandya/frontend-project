@@ -1,4 +1,4 @@
-import language from "../db/models/language";
+import language from "../db/models/language.js";
 
 const createLanguage = async (req, res) => {
     try {
@@ -20,7 +20,7 @@ const createLanguage = async (req, res) => {
             language: newLanguage,
         });
     } catch (error) {
-        console.error("Error adding category:", error);
+        console.error("Error adding language:", error);
         res.status(500).json({
             success: false,
             message: "Internal Server Error",
@@ -56,7 +56,7 @@ const updateLanguage = async (req, res) => {
 
 
     } catch (error) {
-        console.error("Error updating category:", error);
+        console.error("Error updating language:", error);
         res.status(500).json({
             success: false,
             message: "Internal Server Error",
@@ -93,7 +93,7 @@ const deleteLanguage = async (req, res) => {
             message: "Language deleted successfully",
         });
     } catch (error) {
-        console.error("Error deleting category:", error);
+        console.error("Error deleting language:", error);
         res.status(500).json({
             success: false,
             message: "Internal Server Error",
@@ -117,10 +117,17 @@ const getAllLanguage = async (req, res) => {
             languages: languages,
         });
     } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error("Error fetching languages:", error);
         res.status(500).json({
             success: false,
             message: "Internal Server Error",
         });
     }
+}
+
+export default {
+    createLanguage,
+    updateLanguage,
+    deleteLanguage,
+    getAllLanguage
 }

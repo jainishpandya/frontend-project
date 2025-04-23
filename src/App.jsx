@@ -6,12 +6,13 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import ClubSelection from "./components/ClubSelection/ClubSelection";
 import BookListing from "./components/BookListing";
 import Homepage from "./components/Homepage/Homepage";
-import MyBooks from "./components/MyBooks";
+import MyBooks from "./components/Mybooks/MyBooks";
 import ProfilePage from "./components/ProfilePage";
 import MemberList from "./components/Member/MemberList";
 import TransactionList from "./components/Transactions/TransactionList";
 import ReviewList from "./components/Review/ReviewList";
 import ClubList from "./components/Clubs/ClubList";
+import SetPassword from "./components/Authentication/SetPassword";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/" Component={ClubSelection} />
         <Route path="/signin" Component={LoginPage} />
         <Route path="club-selection" Component={ClubSelection} />
+        <Route path="/set-password" Component={SetPassword} />
 
         <Route path="/home" Component={Homepage}>
           <Route index element={<Dashboard />} />

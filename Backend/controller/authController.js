@@ -104,8 +104,8 @@ const signup = async (req, res) => {
 
 const setPassword = async (req, res) => {
     try {
-        const { password } = req.body;
-        const token = req.query.token;
+        const { password, token } = req.body;
+        
 
 
         const result = await user.findOne({
@@ -118,8 +118,8 @@ const setPassword = async (req, res) => {
         })
 
         if (!result) {
-            console.error('set-Password Error: ');
-            res.status(500).json({ message: 'Internal Server error' })
+            console.error('set-Password Error: ', result);
+            return res.status(500).json({ message: 'Internal Server error' })
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
