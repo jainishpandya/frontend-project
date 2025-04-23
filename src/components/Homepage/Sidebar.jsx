@@ -7,6 +7,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 function Sidebar(props) {
 
   const { activeOption, setActiveOption } = props;
+  
 
   const role = localStorage.getItem("Role");
   console.log("this is role", role);
@@ -19,6 +20,7 @@ React.useEffect(() => {
   const pathToOption = {
     '/home': 'Dashboard',
     '/home/books': 'BookList',
+    '/home/books/book-details': 'BookList',
     '/home/mybooks': 'MyBooks',
     '/home/members': 'MyBooks',
     '/home/Transactions': 'transactions',

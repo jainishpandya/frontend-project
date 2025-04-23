@@ -13,6 +13,7 @@ import TransactionList from "./components/Transactions/TransactionList";
 import ReviewList from "./components/Review/ReviewList";
 import ClubList from "./components/Clubs/ClubList";
 import SetPassword from "./components/Authentication/SetPassword";
+import BookDetails from "./components/BookDetails";
 
 function App() {
   return (
@@ -26,13 +27,14 @@ function App() {
         <Route path="/home" Component={Homepage}>
           <Route index element={<Dashboard />} />
           <Route path="books" element={<BookListing />} />
-          
+          <Route path="books/book-details" element={<BookDetails />} />
+
           <Route path="mybooks" element={<MyBooks />} />
 
           <Route path="members" element={<MemberList />} />
           <Route path="transactions" element={<TransactionList />} />
           <Route path="reviews" element={<ReviewList />} />
-          <Route path="clubs" element={<ClubList /> } />
+          <Route path="clubs" element={<ClubList />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
       </Routes>

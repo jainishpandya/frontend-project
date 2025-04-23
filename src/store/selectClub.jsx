@@ -18,7 +18,7 @@ const useSelectClub = () => {
 
     // let i = data.listclubs.length;
 
-    data.listclubs[0].clubusers.forEach((item) => {
+    data.listclubs.forEach((item) => {
       console.log("item : ", item); // Log the item for debugging
       if (item.club) {
         // Assuming the club name is stored somewhere in the club object
@@ -26,8 +26,8 @@ const useSelectClub = () => {
         extractedLabels.push(item.club?.club_name || "Unknown Club");
         console.log("club role : ", item.role);
         extractedRoles.push(item.role || "Member");
-        console.log("club Id : ", item.club?.id);
-        extractedClubId.push(item.club?.id || "Unknown Club ID");
+        console.log("club Id : ", item.clubId);
+        extractedClubId.push(item.clubId || "Unknown Club ID");
       }
     });
 
