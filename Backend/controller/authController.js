@@ -202,10 +202,10 @@ const login = async (req, res) => {
                     console.error('Email verification Error')
                 }
             } else {
-                res.status(403).json({ message: "Invalid Credentials 1" })
+                res.status(403).json({ message: "Invalid Credentials" })
             }
         } else {
-            res.status(403).json({ message: "Invalid Credentials 2" })
+            res.status(403).json({ message: "User not Found" })
         }
     } catch (error) {
         console.error('Login Error : ', error);

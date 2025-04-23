@@ -56,7 +56,8 @@ const BookCard = ({ title, author, coverUrl, isAvailable, rating }) => {
             }
             })}
           >
-            {isAvailable ? "Borrow Now" : "Request To Borrow"}
+            {isAvailable ? 'Borrow Now' : 'Request To Borrow'}
+            {/* onClick={BookDetails} */}
           </Button>
         </div>
       </div>
