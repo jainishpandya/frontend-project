@@ -47,8 +47,8 @@ export default function MyBooks() {
           <Tab
            sx={{
             fontFamily: 'Roboto, Sans-serif',
-            fontWeight: '700',
-            fontSize: '0.95rem',
+            fontWeight: '600',
+            fontSize: '1.05rem',
             color: '#000000',
             textTransform: 'none',
            }}
@@ -56,24 +56,24 @@ export default function MyBooks() {
           <Tab 
            sx={{
             fontFamily: 'Roboto, Sans-serif',
-            fontWeight: '700',
-            fontSize: '0.95rem',
+            fontWeight: '600',
+            fontSize: '1.05rem',
             color: '#000000',
             textTransform: 'none',
            }} label="Borrowed" {...a11yProps(1)} />
           <Tab 
            sx={{
             fontFamily: 'Roboto, Sans-serif',
-            fontWeight: '700',
-            fontSize: '0.95rem',
+            fontWeight: '600',
+            fontSize: '1.05rem',
             color: '#000000',
             textTransform: 'none',
            }} label="Reviews" {...a11yProps(2)} />
           <Tab 
            sx={{
             fontFamily: 'Roboto, Sans-serif',
-            fontWeight: '700',
-            fontSize: '0.95rem',
+            fontWeight: '600',
+            fontSize: '1.05rem',
             color: '#000000',
             textTransform: 'none',
            }} label="Transactions" {...a11yProps(3)} />
