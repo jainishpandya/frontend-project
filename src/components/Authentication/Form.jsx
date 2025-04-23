@@ -36,7 +36,6 @@ function Form(props) {
 
 
     const submitHandler = async () => {
-        console.log("hellow");
 
         if (!email) {
             setEmailError("this field is empty");
