@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import UserBookList from './UserBookList';
+import UserBorrowedList from './UserBorrowedList';
+import UserReviewList from './UserReviewList';
+import UserTransactionList from './UserTransactionList';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -80,16 +84,16 @@ export default function MyBooks() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Item One
+        <UserBookList />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <UserBorrowedList />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <UserReviewList />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        Item Four
+        <UserTransactionList />
       </CustomTabPanel>
     </Box>
   );
