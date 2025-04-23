@@ -20,6 +20,7 @@ React.useEffect(() => {
   const pathToOption = {
     '/home': 'Dashboard',
     '/home/books': 'BookList',
+    '/home/books/book-details': 'BookList',
     '/home/mybooks': 'MyBooks',
     '/home/members': 'MyBooks',
     '/home/Transactions': 'transactions',
