@@ -1,7 +1,7 @@
 import { ArrowLeftRight, Book, Flag, LayoutDashboard, List, Menu, Star, UsersRound } from 'lucide-react'
 import React from 'react'
 import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarLeftExpand } from 'react-icons/tb'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 
 function Sidebar(props) {
@@ -11,6 +11,26 @@ function Sidebar(props) {
   const role = localStorage.getItem("Role");
   console.log("this is role", role);
 
+
+  const location = useLocation();
+
+React.useEffect(() => {
+  // Map routes to their corresponding option names
+  const pathToOption = {
+    '/home': 'Dashboard',
+    '/home/books': 'BookList',
+    '/home/mybooks': 'MyBooks',
+    '/home/members': 'MyBooks',
+    '/home/Transactions': 'transactions',
+    '/home/reviews': 'reviews',
+    '/home/clubs': 'clubs',
+  };
+
+  const currentOption = pathToOption[location.pathname];
+  if (currentOption) {
+    setActiveOption(currentOption);
+  }
+}, [location.pathname]);
 
 
   const getItemClass = (option) => {

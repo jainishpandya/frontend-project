@@ -6,7 +6,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import ClubSelection from "./components/ClubSelection/ClubSelection";
 import BookListing from "./components/BookListing";
 import Homepage from "./components/Homepage/Homepage";
-import MyBooks from "./components/MyBooks";
+import MyBooks from "./components/Mybooks/MyBooks";
 import ProfilePage from "./components/ProfilePage";
 import MemberList from "./components/Member/MemberList";
 import TransactionList from "./components/Transactions/TransactionList";
