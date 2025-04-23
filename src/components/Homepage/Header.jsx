@@ -31,6 +31,8 @@ const Header = ({ setActiveOption }) => {
 
   const handleSwitchClubs = () => {
     dispatch(clubout());
+    localStorage.removeItem('clubId');
+    localStorage.removeItem('Role');
     handleClose();
     navigate('/club-selection');
   };
