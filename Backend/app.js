@@ -19,7 +19,6 @@ import book from './db/models/book.js';
 import language from './db/models/language.js';
 import category from './db/models/category.js';
 
-
 initialiseAssociations();
 
 const app = express();
