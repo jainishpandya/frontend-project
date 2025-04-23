@@ -46,7 +46,15 @@ const BookCard = ({ title, author, coverUrl, isAvailable, rating }) => {
             className={`w-full bg-br-blue-medium hover:bg-br-blue-dark 
               text-white py-2 rounded-lg transition-colors duration-200`}
             disabled={!isAvailable}
-            onClick={() => navigate("/home/books/book-details")}
+            onClick={() => navigate("/home/books/book-details",{
+            state : {
+              title,
+              author,
+              coverUrl,
+              isAvailable,
+              rating
+            }
+            })}
           >
             {isAvailable ? "Borrow Now" : "Request To Borrow"}
           </Button>
