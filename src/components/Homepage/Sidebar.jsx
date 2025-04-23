@@ -117,7 +117,7 @@ React.useEffect(() => {
         </NavLink>
       )}
 
-      {(role === "2") && ( // Super Admin
+      {(role === "0") && ( // Super Admin
         <NavLink
           to={"/home/clubs"}
           className={getItemClass("clubs")}
