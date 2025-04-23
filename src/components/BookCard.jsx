@@ -36,8 +36,8 @@ const BookCard = ({ title, author, coverUrl, isAvailable, rating }) => {
               text-white py-2 rounded-lg transition-colors duration-200`}
             disabled={!isAvailable} 
           >
-            {isAvailable ? 'Borrow Now' : 'Request To Borrow'};
-            onClick={BookDetails}
+            {isAvailable ? 'Borrow Now' : 'Request To Borrow'}
+            {/* onClick={BookDetails} */}
           </Button>
         </div>
       </div>

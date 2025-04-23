@@ -63,7 +63,7 @@ function BookGrid() {
   if (error) return <div className="text-center py-8">Error: {error}</div>;
 
   return (
-    <div className="grid grid-cols-5 gap-4 px-4 py-8 w-full bg-white">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 px-4 py-8 w-full bg-white">
         {books.length > 0 ? (
           books.map((book) => (
             <BookCard
