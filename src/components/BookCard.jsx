@@ -28,8 +28,8 @@ const BookCard = ({ title, author, coverUrl, isAvailable, rating, category, lang
         </div>
 
         <div className="flex flex-row 2xl:text-sm xl:text-xs lg:text-xs items-start space-x-2">
-          <div className="w-fit bg-br-blue-light p-1 rounded-md text-blue-400 font-semibold">{category}</div>
-          <div className="w-fit bg-br-blue-light p-1 rounded-md text-blue-400 font-semibold">{language}</div>
+          <div className="w-fit bg-gray-200 py-1 px-2 rounded-md text-black font-semibold">{category}</div>
+          <div className="w-fit bg-gray-200 py-1 px-2 rounded-md text-black font-semibold">{language}</div>
         </div>
 
         <div className="space-y-2">
