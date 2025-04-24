@@ -16,8 +16,11 @@ export function initialiseAssociations() {
     club.belongsToMany(user, { through: clubuser ,foreignKey: 'clubId' });
     club.hasMany(book, { foreignKey: 'clubId' });
 
-    // clubuser.hasMany(book, { foreignKey: 'clubuserId' }); // correct foreign key
-    // book.belongsTo(clubuser, { foreignKey: 'clubuserId' }); // correct association
+    club.hasMany(book, { foreignKey: 'clubId' });
+    book.belongsTo(club, { foreignKey: 'userId' });
+
+    user.hasMany(book, { foreignKey: 'userId' });
+    book.belongsTo(user, { foreignKey: 'userId' });
 
     language.hasMany(book, { foreignKey: 'languageId' });
     book.belongsTo(language, { foreignKey: 'languageId' });
