@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Skeleton } from "@mui/material";
 import { Box } from "lucide-react";
 
-function BookGrid() {
+function BookGrid({ searchQuery }) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,6 +24,7 @@ function BookGrid() {
         params: {
           page: currentPage,
           limit: resultsPerPage,
+          search: searchQuery,
         }
       }
       );
@@ -31,7 +32,6 @@ function BookGrid() {
 
       if (data.success) {
         setTotalCount(data.total); 
-        setMessage(data.message || "");
         if (data.books?.length) {
           const booksWithCovers = await Promise.all(
             data.books.map(async (book) => {
@@ -55,7 +55,7 @@ function BookGrid() {
   useEffect(() => {
     fetchBooks();
     setLoading(true); // Set loading state
-  }, [currentPage, clubId]);
+  }, [currentPage, clubId, searchQuery]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);

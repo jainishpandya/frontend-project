@@ -20,6 +20,7 @@
     "axios": "^1.8.4",
     "env": "^0.0.2",
     "framer-motion": "^12.5.0",
+    "lodash": "^4.17.21",
     "lucide": "^0.488.0",
     "lucide-react": "^0.487.0",
     "react": "^19.0.0",

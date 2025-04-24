@@ -10,6 +10,7 @@ const bookController = {
       const page = parseInt(req.query.page) || 1; 
       const limit = parseInt(req.query.limit) || 10;
       const offset = (page - 1) * limit;
+      const search = req.query.search || '';
       const clubId = req.params.clubId;
 
       if (!clubId) {
@@ -19,10 +20,18 @@ const bookController = {
         });
       }
 
+      const whereClause = {
+        clubId: clubId,
+        ...(search && {
+          [Op.or]: [
+            { title: { [Op.iLike]: `%${search}%` } },
+            { author: { [Op.iLike]: `%${search}%` } }
+          ]
+        })
+      };
+
       const { count, rows: books } = await book.findAndCountAll({
-        where: {
-          clubId: clubId
-        },
+        where: whereClause,
         attributes: ['id', 'title', 'ISBN', 'author', 'IsAvailable'],
         order: [['title', 'ASC']],
         offset: offset,
