@@ -22,7 +22,6 @@ const bookController = {
       const { count, rows: books } = await book.findAndCountAll({
         where: {
           clubId: clubId
-          clubId: clubId
         },
         attributes: ['id', 'title', 'ISBN', 'author', 'IsAvailable'],
         order: [['title', 'ASC']],
