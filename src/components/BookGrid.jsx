@@ -27,7 +27,6 @@ function BookGrid() {
           }
         );
         const data = response.data;
-        console.log(data);
 
         if (data.success) {
           setTotalCount(data.total); // Save total count from backend
@@ -97,7 +96,7 @@ function BookGrid() {
           ))
         ) : (
           <div className="col-span-5 text-center py-8">
-            <p className="text-gray-500 text-lg">{data?.message || "No books found"}</p>
+            <p className="text-gray-500 text-lg">{"No books found"}</p>
           </div>
         )}
       </div>
