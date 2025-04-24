@@ -33,9 +33,5 @@ const language = sequelize.define('language',{
   
 });
 
-language.associate = function(models) {
-  // associations can be defined here
-  language.hasMany(models.book, {foreignKey: 'languageId'});
-}
 
 export default language;

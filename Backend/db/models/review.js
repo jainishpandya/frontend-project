@@ -46,6 +46,5 @@ const review = sequelize.define('review', {
 
 });
 
-review.belongsTo(clubuser, { foreignKey: 'userId' })
 
 export default review;

@@ -35,8 +35,7 @@ const bookController = {
           total: count,
           page: page,
           limit: limit,
-          books: [],
-          message: "No books found in this club. Start adding books to build your collection!"
+          books: []
         });
       }
 
@@ -77,7 +76,8 @@ const bookController = {
         clubId: clubId,
         userId: userId,
         categoryId: categoryId,
-        languageId: languageId
+        languageId: languageId,
+        IsAvailable: IsAvailable
       });
 
       if (newBook) {
