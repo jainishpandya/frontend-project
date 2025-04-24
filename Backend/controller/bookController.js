@@ -60,7 +60,7 @@ const bookController = {
   // Add more methods as needed
   AddBooks: async (req, res) => {
     try {
-      const { title, author, ISBN, clubId, userId, categoryId, languageId, } = req.body;
+      const { title, author, ISBN, clubId, userId, categoryId, languageId } = req.body;
 
       if (!title || !author || !ISBN || !clubId || !userId || !categoryId || !languageId) {
         return res.status(400).json({
@@ -77,7 +77,7 @@ const bookController = {
         userId: userId,
         categoryId: categoryId,
         languageId: languageId,
-        IsAvailable: IsAvailable
+        IsAvailable: true
       });
 
       if (newBook) {
