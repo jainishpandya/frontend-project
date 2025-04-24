@@ -102,7 +102,14 @@ const deleteCategory = async (req, res) => {
 
 const getCategories = async (req, res) => {
     try {
-        const categories = await category.findAll();
+        const categories = await category.findAndCountAll();
+
+        if (!categories) {
+            return res.status(404).json({
+                success: false,
+                message: "No categories found",
+            });
+        }
 
         res.status(200).json({
             success: true,
