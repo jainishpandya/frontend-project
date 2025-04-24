@@ -12,7 +12,6 @@ function BookGrid({ searchQuery }) {
   const [error, setError] = useState(null);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [message, setMessage] = useState("");
   const resultsPerPage = 10;
 
   const clubId = useSelector((state => state.club.id));
@@ -35,6 +34,7 @@ function BookGrid({ searchQuery }) {
       }
       );
       const data = response.data;
+      console.log("dekhle", data);
 
       if (data.success) {
         setTotalCount(data.total); 

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Op } from 'sequelize';
-
 import book from '../db/models/book.js';
-import clubuser from '../db/models/clubuser.js';
+import category from '../db/models/category.js';
+import language from '../db/models/language.js';
 
 const bookController = {
   bookDetails: async (req, res) => {
     try {
-      const page = parseInt(req.query.page) || 1; 
+      const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 10;
       const offset = (page - 1) * limit;
       const search = req.query.search || '';
@@ -33,6 +33,16 @@ const bookController = {
       const { count, rows: books } = await book.findAndCountAll({
         where: whereClause,
         attributes: ['id', 'title', 'ISBN', 'author', 'IsAvailable'],
+        include: [
+          {
+            model: category,
+            attributes: ['CategoryName'],
+          },
+          {
+            model: language,
+            attributes: ['LanguageName'],
+          }
+        ],
         order: [['title', 'ASC']],
         offset: offset,
         limit: limit
@@ -55,7 +65,6 @@ const bookController = {
         limit: limit,
         books: books
       };
-
       res.status(200).json(response);
     } catch (error) {
       console.error('Error fetching book details:', error);
