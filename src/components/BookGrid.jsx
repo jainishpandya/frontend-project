@@ -17,10 +17,6 @@ function BookGrid() {
 
   const clubId = useSelector((state => state.club.id));
 
-  function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
   async function fetchBooks() {
     try {
       const response = await axios.get(
@@ -33,8 +29,6 @@ function BookGrid() {
       );
       const data = response.data;
       console.log(data);
-
-      await sleep(10000); // Simulate a delay for loading state
 
       if (data.success) {
         setTotalCount(data.total); // Save total count from backend
@@ -51,12 +45,11 @@ function BookGrid() {
       } else {
         setError(data.message || "Failed to fetch books");
       }
+      setLoading(false);
     } catch (error) {
       setError("Error fetching books");
       console.error(error);
-    } finally {
-      setLoading(false);
-    }
+    } 
   }
 
 
@@ -96,7 +89,22 @@ function BookGrid() {
         {loading ? (
           // Skeleton loader when loading is true
           [...Array(resultsPerPage)].map((_, i) => (
-            <Skeleton key={i} height={410} className="w-full m-0 bg-gray-200 rounded animate-pulse"></Skeleton>
+            <div className="p-4 rounded-xl border border-br-gray-light shadow-sm w-full bg-white" style={{ height: "400px" }}>
+            {/* Image placeholder */}
+            <Skeleton variant="rectangular" height={210} className="w-full rounded-md" />
+      
+            {/* Title */}
+            <Skeleton variant="text" height={28} width="80%" className="mt-4" />
+      
+            {/* Author */}
+            <Skeleton variant="text" height={20} width="60%" />
+      
+            {/* Rating */}
+            <Skeleton variant="text" height={20} width="40%" />
+      
+            {/* Button */}
+            <Skeleton variant="rectangular" height={36} className="mt-4 rounded-md w-full" />
+          </div>
           ))
         ) : books.length > 0 ? (
           books.map((book) => (
