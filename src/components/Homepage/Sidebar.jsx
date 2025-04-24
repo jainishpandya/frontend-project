@@ -8,10 +8,7 @@ function Sidebar(props) {
 
   const { activeOption, setActiveOption } = props;
   
-
   const role = localStorage.getItem("Role");
-  console.log("this is role", role);
-
 
   const location = useLocation();
 

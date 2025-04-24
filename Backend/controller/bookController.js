@@ -76,8 +76,7 @@ const bookController = {
         clubId: clubId,
         userId: userId,
         categoryId: categoryId,
-        languageId: languageId,
-        IsAvailable: IsAvailable
+        languageId: languageId
       });
 
       if (newBook) {

@@ -8,13 +8,6 @@ function ClubSelection() {
   const navigate = useNavigate();
   const [club, setClub] = useState(0);
 
-  useEffect(() => {
-    console.log( "this is use effect on club selection page line 16", club);
-  }, [club]);
-
-
-  
-
   const handleSubmit = async () => {
     console.log("Selected Club ID:", club.clubId);
     if (club) {

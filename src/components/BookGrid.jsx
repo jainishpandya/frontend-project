@@ -28,10 +28,9 @@ function BookGrid() {
       }
       );
       const data = response.data;
-      console.log(data);
 
       if (data.success) {
-        setTotalCount(data.total); // Save total count from backend
+        setTotalCount(data.total); 
         setMessage(data.message || "");
         if (data.books?.length) {
           const booksWithCovers = await Promise.all(
@@ -80,12 +79,11 @@ function BookGrid() {
     }
   }
 
-
   if (error) return <div className="text-center py-8">Error: {error}</div>;
 
   return (
     <>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-4 px-4 py-8 w-full bg-white">
+      <div className="grid h-9/10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-4 px-4 py-8 w-full bg-white">
         {loading ? (
           // Skeleton loader when loading is true
           [...Array(resultsPerPage)].map((_, i) => (
