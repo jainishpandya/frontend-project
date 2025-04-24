@@ -8,7 +8,7 @@ function UserBookListRecord() {
         <div className='w-1/12'>ISBN</div>
         <div className='w-1/12'>Rating</div>
         <div className='w-1/12'>Language</div>
-        <div className='w-2/12'>Genre</div>
+        <div className='w-2/12'>Category</div>
         <div className='w-1/12'>Status</div>
         <div className='w-2/12 text-right'>Actions</div>
       </Box>
