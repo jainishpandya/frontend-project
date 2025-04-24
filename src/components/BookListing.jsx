@@ -5,7 +5,6 @@ import SearchBar from './SearchBar'
 import ActionBar from './ActionBar'
 import Filter from './Filters'
 import BookGrid from './BookGrid'
-import Pagination from './Pagination'
 
 const BookListing = () => {
   return (

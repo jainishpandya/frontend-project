@@ -4,7 +4,7 @@ import SortBy from './SortBy'
 import Button from './Button'
 import { FaSortAmountDown } from "react-icons/fa";
 
-const ActionBar = () => {
+const ActionBar = ({ searchQuery, setSearchQuery }) => {
     const [isSortByOpen, setIsSortByOpen] = useState(false);
 
     const handleSortClick = () => {
@@ -18,7 +18,7 @@ const ActionBar = () => {
     return (
         <div className='relative'>
             <div className='flex p-3 items-center space-x-3 bg-white rounded-t-[var(--br-radius)]'>
-                <SearchBar placeholder="Search by Title, Author"/>
+                <SearchBar setSearchQuery={setSearchQuery} />
                 <div className='relative h-full flex-none'> 
                     <Button 
                         className="bg-br-gray-dark text-lg text-black font-bold px-3 py-1 rounded-lg transition duration-200 w-28 h-full flex items-center justify-between space-x-1" 
