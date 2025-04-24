@@ -29,7 +29,7 @@ function BookGrid() {
         const data = response.data;
 
         if (data.success) {
-          setTotalCount(data.total); // Save total count from backend
+          setTotalCount(data.total); 
           setMessage(data.message || "");
           if (data.books?.length) {
             const booksWithCovers = await Promise.all(
@@ -96,7 +96,7 @@ function BookGrid() {
           ))
         ) : (
           <div className="col-span-5 text-center py-8">
-            <p className="text-gray-500 text-lg">{"No books found"}</p>
+            <p className="text-gray-500 text-lg">{"No books found in this club. Start adding books to build your collection!"}</p>
           </div>
         )}
       </div>

@@ -21,7 +21,7 @@ const bookController = {
 
       const { count, rows: books } = await book.findAndCountAll({
         where: {
-          clubID: clubId
+          clubId: clubId
         },
         attributes: ['id', 'title', 'ISBN', 'author', 'IsAvailable'],
         order: [['title', 'ASC']],
@@ -35,8 +35,7 @@ const bookController = {
           total: count,
           page: page,
           limit: limit,
-          books: [],
-          message: "No books found in this club. Start adding books to build your collection!"
+          books: []
         });
       }
 
@@ -61,20 +60,12 @@ const bookController = {
   // Add more methods as needed
   AddBooks: async (req, res) => {
     try {
-      const { title, author, ISBN, clubuserId, categoryId, languageId, } = req.body;
+      const { title, author, ISBN, clubId, userId, categoryId, languageId, IsAvailable } = req.body;
 
-      if (!title || !author || !ISBN || !clubuserId || !categoryId || !languageId) {
+      if (!title || !author || !ISBN || !clubId || !userId || !categoryId || !languageId || !IsAvailable) {
         return res.status(400).json({
           success: false,
           message: "All fields are required"
-        });
-      }
-
-      const findClubUser = await clubuser.findByPk(clubuserId);
-      if (!findClubUser) {
-        return res.status(404).json({
-          success: false,
-          message: "user not found"
         });
       }
 
@@ -82,9 +73,11 @@ const bookController = {
         title: title,
         author: author,
         ISBN: ISBN,
-        clubuserId: clubuserId,
+        clubId: clubId,
+        userId: userId,
         categoryId: categoryId,
-        languageId: languageId
+        languageId: languageId,
+        IsAvailable: IsAvailable
       });
 
       if (newBook) {
