@@ -26,7 +26,7 @@ const book = sequelize.define('book', {
     },
     clubId:{
         type: DataTypes.INTEGER,
-        references:{
+        references: {
             model: 'club',
             key: 'id'
         },
@@ -35,7 +35,7 @@ const book = sequelize.define('book', {
     },
     userId:{
         type: DataTypes.INTEGER,
-        references:{
+        references: {
             model: 'user',
             key: 'id'
         },
@@ -67,13 +67,13 @@ const book = sequelize.define('book', {
     deletedAt: {
         type: DataTypes.DATE
     },
-       
-    },
+
+},
     {
-        tableName:'book',
+        tableName: 'book',
         timestamps: true
     }
-    
+
 );
 
 

@@ -42,7 +42,7 @@ function Homepage() {
           config
         );
 
-        console.log(data);
+        // console.log(data);
         if (data.success) {
           console.log(data);
 

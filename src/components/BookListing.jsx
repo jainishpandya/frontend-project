@@ -14,10 +14,10 @@ const BookListing = () => {
       <div className='h-fit space-y-1 overflow-hidden'>
         <ActionBar />
         <div className='flex space-x-1'>
-        <Filter />
-        <div className='space-y-1 w-full'>
-        <BookGrid />
-        </div>
+          <Filter />
+          <div className='space-y-1 w-full'>
+            <BookGrid />
+          </div>
         </div>
       </div>
     </div>

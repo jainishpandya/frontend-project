@@ -33,9 +33,5 @@ const category = sequelize.define('category',{
   
 });
 
-category.associate = function(models) {
-  // associations can be defined here
-  category.hasMany(models.book, {foreignKey: 'categoryId'});
-};
 
 export default category;
