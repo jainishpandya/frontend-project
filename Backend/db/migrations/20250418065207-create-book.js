@@ -23,10 +23,19 @@ export default{
       IsAvailable: {
         type: Sequelize.BOOLEAN
       },
-      clubuserId: {
+      clubId: {
         type: Sequelize.INTEGER,
         reference: {
           model: 'clubuser',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        reference: {
+          model: 'user',
           key: 'id'
         },
         onUpdate: 'CASCADE',

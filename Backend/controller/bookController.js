@@ -73,16 +73,16 @@ const bookController = {
   // Add more methods as needed
   AddBooks: async (req, res) => {
       try {
-        const { title, author, ISBN, clubuserId, categoryId, languageId,  } = req.body;
+        const { title, author, ISBN, clubId, categoryId, languageId, userId  } = req.body;
 
-        if (!title || !author || !ISBN || !clubuserId || !categoryId || !languageId) {
+        if (!title || !author || !ISBN || !clubId || !categoryId || !languageId || !userId) {
           return res.status(400).json({
             success: false,
             message: "All fields are required"
           });
         }
 
-        const findClubUser = await clubuser.findByPk(clubuserId);
+        const findClubUser = await clubuser.findByPk(clubId);
         if (!findClubUser) {
           return res.status(404).json({
             success: false,
@@ -94,7 +94,8 @@ const bookController = {
           title: title,
           author: author,
           ISBN: ISBN,
-          clubuserId: clubuserId,
+          clubId: clubId,
+          userId: userId,
           categoryId: categoryId,
           languageId: languageId
         });

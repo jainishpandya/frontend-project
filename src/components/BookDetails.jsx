@@ -23,7 +23,7 @@ function BookDetails() {
     <Card sx={{}}>
       <CardMedia
         sx={{ height: 140 }}
-        image="/src/assets/images/Book_Banner.png"
+        image= {bookData.coverUrl} className="blur-2xl border-2 border-br-gray-light"
         title={bookData.title}
       />
       <CardContent> 
