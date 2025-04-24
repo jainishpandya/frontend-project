@@ -14,6 +14,7 @@ import ReviewList from "./components/Review/ReviewList";
 import ClubList from "./components/Clubs/ClubList";
 import SetPassword from "./components/Authentication/SetPassword";
 import BookDetails from "./components/BookDetails";
+import AddBookModal from "./components/Mybooks/AddBookModal";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="books/book-details" element={<BookDetails />} />
 
           <Route path="mybooks" element={<MyBooks />} />
+          <Route path="mybooks/add-book" element={<AddBookModal/>} />
 
           <Route path="members" element={<MemberList />} />
           <Route path="transactions" element={<TransactionList />} />

@@ -1,14 +1,18 @@
 import { Box } from '@mui/material'
 import { PlusIcon, SquarePlus } from 'lucide-react'
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function UserBookList() {
+
+  const navigate = useNavigate();
   
   return (
     <Box  className='bg-br-white rounded-xl p-0 w-full'>
       <Box className='flex flex-row rounded-xl py-4 px-6 items-center'>
         <div className='text-lg font-bold'>My Books</div>
-        <button className='bg-br-blue-regular text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center ml-auto font-bold'>
+        <button className='bg-br-blue-regular text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center ml-auto font-bold'
+          onClick={() => navigate('/home/mybooks/add-book')}>
         <SquarePlus className='mr-2' />
           Add Book
         </button>
