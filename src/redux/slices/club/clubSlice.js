@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    id: -1,
+    id: null,
     club_name: '',
     club_contact_email: '',
     club_thumbnail_url: '',
@@ -26,7 +26,7 @@ export const clubSlice = createSlice({
                 state.isClubin = true;
         },
         clubout: (state) => {
-                state.id = -1,
+                state.id = null,
                 state.club_name = '',
                 state.club_contact_email = '',
                 state.club_thumbnail_url = '',

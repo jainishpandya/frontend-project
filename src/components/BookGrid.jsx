@@ -19,6 +19,12 @@ function BookGrid({ searchQuery }) {
 
   async function fetchBooks() {
     try {
+
+      if (!clubId) {
+        setLoading(false);
+        return;
+      }
+
       const response = await axios.get(
         `http://localhost:3000/api/v1/book/bookDetails/${clubId}`, {
         params: {
@@ -82,12 +88,12 @@ function BookGrid({ searchQuery }) {
   if (error) return <div className="text-center py-8">Error: {error}</div>;
 
   return (
-    <>
-      <div className="grid h-9/10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-4 px-4 py-8 w-full bg-white">
+    <div className="w-full h-screen bg-br-blue-light flex flex-col space-y-1">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-4 px-4 py-8 w-full flex-grow bg-white">
         {loading ? (
           // Skeleton loader when loading is true
           [...Array(resultsPerPage)].map((_, i) => (
-            <div className="p-4 rounded-xl border border-br-gray-light shadow-sm w-full bg-white" style={{ height: "400px" }}>
+            <div className="p-4 rounded-xl border border-br-gray-light shadow-sm w-full bg-white" style={{ minHeight: "410px" }}>
             {/* Image placeholder */}
             <Skeleton variant="rectangular" height={210} className="w-full rounded-md" />
       
@@ -127,7 +133,7 @@ function BookGrid({ searchQuery }) {
         totalResults={totalCount}
         onPageChange={handlePageChange}
       />
-    </>
+    </div>
 
   );
 }

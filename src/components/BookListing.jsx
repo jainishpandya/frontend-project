@@ -18,11 +18,11 @@ const BookListing = () => {
       <ScreenHeading pageTitle="Book Listing" />
       <div className='h-fit space-y-1 overflow-hidden'>
         <ActionBar onSearch={handleSearch}/>
-        <div className='flex space-x-1'>
-          <Filter />
-          <div className='space-y-1 w-full'>
-            <BookGrid searchQuery={searchQuery}/>
-          </div>
+        <div className='flex space-x-1 h-full'>
+        <Filter />
+        <div className='space-y-1 w-full h-full'>
+        <BookGrid searchQuery={searchQuery}/>
+        </div>
         </div>
       </div>
     </div>

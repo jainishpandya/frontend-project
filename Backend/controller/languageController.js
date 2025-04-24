@@ -103,7 +103,7 @@ const deleteLanguage = async (req, res) => {
 
 const getAllLanguage = async (req, res) => {
     try {
-        const languages = await language.findAll();
+        const languages = await language.findAndCountAll();
 
         if (!languages) {
             return res.status(404).json({
@@ -114,7 +114,7 @@ const getAllLanguage = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            languages: languages,
+            languages,
         });
     } catch (error) {
         console.error("Error fetching languages:", error);
