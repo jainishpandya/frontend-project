@@ -34,10 +34,9 @@ function BookGrid() {
       }
       );
       const data = response.data;
-      console.log(data);
 
       if (data.success) {
-        setTotalCount(data.total); // Save total count from backend
+        setTotalCount(data.total); 
         setMessage(data.message || "");
         if (data.books?.length) {
           const booksWithCovers = await Promise.all(
@@ -85,7 +84,6 @@ function BookGrid() {
       return null;
     }
   }
-
 
   if (error) return <div className="text-center py-8">Error: {error}</div>;
 
