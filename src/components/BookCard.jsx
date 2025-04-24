@@ -4,7 +4,7 @@ import Button from "./Button";
 import { FaStar } from "react-icons/fa";
 import BookDetails from "./BookDetails";
 
-const BookCard = ({ title, author, coverUrl, isAvailable, rating }) => {
+const BookCard = ({ title, author, coverUrl, isAvailable, rating, category, language }) => {
   const navigate = useNavigate();
 
   return (
@@ -28,8 +28,8 @@ const BookCard = ({ title, author, coverUrl, isAvailable, rating }) => {
         </div>
 
         <div className="flex flex-row 2xl:text-sm xl:text-xs lg:text-xs items-start space-x-2">
-          <div className="w-fit bg-br-blue-light p-1 rounded-md text-blue-400 font-semibold">Category</div>
-          <div className="w-fit bg-br-blue-light p-1 rounded-md text-blue-400 font-semibold">Language</div>
+          <div className="w-fit bg-br-blue-light p-1 rounded-md text-blue-400 font-semibold">{category}</div>
+          <div className="w-fit bg-br-blue-light p-1 rounded-md text-blue-400 font-semibold">{language}</div>
         </div>
 
         <div className="space-y-2">

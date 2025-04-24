@@ -116,6 +116,8 @@ function BookGrid({ searchQuery }) {
               key={book.id}
               title={book.title}
               author={book.author}
+              category={book.category.CategoryName}
+              language={book.language.LanguageName}
               coverUrl={book.coverUrl}
               isAvailable={book.IsAvailable}
               rating={4.5}
