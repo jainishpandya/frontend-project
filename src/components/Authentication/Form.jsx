@@ -48,7 +48,6 @@ function Form(props) {
         }
 
         try {
-            console.log("function is called");
 
             axios.defaults.baseURL = await "http://localhost:3000/";
             const params = JSON.stringify({
@@ -69,7 +68,7 @@ function Form(props) {
                 console.log(data);
             }
         } catch (error) {
-            console.log("error" + error);
+            console.log("error:   " + error);
         }
     }
 
@@ -91,7 +90,7 @@ function Form(props) {
                 </div>
                 <div className='mt-4'>
                     <label className='text-md font-medium text-br-blue-medium'>Password</label>
-                    <div className='flex bg-white rounded-xl'>
+                    <div className='flex bg-white rounded-xl '>
                         <input
                             className='w-full bg-white text-br-blue-medium rounded-xl px-4 py-3 mt-1'
                             placeholder='Password'

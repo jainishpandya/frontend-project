@@ -17,7 +17,6 @@ const BookListing = () => {
         <Filter />
         <div className='space-y-1 w-full'>
         <BookGrid />
-        <Pagination />
         </div>
         </div>
       </div>

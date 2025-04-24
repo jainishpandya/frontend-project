@@ -7,57 +7,45 @@ import clubuser from '../db/models/clubuser.js';
 const bookController = {
   bookDetails: async (req, res) => {
     try {
-      const page = parseInt(req.query.page) - 1 || 0;
+      const page = parseInt(req.query.page) || 1; 
       const limit = parseInt(req.query.limit) || 10;
-      const search = req.query.search || "";
-      const { clubuserId } = req.params;
+      const offset = (page - 1) * limit;
+      const clubId = req.params.clubId;
 
-      // Check if ISBN is provided
-      if (!clubuserId) {
+      if (!clubId) {
         return res.status(400).json({
           success: false,
-          message: "User ID and Club Details is required"
+          message: "Club ID is required"
         });
       }
 
-      // Finding book by ISBN
-      const bookByISBN = await book.findOne({
+      const { count, rows: books } = await book.findAndCountAll({
         where: {
-          clubuserId: clubuserId
-        },  
-        attributes: ['title', 'ISBN', 'author'],
-
-      });
-
-      if (!bookByISBN) {
-        return res.status(404).json({
-          success: false,
-          message: "Book not found"
-        });
-      }
-
-      // Finding all books with search criteria
-      const { count, rows: booklist } = await book.findAndCountAll({
-        where: {
-          [Op.or]: [
-            { title: { [Op.like]: `%${search}%` } },
-            { author: { [Op.like]: `%${search}%` } },
-            
-          ]
+          clubID: clubId
         },
-        attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+        attributes: ['id', 'title', 'ISBN', 'author', 'IsAvailable'],
         order: [['title', 'ASC']],
-        offset: page * limit,
+        offset: offset,
         limit: limit
       });
+
+      if (!books.length) {
+        return res.status(200).json({
+          success: true,
+          total: count,
+          page: page,
+          limit: limit,
+          books: [],
+          message: "No books found in this club. Start adding books to build your collection!"
+        });
+      }
 
       const response = {
         success: true,
         total: count,
-        page: page + 1,
+        page: page,
         limit: limit,
-        bookDetails: bookByISBN,
-        books: booklist
+        books: books
       };
 
       res.status(200).json(response);
@@ -72,49 +60,48 @@ const bookController = {
 
   // Add more methods as needed
   AddBooks: async (req, res) => {
-      try {
-        const { title, author, ISBN, clubId, categoryId, languageId, userId  } = req.body;
+    try {
+      const { title, author, ISBN, clubuserId, categoryId, languageId, } = req.body;
 
-        if (!title || !author || !ISBN || !clubId || !categoryId || !languageId || !userId) {
-          return res.status(400).json({
-            success: false,
-            message: "All fields are required"
-          });
-        }
-
-        const findClubUser = await clubuser.findByPk(clubId);
-        if (!findClubUser) {
-          return res.status(404).json({
-            success: false,
-            message: "user not found"
-          });
-        }
-
-        const newBook = await book.create({
-          title: title,
-          author: author,
-          ISBN: ISBN,
-          clubId: clubId,
-          userId: userId,
-          categoryId: categoryId,
-          languageId: languageId
-        });
-
-        if (newBook) {
-          return res.status(201).json({
-            success: true,
-            message: "Book added successfully",
-            book: newBook
-          });
-        }
-
-      } catch (error) {
-        console.error('Error adding book:', error);
-        res.status(500).json({
+      if (!title || !author || !ISBN || !clubuserId || !categoryId || !languageId) {
+        return res.status(400).json({
           success: false,
-          message: "Internal Server Error"
+          message: "All fields are required"
         });
       }
+
+      const findClubUser = await clubuser.findByPk(clubuserId);
+      if (!findClubUser) {
+        return res.status(404).json({
+          success: false,
+          message: "user not found"
+        });
+      }
+
+      const newBook = await book.create({
+        title: title,
+        author: author,
+        ISBN: ISBN,
+        clubuserId: clubuserId,
+        categoryId: categoryId,
+        languageId: languageId
+      });
+
+      if (newBook) {
+        return res.status(201).json({
+          success: true,
+          message: "Book added successfully",
+          book: newBook
+        });
+      }
+
+    } catch (error) {
+      console.error('Error adding book:', error);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error"
+      });
+    }
   }
 };
 

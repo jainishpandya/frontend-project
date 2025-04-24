@@ -24,18 +24,18 @@ const book = sequelize.define('book', {
     IsAvailable: {
         type: DataTypes.BOOLEAN
     },
-    clubId: {
+    clubID:{
         type: DataTypes.INTEGER,
-        REFERENCES: {
+        references:{
             model: 'club',
             key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     },
-    userId: {
+    userID:{
         type: DataTypes.INTEGER,
-        REFERENCES: {
+        references:{
             model: 'user',
             key: 'id'
         },
@@ -77,12 +77,13 @@ const book = sequelize.define('book', {
 );
 
 
-// book.associate = function (models) {
-//     // associations can be defined here
-//     book.hasMany(models.review, { foreignKey: 'bookId' });
-//     book.belongsTo(models.clubuser, { foreignKey: 'clubuserId' });
-//     book.belongsTo(models.category, { foreignKey: 'categoryId' });
-//     book.belongsTo(models.language, { foreignKey: 'languageId' });
-// }
+book.associate = function (models) {
+    // associations can be defined here
+    book.hasMany(models.review, { foreignKey: 'bookId' });
+    book.belongsTo(models.user, { foreignKey: 'userID' });
+    book.belongsTo(models.club, { foreignKey: 'clubID' });
+    book.belongsTo(models.category, { foreignKey: 'categoryId' });
+    book.belongsTo(models.language, { foreignKey: 'languageId' });
+}
 
 export default book;
