@@ -24,7 +24,7 @@ const book = sequelize.define('book', {
     IsAvailable: {
         type: DataTypes.BOOLEAN
     },
-    clubId: {
+    clubId:{
         type: DataTypes.INTEGER,
         references: {
             model: 'club',
@@ -33,7 +33,7 @@ const book = sequelize.define('book', {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     },
-    userId: {
+    userId:{
         type: DataTypes.INTEGER,
         references: {
             model: 'user',
@@ -75,5 +75,6 @@ const book = sequelize.define('book', {
     }
 
 );
+
 
 export default book;

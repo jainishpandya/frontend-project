@@ -71,7 +71,8 @@ const port = process.env.PORT || 3000;
 
 user.hasMany(clubuser);
 club.hasMany(clubuser);
-club.hasMany(book);
 user.hasMany(book);
+club.hasMany(book);
+// clubuser.hasMany(book);
 language.hasMany(book);
 category.hasMany(book);

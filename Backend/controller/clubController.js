@@ -18,7 +18,7 @@ const createClub = async (req, res) => {
             return res.status(409).json({ message: "club with this name already exists", success: false })
         }
         
-        const upload = await cloudinary.uploadFile(req.file.path, "bookcircle/club", findClub.id);
+        const upload = await cloudinary.uploadFile(req.file.path, "bookcircle/club", club_name);
         const newClub = await club.create({
             club_name: club_name,
             club_contact_email: club_contact_email,

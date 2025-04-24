@@ -15,12 +15,13 @@ const bookController = {
       if (!clubId) {
         return res.status(400).json({
           success: false,
-          message: "Club ID is required"
+          message: "Club id is required"
         });
       }
 
       const { count, rows: books } = await book.findAndCountAll({
         where: {
+          clubId: clubId
           clubId: clubId
         },
         attributes: ['id', 'title', 'ISBN', 'author', 'IsAvailable'],
@@ -60,9 +61,9 @@ const bookController = {
   // Add more methods as needed
   AddBooks: async (req, res) => {
     try {
-      const { title, author, ISBN, clubId, userId, categoryId, languageId, IsAvailable } = req.body;
+      const { title, author, ISBN, clubId, userId, categoryId, languageId, } = req.body;
 
-      if (!title || !author || !ISBN || !clubId || !userId || !categoryId || !languageId || !IsAvailable) {
+      if (!title || !author || !ISBN || !clubId || !userId || !categoryId || !languageId) {
         return res.status(400).json({
           success: false,
           message: "All fields are required"
