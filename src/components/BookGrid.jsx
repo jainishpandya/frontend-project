@@ -6,13 +6,12 @@ import { useSelector } from "react-redux";
 import { Skeleton } from "@mui/material";
 import { Box } from "lucide-react";
 
-function BookGrid() {
+function BookGrid({ searchQuery }) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [message, setMessage] = useState("");
   const resultsPerPage = 10;
 
   const clubId = useSelector((state => state.club.id));
@@ -30,14 +29,15 @@ function BookGrid() {
         params: {
           page: currentPage,
           limit: resultsPerPage,
+          search: searchQuery,
         }
       }
       );
       const data = response.data;
+      console.log("dekhle", data);
 
       if (data.success) {
         setTotalCount(data.total); 
-        setMessage(data.message || "");
         if (data.books?.length) {
           const booksWithCovers = await Promise.all(
             data.books.map(async (book) => {
@@ -61,7 +61,7 @@ function BookGrid() {
   useEffect(() => {
     fetchBooks();
     setLoading(true); // Set loading state
-  }, [currentPage, clubId]);
+  }, [currentPage, clubId, searchQuery]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -89,7 +89,7 @@ function BookGrid() {
 
   return (
     <div className="w-full h-screen bg-br-blue-light flex flex-col space-y-1">
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-4 px-4 py-8 w-full flex-grow bg-white">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-4 base:py-10 px-4 py-8 w-full flex-grow bg-white">
         {loading ? (
           // Skeleton loader when loading is true
           [...Array(resultsPerPage)].map((_, i) => (
@@ -116,6 +116,8 @@ function BookGrid() {
               key={book.id}
               title={book.title}
               author={book.author}
+              category={book.category.CategoryName}
+              language={book.language.LanguageName}
               coverUrl={book.coverUrl}
               isAvailable={book.IsAvailable}
               rating={4.5}

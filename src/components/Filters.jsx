@@ -83,8 +83,6 @@ const Filters = () => {
     const getcategory = async () => {
         try {
             
-            await new Promise((resolve) => setTimeout(resolve, 10000));
-
             axios.defaults.baseURL = "http://localhost:3000/";
             
             const { data } = await axios.get('/api/v1/category/getall');
@@ -104,8 +102,6 @@ const Filters = () => {
 
     const getLanguage = async () => {
         try {
-            
-            await new Promise((resolve) => setTimeout(resolve, 10000));
 
             axios.defaults.baseURL = "http://localhost:3000/";
             

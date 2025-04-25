@@ -4,12 +4,12 @@ import Button from "./Button";
 import { FaStar } from "react-icons/fa";
 import BookDetails from "./BookDetails";
 
-const BookCard = ({ title, author, coverUrl, isAvailable, rating }) => {
+const BookCard = ({ title, author, coverUrl, isAvailable, rating, category, language }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white rounded-[var(--br-radius)] w-full p-4 hover:shadow-lg transition-shadow duration-300 border border-br-gray-light hover:cursor-pointer flex flex-col h-fit">
-      <div className="w-full h-[218px] mb-2 flex items-center justify-center flex-shrink-0">
+    <div className="bg-white rounded-[var(--br-radius)] w-full p-4 hover:shadow-lg transition-shadow duration-300 border border-br-gray-light hover:cursor-pointer flex flex-col ">
+      <div className="w-full h-[204px] 2xl:mb-0 xl:mb-4 lg:mb-4 md:mb-4  flex items-center justify-center flex-shrink-0">
         <img
           src={coverUrl || "https://via.placeholder.com/150"}
           alt={`${title} cover`}
@@ -17,14 +17,19 @@ const BookCard = ({ title, author, coverUrl, isAvailable, rating }) => {
         />
       </div>
 
-      <div className="flex flex-col justify-between h-[150px]">
+      <div className="flex flex-col justify-between h-fit flex-grow">
         <div>
-          <h1 className="font-bold text-lg h-[50px] overflow-hidden mb-2">
+          <h1 className="font-bold 2xl:text-lg xl:text-sm lg:text-sm  overflow-hidden 2xl:mb-1 mb-2">
             {title}
           </h1>
-          <p className="text-gray-600 text-sm h-[20px] overflow-hidden">
+          <p className="text-gray-600 2xl:text-sm xl:text-xs lg:text-xs overflow-hidden 2xl:mb-1 mb-2">
             {author}
           </p>
+        </div>
+
+        <div className="flex flex-row 2xl:text-sm xl:text-xs lg:text-xs items-start space-x-2">
+          <div className="w-fit bg-gray-200 py-1 px-2 rounded-md text-black font-semibold">{category}</div>
+          <div className="w-fit bg-gray-200 py-1 px-2 rounded-md text-black font-semibold">{language}</div>
         </div>
 
         <div className="space-y-2">
@@ -43,7 +48,7 @@ const BookCard = ({ title, author, coverUrl, isAvailable, rating }) => {
           </div>
 
           <Button
-            className={`w-full bg-br-blue-medium hover:bg-br-blue-dark 
+            className={`w-full bg-br-blue-medium 2xl:text-base xl:text-sm lg:text-sm hover:bg-br-blue-dark 
               text-white py-2 rounded-lg transition-colors duration-200`}
             disabled={!isAvailable}
             onClick={() => navigate("/home/books/book-details",{
