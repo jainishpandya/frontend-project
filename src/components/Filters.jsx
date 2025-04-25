@@ -8,7 +8,8 @@ import { CircularProgress, Skeleton } from '@mui/material';
 const Status_Options = [
     { id: 'all', label: 'All' },
     { id: 'borrowed', label: 'Borrowed' },
-    { id: 'available', label: 'Available' }
+    { id: 'available', label: 'Available' },
+    
 ];
 const Categories_Options = [
     { id: 'action_adventure', label: 'Action & Adventure' },

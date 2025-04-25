@@ -23,7 +23,7 @@ const bookController = {
         where: {
           clubId: clubId
         },
-        attributes: ['id', 'title', 'ISBN', 'author', 'IsAvailable'],
+        attributes: ['id', 'title', 'ISBN', 'author', 'IsAvailable','categoryId', 'languageId'],
         order: [['title', 'ASC']],
         offset: offset,
         limit: limit
