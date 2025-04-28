@@ -34,6 +34,14 @@ const transaction = sequelize.define('transaction',{
         },
         onUpdate: 'CASCADE'
     },
+    ClubId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'club',
+            key: 'id'
+        },
+        onUpdate: 'CASCADE'
+    },
     status: {
         type: DataTypes.ENUM('1', '2', '3', '4', '5', '6'),
         allowNull: false,
