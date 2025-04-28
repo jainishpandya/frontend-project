@@ -19,6 +19,7 @@ import book from './db/models/book.js';
 import language from './db/models/language.js';
 import category from './db/models/category.js';
 import transaction from './db/models/transaction.js';
+import location from './db/models/location.js';
 
 initialiseAssociations();
 

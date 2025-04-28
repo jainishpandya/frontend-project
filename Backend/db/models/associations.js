@@ -5,7 +5,7 @@ import book from './book.js';
 import language from './language.js';
 import category from './category.js';
 import transaction from './transaction.js';
-
+import location from './location.js';
 export function initialiseAssociations() {
 
     // user.hasMany(clubuser, { foreignKey: 'userId' });
