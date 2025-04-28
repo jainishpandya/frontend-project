@@ -10,6 +10,7 @@ import userRouter from "./route/userRoute.js";
 import bookRouter from "./route/bookRoute.js";
 import categoryRouter from "./route/categoryRoute.js";
 import languageRouter from "./route/languageRoute.js";
+import transactionRouter from "./route/transactionRoute.js";
 
 import user from './db/models/user.js';
 import club from './db/models/club.js';
@@ -45,6 +46,7 @@ app.use('/api/v1/user', userRouter)
 app.use('/api/v1/book', bookRouter)
 app.use('/api/v1/category', categoryRouter)
 app.use('/api/v1/language', languageRouter)
+app.use('/api/v1/transaction', transactionRouter)
 
 // Error handler
 
