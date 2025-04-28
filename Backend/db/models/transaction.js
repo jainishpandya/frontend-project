@@ -1,7 +1,6 @@
 'use strict';
 import {Model, Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../../config/database.js';
-import { pick } from 'lodash';
 
 const transaction = sequelize.define('transaction',{
     id: {
@@ -30,6 +29,14 @@ const transaction = sequelize.define('transaction',{
         type: DataTypes.INTEGER,
         references: {
             model: 'user',
+            key: 'id'
+        },
+        onUpdate: 'CASCADE'
+    },
+    ClubId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'club',
             key: 'id'
         },
         onUpdate: 'CASCADE'
