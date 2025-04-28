@@ -65,7 +65,7 @@ const Languages_Options = [
     { id: 'assamese', label: 'Assamese' }
 ];
 
-const Filters = () => {
+const Filters = ({onFilterChange}) => {
     const [selectedStatus, setSelectedStatus] = useState('all');
     const [selectedCategories, setSelectedCategories] = useState({});
     const [selectedLanguages, setSelectedLanguages] = useState({});
@@ -145,6 +145,20 @@ const Filters = () => {
             [id]: isChecked
         }));
     };
+
+    useEffect(() => {
+        // Whenever filters change, notify parent
+        const activeFilters = {
+            status: selectedStatus,
+            categories: Object.entries(selectedCategories)
+                .filter(([_, isChecked]) => isChecked)
+                .map(([id, _]) => parseInt(id)),
+            languages: Object.entries(selectedLanguages)
+                .filter(([_, isChecked]) => isChecked)
+                .map(([id, _]) => parseInt(id))
+        };
+        onFilterChange(activeFilters);
+    }, [selectedStatus, selectedCategories, selectedLanguages]);
 
     return (
         <div className='h-screen min-h-[1005px] w-1/5 flex flex-col bg-white p-5 rounded-bl-[var(--br-radius)]'>

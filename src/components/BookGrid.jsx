@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Skeleton } from "@mui/material";
 import { Box } from "lucide-react";
 
-function BookGrid({ searchQuery }) {
+function BookGrid({ searchQuery, filters }) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,6 +30,9 @@ function BookGrid({ searchQuery }) {
           page: currentPage,
           limit: resultsPerPage,
           search: searchQuery,
+          status: filters.status,
+          category: JSON.stringify(filters.category),
+          languages: JSON.stringify(filters.languages),
         }
       }
       );
@@ -77,7 +80,7 @@ function BookGrid({ searchQuery }) {
   useEffect(() => {
     fetchBooks();
     setLoading(true); // Set loading state
-  }, [currentPage, clubId, searchQuery]);
+  }, [currentPage, clubId, searchQuery, filters]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);

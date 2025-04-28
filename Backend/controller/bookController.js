@@ -12,12 +12,15 @@ const bookController = {
       const limit = parseInt(req.query.limit) || 10;
       const offset = (page - 1) * limit;
       const search = req.query.search || '';
+      const status = req.query.status || 'all';
+      const category = req.query.category ? JSON.parse(req.query.categories) : [];
+      const languages = req.query.languages ? JSON.parse(req.query.languages) : [];
       const clubId = req.params.clubId;
-      const token = req.body.token || req.query.token;
-      console.log("Token:", token);
+      // const token = req.body.token || req.query.token;
+      // console.log("Token:", token);
        // Assuming token is passed in the body or query
-      const userId = jwt.getUserIdFromToken(req.body.token); // Assuming you have a function to get userId from token
-      console.log("User ID:", userId);
+      // const userId = jwt.getUserIdFromToken(req.body.token); // Assuming you have a function to get userId from token
+      // console.log("User ID:", userId);
       
       if (!clubId) {
         return res.status(400).json({
@@ -33,7 +36,20 @@ const bookController = {
             { title: { [Op.iLike]: `%${search}%` } },
             { author: { [Op.iLike]: `%${search}%` } }
           ]
-        })
+        }),
+        ...(status !== 'all' && {
+          IsAvailable: status === 'available'
+        }),
+        ...(category.length > 0 && {
+          categoryId: {
+            [Op.in]: category
+          }
+        }),
+        ...(languages.length > 0 && {
+          languageId: {
+            [Op.in]: languages
+          }
+        }),
       };
 
       const { count, rows: books } = await book.findAndCountAll({
@@ -54,7 +70,6 @@ const bookController = {
         limit: limit
       });
 
-      const message = search.trim() != '' && count === 0 ? "No books found matching your search" : "No books found in this club";
       if (!books.length) {
         return res.status(200).json({
           success: true,
@@ -62,7 +77,6 @@ const bookController = {
           page: page,
           limit: limit,
           books: [],
-          // message: message
         });
       }
 
@@ -72,7 +86,6 @@ const bookController = {
         page: page,
         limit: limit,
         books: books,
-        // message: ''
       };
       res.status(200).json(response);
     } catch (error) {
