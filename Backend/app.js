@@ -18,6 +18,7 @@ import { initialiseAssociations } from './db/models/associations.js';
 import book from './db/models/book.js';
 import language from './db/models/language.js';
 import category from './db/models/category.js';
+import transaction from './db/models/transaction.js';
 
 initialiseAssociations();
 
@@ -70,8 +71,11 @@ const port = process.env.PORT || 3000;
 // Database Relation Area (!!!!!!!!!DO NOT CHANGE!!!!!!!!)
 
 user.hasMany(clubuser);
+user.hasMany(transaction);
 club.hasMany(clubuser);
+club.hasMany(transaction);
 user.hasMany(book);
 club.hasMany(book);
 language.hasMany(book);
 category.hasMany(book);
+book.hasMany(transaction);
