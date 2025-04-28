@@ -37,7 +37,22 @@ function BookGrid({ searchQuery }) {
       console.log("dekhle", data);
 
       if (data.success) {
-        setTotalCount(data.total); 
+        setTotalCount(data.total);
+
+         // If search is active and no results found
+        if(searchQuery && data.total === 0) {
+          setBooks([]);
+          setError("No books found matching your search");
+          return;
+        }
+
+        // If no books in club
+        if(data.total === 0) {
+          setBooks([]);
+          setError("No books found in this club. Start adding books to build your collection!");
+          return;
+        }
+
         if (data.books?.length) {
           const booksWithCovers = await Promise.all(
             data.books.map(async (book) => {
@@ -46,6 +61,7 @@ function BookGrid({ searchQuery }) {
             })
           );
           setBooks(booksWithCovers);
+          setError(null);
         }
       } else {
         setError(data.message || "Failed to fetch books");
@@ -110,7 +126,16 @@ function BookGrid({ searchQuery }) {
             <Skeleton variant="rectangular" height={36} className="mt-4 rounded-md w-full" />
           </div>
           ))
-        ) : books.length > 0 ? (
+        ) : error ? (
+          <div className="col-span-5 text-center py-8">
+            <p className="text-gray-500 text-lg">{error}</p>
+            {totalCount === 0 && !searchQuery && (
+              <button className="mt-4 px-6 py-2 bg-br-blue text-white rounded-lg hover:bg-br-blue-dark">
+                Add Your First Book
+              </button>
+            )}
+          </div>
+        ): (
           books.map((book) => (
             <BookCard
               key={book.id}
@@ -123,18 +148,16 @@ function BookGrid({ searchQuery }) {
               rating={4.5}
             />
           ))
-        ) : (
-          <div className="col-span-5 text-center py-8">
-            <p className="text-gray-500 text-lg">{"No books found in this club. Start adding books to build your collection!"}</p>
-          </div>
         )}
       </div>
 
+      {totalCount > 0 && (
       <Pagination
         currentPage={currentPage}
         totalResults={totalCount}
         onPageChange={handlePageChange}
       />
+    )}
     </div>
 
   );

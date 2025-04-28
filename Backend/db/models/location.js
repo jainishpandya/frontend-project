@@ -2,25 +2,18 @@
 
 import { DataTypes } from 'sequelize';
 import sequelize from '../../config/database.js';
-import book from './book.js';
 
-const clubuser = sequelize.define('clubuser', {
+const location = sequelize.define('location', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  userId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: 'user',
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
+  location: {
+    type: DataTypes.STRING
   },
-  clubId: {
+  clubId:{
     type: DataTypes.INTEGER,
     references: {
       model: 'club',
@@ -29,10 +22,6 @@ const clubuser = sequelize.define('clubuser', {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
   },
-  role: {
-    type: DataTypes.ENUM('0','1','2'),
-    allowNull: false,
-  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -40,14 +29,13 @@ const clubuser = sequelize.define('clubuser', {
   updatedAt: {
     type: DataTypes.DATE,
     allowNull: false,
-  },
-  
+  }
 }, {
   freezeTableName: true,
-  modelName: 'clubuser',
+  modelName: 'location',
   timestamps: true,
 });
 
 
 
-export default clubuser;
+export default location;

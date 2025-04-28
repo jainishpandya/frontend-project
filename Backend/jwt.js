@@ -1,4 +1,7 @@
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import process from "process";
+dotenv.config();
 
 const jwtAuthMiddleware = ( req, res, next ) => {
 
@@ -16,7 +19,7 @@ const jwtAuthMiddleware = ( req, res, next ) => {
         next();
 
     } catch (error) {
-        console.error("JWT Error", err);
+        console.error("JWT Error", error);
         res.status(401).json({error: "Invalid token"});
     }
 }
