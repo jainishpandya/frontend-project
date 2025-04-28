@@ -88,7 +88,7 @@ function BookGrid({ searchQuery }) {
   if (error) return <div className="text-center py-8">Error: {error}</div>;
 
   return (
-    <div className="w-full h-screen bg-br-blue-light flex flex-col space-y-1">
+    <div className="w-full  bg-br-blue-light flex flex-col space-y-1">
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-4 base:py-10 px-4 py-8 w-full flex-grow bg-white">
         {loading ? (
           // Skeleton loader when loading is true

@@ -22,7 +22,7 @@ const bookController = {
 
       const whereClause = {
         clubId: clubId,
-        ...(search && {
+        ...(search.trim() != '' && {
           [Op.or]: [
             { title: { [Op.iLike]: `%${search}%` } },
             { author: { [Op.iLike]: `%${search}%` } }
@@ -48,6 +48,7 @@ const bookController = {
         limit: limit
       });
 
+      const message = search.trim() != '' && count === 0 ? "No books found" : "Books fetched successfully";
       if (!books.length) {
         return res.status(200).json({
           success: true,
