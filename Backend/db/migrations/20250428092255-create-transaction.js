@@ -34,6 +34,14 @@ export default {
         },
         onUpdate: 'CASCADE'
       },
+      ClubId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'club',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE'
+      },
       status: {
         type: Sequelize.ENUM('1', '2', '3', '4', '5', '6'),
         allowNull: false,
