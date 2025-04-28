@@ -13,19 +13,10 @@ const bookController = {
       const offset = (page - 1) * limit;
       const search = req.query.search || '';
       const clubId = req.params.clubId;
- // Default to null if not authenticated
-      const token = req.body.token || req.query.token|| req.headers['authorization']?.split(' ')[1];
-      //  const userId = jwt.getUserIdFromToken(token); // Extract token from headers or body/query
+
+      const token = req.body.token || req.query.token || req.headers['authorization']?.split(' ')[1];
       console.log("Token:", token);
-      // if (token) {
-      //   try {
-      //     const userId = jwt.getUserIdFromToken(token);
-      //   } catch (error) {
-      //     // Silently handle token errors - the user is just not authenticated
-      //     console.log("Token error:", error.message);
-      //   }
-      // }
-      
+
       if (!clubId) {
         return res.status(400).json({
           success: false,
@@ -35,19 +26,17 @@ const bookController = {
 
       const whereClause = {
         clubId: clubId,
-        ...(search.trim() != '' && {
-        // userId: userId,
-        ...(search && {
+        ...(search.trim() !== '' && {
           [Op.or]: [
             { title: { [Op.iLike]: `%${search}%` } },
             { author: { [Op.iLike]: `%${search}%` } }
           ]
         })
-      };
+      }; // <-- this closing } was missing
 
       const { count, rows: books } = await book.findAndCountAll({
         where: whereClause,
-        attributes: ['id','userId', 'title', 'ISBN', 'author', 'IsAvailable'],
+        attributes: ['id', 'userId', 'title', 'ISBN', 'author', 'IsAvailable'],
         include: [
           {
             model: category,
@@ -63,7 +52,7 @@ const bookController = {
         limit: limit
       });
 
-      const message = search.trim() != '' && count === 0 ? "No books found matching your search" : "No books found in this club";
+      const message = search.trim() !== '' && count === 0 ? "No books found matching your search" : "No books found in this club";
       if (!books.length) {
         return res.status(200).json({
           success: true,
@@ -71,7 +60,6 @@ const bookController = {
           page: page,
           limit: limit,
           books: [],
-          // message: message
         });
       }
 
@@ -81,7 +69,6 @@ const bookController = {
         page: page,
         limit: limit,
         books: books,
-        // message: ''
       };
       res.status(200).json(response);
     } catch (error) {
@@ -93,7 +80,6 @@ const bookController = {
     }
   },
 
-  // Add more methods as needed
   AddBooks: async (req, res) => {
     try {
       const { title, author, ISBN, clubId, userId, categoryId, languageId } = req.body;
@@ -123,7 +109,6 @@ const bookController = {
           book: newBook
         });
       }
-
     } catch (error) {
       console.error('Error adding book:', error);
       res.status(500).json({
