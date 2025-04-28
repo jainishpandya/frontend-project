@@ -16,7 +16,6 @@ const TransactionController = {
             const checkbook = await book.findOne({
                 where: {
                     id: bookId,
-                    IsAvailable: true
                 }
             });
 
@@ -26,7 +25,10 @@ const TransactionController = {
                     message: "Book not available"
                 });
             }
-            
+
+            if (checkbook.IsAvailable == false) {
+                // to check if the book 
+            }
         } catch (error) {
             
         }

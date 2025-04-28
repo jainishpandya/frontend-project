@@ -1,7 +1,6 @@
 'use strict';
 import {Model, Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../../config/database.js';
-import { pick } from 'lodash';
 
 const transaction = sequelize.define('transaction',{
     id: {
