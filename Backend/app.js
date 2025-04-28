@@ -74,6 +74,7 @@ user.hasMany(clubuser);
 user.hasMany(transaction);
 club.hasMany(clubuser);
 club.hasMany(transaction);
+clubuser.hasMany(location);
 user.hasMany(book);
 club.hasMany(book);
 language.hasMany(book);

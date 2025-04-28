@@ -15,6 +15,7 @@ function BookGrid({ searchQuery }) {
   const resultsPerPage = 10;
 
   const clubId = useSelector((state => state.club.id));
+  const token = localStorage.getItem("token");
 
   async function fetchBooks() {
     try {
@@ -30,6 +31,10 @@ function BookGrid({ searchQuery }) {
           page: currentPage,
           limit: resultsPerPage,
           search: searchQuery,
+        }
+        ,
+        headers: {
+          Authorization: `Bearer ${token}`,
         }
       }
       );

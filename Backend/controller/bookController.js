@@ -13,11 +13,18 @@ const bookController = {
       const offset = (page - 1) * limit;
       const search = req.query.search || '';
       const clubId = req.params.clubId;
-      const token = req.body.token || req.query.token;
+ // Default to null if not authenticated
+      const token = req.body.token || req.query.token|| req.headers['authorization']?.split(' ')[1];
+      //  const userId = jwt.getUserIdFromToken(token); // Extract token from headers or body/query
       console.log("Token:", token);
-       // Assuming token is passed in the body or query
-      const userId = jwt.getUserIdFromToken(req.body.token); // Assuming you have a function to get userId from token
-      console.log("User ID:", userId);
+      // if (token) {
+      //   try {
+      //     const userId = jwt.getUserIdFromToken(token);
+      //   } catch (error) {
+      //     // Silently handle token errors - the user is just not authenticated
+      //     console.log("Token error:", error.message);
+      //   }
+      // }
       
       if (!clubId) {
         return res.status(400).json({
@@ -28,7 +35,7 @@ const bookController = {
 
       const whereClause = {
         clubId: clubId,
-        userId: userId,
+        // userId: userId,
         ...(search && {
           [Op.or]: [
             { title: { [Op.iLike]: `%${search}%` } },

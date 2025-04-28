@@ -48,6 +48,9 @@ export function initialiseAssociations() {
     club.hasMany(book, { foreignKey: 'clubId' });
     club.hasMany(transaction, { foreignKey: 'clubId' });
 
+    club.hasMany(location, { foreignKey: 'clubId' });
+
+
     book.hasMany(transaction, { foreignKey: 'bookId' });
 
     // Book associations
@@ -70,4 +73,6 @@ export function initialiseAssociations() {
     transaction.belongsTo(user, { foreignKey: 'BorrowerId' });
     transaction.belongsTo(book, { foreignKey: 'bookId' });
     transaction.belongsTo(club, { foreignKey: 'clubId' });
+
+    location.belongsTo(club, { foreignKey: 'clubId' });
 }
