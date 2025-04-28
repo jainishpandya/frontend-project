@@ -35,6 +35,7 @@ const bookController = {
 
       const whereClause = {
         clubId: clubId,
+        ...(search.trim() != '' && {
         // userId: userId,
         ...(search && {
           [Op.or]: [
@@ -62,13 +63,15 @@ const bookController = {
         limit: limit
       });
 
+      const message = search.trim() != '' && count === 0 ? "No books found matching your search" : "No books found in this club";
       if (!books.length) {
         return res.status(200).json({
           success: true,
           total: count,
           page: page,
           limit: limit,
-          books: []
+          books: [],
+          // message: message
         });
       }
 
@@ -77,7 +80,8 @@ const bookController = {
         total: count,
         page: page,
         limit: limit,
-        books: books
+        books: books,
+        // message: ''
       };
       res.status(200).json(response);
     } catch (error) {

@@ -56,6 +56,13 @@ const book = sequelize.define('book', {
             key: 'id'
         }
     },
+    locationId:{
+        type: DataTypes.INTEGER,
+        references:{
+            model: 'location',
+            key: 'id'
+        }
+    },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE
