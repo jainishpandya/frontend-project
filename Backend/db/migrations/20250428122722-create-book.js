@@ -2,8 +2,8 @@
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
-export default{
-  async up (queryInterface, Sequelize) {
+export default {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('book', {
       id: {
         allowNull: false,
@@ -55,6 +55,13 @@ export default{
           key: 'id'
         }
       },
+      locationId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'location',
+          key: 'id'
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -69,7 +76,7 @@ export default{
     })
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('book');
   }
 };

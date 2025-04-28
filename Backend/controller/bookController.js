@@ -1,8 +1,8 @@
 import React from 'react';
 import { Op } from 'sequelize';
 import book from '../db/models/book.js';
-import category from '../db/models/category.js';
 import language from '../db/models/language.js';
+import category from '../db/models/category.js';
 import jwt from '../jwt.js';
 
 const bookController = {
@@ -12,6 +12,9 @@ const bookController = {
       const limit = parseInt(req.query.limit) || 10;
       const offset = (page - 1) * limit;
       const search = req.query.search || '';
+      const status = req.query.status || 'all';
+      const category = req.query.category ? JSON.parse(req.query.categories) : [];
+      const languages = req.query.languages ? JSON.parse(req.query.languages) : [];
       const clubId = req.params.clubId;
 
       const token = req.body.token || req.query.token || req.headers['authorization']?.split(' ')[1];
@@ -31,8 +34,21 @@ const bookController = {
             { title: { [Op.iLike]: `%${search}%` } },
             { author: { [Op.iLike]: `%${search}%` } }
           ]
-        })
-      }; // <-- this closing } was missing
+        }),
+        ...(status !== 'all' && {
+          IsAvailable: status === 'available'
+        }),
+        ...(category.length > 0 && {
+          categoryId: {
+            [Op.in]: category
+          }
+        }),
+        ...(languages.length > 0 && {
+          languageId: {
+            [Op.in]: languages
+          }
+        }),
+      };
 
       const { count, rows: books } = await book.findAndCountAll({
         where: whereClause,
@@ -52,7 +68,6 @@ const bookController = {
         limit: limit
       });
 
-      const message = search.trim() !== '' && count === 0 ? "No books found matching your search" : "No books found in this club";
       if (!books.length) {
         return res.status(200).json({
           success: true,
