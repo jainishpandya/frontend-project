@@ -4,6 +4,7 @@ import clubuser from './clubuser.js'
 import book from './book.js';
 import language from './language.js';
 import category from './category.js';
+import transaction from './transaction.js';
 
 export function initialiseAssociations() {
 
@@ -38,11 +39,16 @@ export function initialiseAssociations() {
     user.hasMany(clubuser, { foreignKey: 'userId' });
     user.belongsToMany(club, { through: clubuser, foreignKey: 'userId' });
     user.hasMany(book, { foreignKey: 'userId' });
+    user.hasMany(transaction, { foreignKey: 'LenderId' });
+    user.hasMany(transaction, { foreignKey: 'BorrowerId' });
 
     // Club associations
     club.hasMany(clubuser, { foreignKey: 'clubId' });
     club.belongsToMany(user, { through: clubuser, foreignKey: 'clubId' });
     club.hasMany(book, { foreignKey: 'clubId' });
+    club.hasMany(transaction, { foreignKey: 'clubId' });
+
+    book.hasMany(transaction, { foreignKey: 'bookId' });
 
     // Book associations
     book.belongsTo(club, { foreignKey: 'clubId' });
@@ -59,4 +65,9 @@ export function initialiseAssociations() {
     // Clubuser associations
     clubuser.belongsTo(user, { foreignKey: 'userId' });
     clubuser.belongsTo(club, { foreignKey: 'clubId' });
+
+    transaction.belongsTo(user, { foreignKey: 'LenderId' });
+    transaction.belongsTo(user, { foreignKey: 'BorrowerId' });
+    transaction.belongsTo(book, { foreignKey: 'bookId' });
+    transaction.belongsTo(club, { foreignKey: 'clubId' });
 }
