@@ -15,6 +15,7 @@ function BookGrid({ searchQuery, filters }) {
   const resultsPerPage = 10;
 
   const clubId = useSelector((state => state.club.id));
+  const token = localStorage.getItem("token");
 
   async function fetchBooks() {
     try {
@@ -33,6 +34,10 @@ function BookGrid({ searchQuery, filters }) {
           status: filters.status,
           category: JSON.stringify(filters.category),
           languages: JSON.stringify(filters.languages),
+        }
+        ,
+        headers: {
+          Authorization: `Bearer ${token}`,
         }
       }
       );

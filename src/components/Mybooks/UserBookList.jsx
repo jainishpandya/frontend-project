@@ -30,10 +30,10 @@ function UserBookList() {
       if (data.success) {
         // Check if response is an array or single object and handle accordingly
         if (Array.isArray(data.books)) {
-          setBooks(data.books);
+          setBooks(data.books|| []);
         } else if (data.book) {
           // If it's a single book, put it in an array
-          setBooks([data.book]);
+          setBooks([data.books]);
         } else {
           setBooks([]);
         }
