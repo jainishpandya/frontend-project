@@ -3,6 +3,7 @@ import { Op } from 'sequelize';
 import book from '../db/models/book.js';
 import category from '../db/models/category.js';
 import language from '../db/models/language.js';
+import jwt from '../jwt.js';
 
 const bookController = {
   bookDetails: async (req, res) => {
@@ -12,7 +13,12 @@ const bookController = {
       const offset = (page - 1) * limit;
       const search = req.query.search || '';
       const clubId = req.params.clubId;
-
+      const token = req.body.token || req.query.token;
+      console.log("Token:", token);
+       // Assuming token is passed in the body or query
+      const userId = jwt.getUserIdFromToken(req.body.token); // Assuming you have a function to get userId from token
+      console.log("User ID:", userId);
+      
       if (!clubId) {
         return res.status(400).json({
           success: false,
@@ -22,6 +28,7 @@ const bookController = {
 
       const whereClause = {
         clubId: clubId,
+        userId: userId,
         ...(search && {
           [Op.or]: [
             { title: { [Op.iLike]: `%${search}%` } },
@@ -32,7 +39,7 @@ const bookController = {
 
       const { count, rows: books } = await book.findAndCountAll({
         where: whereClause,
-        attributes: ['id', 'title', 'ISBN', 'author', 'IsAvailable'],
+        attributes: ['id','userId', 'title', 'ISBN', 'author', 'IsAvailable'],
         include: [
           {
             model: category,
