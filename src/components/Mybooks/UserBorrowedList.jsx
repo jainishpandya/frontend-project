@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import axios from "axios";
-import { SquarePlus, Edit } from "lucide-react";
+import { SquarePlus, Edit, Redo2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +26,7 @@ function UserBorrowedList() {
       const { data } = await axios.post(`api/v1/transaction/getborrowedlist/`, {
         token: token 
       });
+
       console.log(data);
 
       if (data.success) {
@@ -65,7 +66,7 @@ function UserBorrowedList() {
         <div className="w-1/12">Rating</div>
         <div className="w-1/12">Language</div>
         <div className="w-2/12">Category</div>
-        <div className="w-1/12">Status</div>
+        <div className="w-1/12">Due Date</div>
         <div className="w-2/12 text-right">Actions</div>
       </Box>
 
@@ -75,7 +76,7 @@ function UserBorrowedList() {
       ></Box>
 
       {loading ? (
-        <Box className="p-4 text-center">Loading books...</Box>
+        <Box className="p-4 text-center"><CircularProgress /></Box>
       ) : error ? (
         <Box className="p-4 text-center text-red-600">{error}</Box>
       ) : books.length === 0 ? (
@@ -101,12 +102,12 @@ function UserBorrowedList() {
                   {book.IsAvailable ? "Availabe": "Not Available"}
                 </span>
               </div>
-              <div className="w-2/12 text-right">
+              <div className="w-2/12 text-right justify-end flex flex-row items-center gap-2">
                 <button
                   onClick={() => handleEdit(book._id)}
-                  className="text-blue-600 hover:text-blue-800"
+                  className="text-blue-600 hover:bg-br-blue-dark flex flex-row items-center justify-end  bg-br-blue-medium gap-1 p-2 rounded-lg text-sm text-white"
                 >
-                  <Edit size={18} />
+                  <Redo2 size={18} /> Return
                 </button>
               </div>
             </Box>

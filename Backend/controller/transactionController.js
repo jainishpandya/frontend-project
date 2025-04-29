@@ -395,7 +395,112 @@ const TransactionController = {
                 message: "Internal Server Error"
             });
         }
-    }
+    },
+    getBorrowingTransactionList: async (req, res) => {
+        try {
+            const { token } = req.body;
+
+            console.log(token)
+            const userId = jwt.getUserIdFromToken(token);
+
+            if (!userId) {
+                console.log("Error in authenticating User");
+                return res.status(403).json({
+                    success: false,
+                    message: "Access Forbidden"
+                })
+            }
+            console.log("user Id ", userId);
+            
+
+            const BorrowedBookList = await transaction.findAll({
+                where: {
+                    borrowerId: userId,
+                    status: {
+                        [Op.in]: ['1','2','4']
+                    }
+                }, include: [
+                    {
+                        model: book,
+                        as: 'book'
+                    }
+                ]
+            });
+
+            if (!BorrowedBookList) {
+                console.log('cannot fetch the borrowed book list'); 
+                return res.status(500).json({
+                    success: false,
+                    message: "Internal Server Error"
+                });
+            }
+
+            return res.status(200).json({
+                success: true,
+                list: BorrowedBookList
+            })
+            
+        } catch (error) {
+            console.log("Errror in the borrowed book list section", error);
+            res.status(500).json({
+                success: false,
+                message: "Internal Server Error"
+            });
+        }
+    },
+
+    getLendingTransactionList: async (req, res) => {
+        try {
+            const { token } = req.body;
+
+            console.log(token)
+            const userId = jwt.getUserIdFromToken(token);
+
+            if (!userId) {
+                console.log("Error in authenticating User");
+                return res.status(403).json({
+                    success: false,
+                    message: "Access Forbidden"
+                })
+            }
+            console.log("user Id ", userId);
+            
+
+            const LendedBookList = await transaction.findAll({
+                where: {
+                    lenderId: userId,
+                    status: {
+                        [Op.in]: ['1','2']
+                    }
+                }, include: [
+                    {
+                        model: book,
+                        as: 'book'
+                    }
+                ]
+            });
+
+            if (!LendedBookList) {
+                console.log('cannot fetch the lended book list'); 
+                return res.status(500).json({
+                    success: false,
+                    message: "Internal Server Error"
+                });
+            }
+
+            return res.status(200).json({
+                success: true,
+                list: LendedBookList
+            })
+            
+        } catch (error) {
+            console.log("Errror in the borrowed book list section", error);
+            res.status(500).json({
+                success: false,
+                message: "Internal Server Error"
+            });
+        }
+    },
     
 
 }

@@ -7,5 +7,7 @@ router.post("/request", TransactionController.borrowRequest);
 router.post("/accept", TransactionController.RequestApproval);
 router.post("/drop", TransactionController.BookDropped);
 router.post("/getborrowedlist", TransactionController.getBorrowedBooks);
+router.post("/getrequestedlist", TransactionController.getBorrowingTransactionList);
+router.post("/getlendinglist", TransactionController.getLendingTransactionList)
 
 export default router;
