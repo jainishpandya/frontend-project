@@ -18,7 +18,7 @@ export default {
         },
         onUpdate: 'CASCADE',
       },
-      LenderId: {
+      lenderId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'user',
@@ -26,7 +26,7 @@ export default {
         },
         onUpdate: 'CASCADE'
       },
-      BorrowerId: {
+      borrowerId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'user',
@@ -34,7 +34,7 @@ export default {
         },
         onUpdate: 'CASCADE'
       },
-      ClubId: {
+      clubId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'club',
@@ -70,39 +70,6 @@ export default {
         type: Sequelize.DATE,
         allowNull: false,
       }
-    });
-    await queryInterface.addConstraint('transaction', {
-      fields: ['bookId'],
-      type: 'foreign key',
-      name: 'fk_bookId',
-      references: {
-        table: 'book',
-        field: 'id'
-      },
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    await queryInterface.addConstraint('transaction', {
-      fields: ['LenderId'],
-      type: 'foreign key',
-      name: 'fk_LenderId',
-      references: {
-        table: 'user',
-        field: 'id'
-      },
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    await queryInterface.addConstraint('transaction', {
-      fields: ['BorrowerId'],
-      type: 'foreign key',
-      name: 'fk_BorrowerId',
-      references: {
-        table: 'user',
-        field: 'id'
-      },
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
     });
   },
  

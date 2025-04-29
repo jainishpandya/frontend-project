@@ -41,5 +41,7 @@ for (const modelName of Object.keys(db)) {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+sequelize.sync({ alter: true });
+
 
 export default db;

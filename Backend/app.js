@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectToDB  from './utils/dbConnect.js';
 
 
+
 import authRouter from "./route/authRoute.js";
 import clubRouter from "./route/ClubRoute.js";
 import userRouter from "./route/userRoute.js";
@@ -74,10 +75,10 @@ const port = process.env.PORT || 3000;
 // Database Relation Area (!!!!!!!!!DO NOT CHANGE!!!!!!!!)
 
 user.hasMany(clubuser);
-user.hasMany(transaction);
+// user.hasMany(transaction);
 club.hasMany(clubuser);
 club.hasMany(transaction);
-clubuser.hasMany(location);
+club.hasMany(location);
 user.hasMany(book);
 club.hasMany(book);
 language.hasMany(book);

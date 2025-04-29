@@ -35,12 +35,14 @@ export function initialiseAssociations() {
     // book.belongsTo(user, { foreignKey: 'userId' });
     // book.belongsTo(club, { foreignKey: 'clubId' });
 
+
+    
     // User associations
     user.hasMany(clubuser, { foreignKey: 'userId' });
     user.belongsToMany(club, { through: clubuser, foreignKey: 'userId' });
     user.hasMany(book, { foreignKey: 'userId' });
-    user.hasMany(transaction, { foreignKey: 'LenderId' });
-    user.hasMany(transaction, { foreignKey: 'BorrowerId' });
+    user.hasMany(transaction, { foreignKey: 'lenderId',  as: 'lentTransactions' });
+    user.hasMany(transaction, { foreignKey: 'borrowerId', as: 'borrowedTransactions' });
 
     // Club associations
     club.hasMany(clubuser, { foreignKey: 'clubId' });
@@ -69,10 +71,10 @@ export function initialiseAssociations() {
     clubuser.belongsTo(user, { foreignKey: 'userId' });
     clubuser.belongsTo(club, { foreignKey: 'clubId' });
 
-    transaction.belongsTo(user, { foreignKey: 'LenderId' });
-    transaction.belongsTo(user, { foreignKey: 'BorrowerId' });
-    transaction.belongsTo(book, { foreignKey: 'bookId' });
-    transaction.belongsTo(club, { foreignKey: 'clubId' });
+    transaction.belongsTo(user, { foreignKey: 'lenderId', as: 'lender' });
+    transaction.belongsTo(user, { foreignKey: 'borrowerId' , as: 'borrower' });
+    transaction.belongsTo(book, { foreignKey: 'bookId', as: 'book' });
+    transaction.belongsTo(club, { foreignKey: 'clubId', as: 'club' });
 
     location.belongsTo(club, { foreignKey: 'clubId' });
 }

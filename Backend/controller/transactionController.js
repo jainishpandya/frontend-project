@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import book from "../db/models/book.js";
 import transaction from "../db/models/transaction.js";
 import jwt from "../jwt.js";
@@ -6,7 +7,7 @@ const TransactionController = {
     borrowRequest: async (req, res) => {
         try {
             
-            const { bookId, ClubId, token } = req.body;
+            const { bookId, clubId, token } = req.body;
 
             const BorrowerId = jwt.getUserIdFromToken(token);
 
@@ -31,6 +32,7 @@ const TransactionController = {
                     id: bookId,
                 }
             });
+            console.log("Checkbook", checkbook);
 
             if (!checkbook) {
                 return res.status(404).json({
@@ -45,10 +47,10 @@ const TransactionController = {
                 const NewTransaction = await transaction.create({
                     bookId: checkbook.id,
                     lenderId: checkbook.userId,
-                    BorrowerId: BorrowerId,
-                    ClubId: ClubId,
-                    Status: 1,
-                    requestDate: Date.now()
+                    borrowerId: borrowerId,
+                    clubId: clubId,
+                    status: 1,
+                     requestDate: new Date() 
                 })
 
                 if (!NewTransaction) {
@@ -71,10 +73,10 @@ const TransactionController = {
                 const NewTransaction = await transaction.create({
                     bookId: checkbook.id,
                     lenderId: checkbook.userId,
-                    BorrowerId: BorrowerId,
-                    ClubId: ClubId,
-                    Status: 4,
-                    requestDate: Date.now()
+                    borrowerId: BorrowerId,
+                    clubId: clubId,
+                    status: 4,
+                    RequestDate: new Date() 
                 })
 
                 if (!NewTransaction) {
@@ -97,16 +99,17 @@ const TransactionController = {
                 const lender = await transaction.findOne({
                     where: {
                         bookId: bookId,
-                        Status: 1
+                        status: 1
                     }
                 })
+
                 const NewTransaction = await transaction.create({
                     bookId: checkbook.id,
-                    lenderId: checkbook.userId,
+                    LenderId: checkbook.userId,
                     BorrowerId: BorrowerId,
-                    ClubId: ClubId,
-                    Status: 1,
-                    requestDate: Date.now()
+                    clubId: clubId,
+                    status: 1,
+                     requestDate: new Date() 
                 })
 
                 if (!NewTransaction) {
@@ -194,7 +197,7 @@ const TransactionController = {
 
             // Update the book's availability status
 
-            transactionToUpdate.Status = 2; // Assuming 2 is the status for approved
+            transactionToUpdate.status = 2; // Assuming 2 is the status for approved
 
             const updatedTransaction = await transactionToUpdate.save();
             const updatedBook = await fetchBook.save();
@@ -223,7 +226,7 @@ const TransactionController = {
     },
     BookDropped: async (req, res) => {
         try {
-            const { transactionId, ClubId } = req.body;
+            const { transactionId, clubId } = req.body;
             const token = req.header['authorization'];
             const userId = jwt.getUserIdFromToken(token);
             if (!userId) {
@@ -256,7 +259,7 @@ const TransactionController = {
 
 
 
-            transactionToUpdate.Status = 4; // Assuming 4 is the status for Book Dropped
+            transactionToUpdate.status = 4; // Assuming 4 is the status for Book Dropped
 
            
             const updatedTransaction = await transactionToUpdate.save();
@@ -286,13 +289,117 @@ const TransactionController = {
 
     BookPicked: async(req, res) => {
         try {
-            const { transactionId } = req.body;
+            const { transactionId, token } = req.body;
+
+            const userId = jwt.getUserIdFromToken(token);
+            if (!userId) {
+                console.log("Error in authenticating User");
+                return res.status(403).json({
+                    success: false,
+                    message: "Access forbidden"
+                })
+            }
+            if (!transactionId) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Transaction ID and status are required"
+                });
+            }
+            const transactionToUpdate = await transaction.findOne({
+                where: {
+                    id: transactionId
+                }
+            });
+            // Check if the user is the lender of the transaction
+            if (transactionToUpdate.borrowerId !== userId) {
+                return res.status(403).json({
+                    success: false,
+                    message: "You are not authorized to approve this transaction"
+                });
+            }
+
+            transactionToUpdate.status = 5; // Assuming 5 is the status for Book Picked
+
+            const updatedTransaction = await transactionToUpdate.save();
+
+            if (updatedTransaction) {
+                res.status(200).json({
+                    success: true,
+                    message: "Transaction status updated successfully",
+                    transaction: updatedTransaction
+                });
+            } else {
+                res.status(500).json({
+                    success: false,
+                    message: "Internal Server Error"
+                });
+            }
 
         } catch (error) {
-            console.log()
+            console.log("Error in updating transaction status", error);
+            res.status(500).json({
+                success: false,
+                message: "Internal Server Error"
+            });
+        }
+    },
+
+    getBorrowedBooks: async (req, res) => {
+        try {
+            const { token } = req.body;
+
+            console.log(token)
+            const userId = jwt.getUserIdFromToken(token);
+
+            if (!userId) {
+                console.log("Error in authenticating User");
+                return res.status(403).json({
+                    success: false,
+                    message: "Access Forbidden"
+                })
+            }
+            console.log("user Id ", userId);
+            
+
+            const BorrowedBookList = await transaction.findAll({
+                where: {
+                    borrowerId: userId,
+                    status: {
+                        [Op.in]: ['5','6']
+                    }
+                }, include: [
+                    {
+                        model: book,
+                        as: 'book'
+                    }
+                ]
+            });
+
+            if (!BorrowedBookList) {
+                console.log('cannot fetch the borrowed book list'); 
+                return res.status(500).json({
+                    success: false,
+                    message: "Internal Server Error"
+                });
+            }
+
+            return res.status(200).json({
+                success: true,
+                list: BorrowedBookList
+            })
+            
+        } catch (error) {
+            console.log("Errror in the borrowed book list section", error);
+            res.status(500).json({
+                success: false,
+                message: "Internal Server Error"
+            });
         }
     }
+    
+
 }
+
 
 
 
