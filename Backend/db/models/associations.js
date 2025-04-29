@@ -49,7 +49,6 @@ export function initialiseAssociations() {
     club.belongsToMany(user, { through: clubuser, foreignKey: 'clubId' });
     club.hasMany(book, { foreignKey: 'clubId' });
     club.hasMany(transaction, { foreignKey: 'clubId' });
-
     club.hasMany(location, { foreignKey: 'clubId' });
 
 

@@ -32,7 +32,7 @@ function BookGrid({ searchQuery, filters }) {
           limit: resultsPerPage,
           search: searchQuery,
           status: filters.status,
-          category: JSON.stringify(filters.category),
+          categories: JSON.stringify(filters.categories),
           languages: JSON.stringify(filters.languages),
         }
         ,
