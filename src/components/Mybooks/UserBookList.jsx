@@ -24,7 +24,18 @@ function UserBookList() {
         return;
       }
 
-      const { data } = await axios.get(`api/v1/book/bookDetails/${clubId}`);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Token is not available in local storage.");
+        return;
+      }
+
+      const { data } = await axios.get(`api/v1/book/myBooks/${clubId}`,{
+        
+        params:{
+        token : token
+        }
+      });
       console.log(data);
 
       if (data.success) {
