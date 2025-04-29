@@ -95,14 +95,17 @@ const bookController = {
 
   AddBooks: async (req, res) => {
     try {
-      const { title, author, ISBN, clubId, userId, categoryId, languageId } = req.body;
+      const { title, author, ISBN, clubId, token, categoryId, languageId } = req.body;
 
-      if (!title || !author || !ISBN || !clubId || !userId || !categoryId || !languageId) {
+      if (!title || !author || !ISBN || !clubId || !token || !categoryId || !languageId) {
         return res.status(400).json({
           success: false,
           message: "All fields are required"
         });
       }
+
+      const userId = jwt.getUserIdFromToken(token);
+      
 
       const newBook = await Book.create({
         title: title,
