@@ -4,12 +4,14 @@ import cors from 'cors';
 import connectToDB  from './utils/dbConnect.js';
 
 
+
 import authRouter from "./route/authRoute.js";
 import clubRouter from "./route/ClubRoute.js";
 import userRouter from "./route/userRoute.js";
 import bookRouter from "./route/bookRoute.js";
 import categoryRouter from "./route/categoryRoute.js";
 import languageRouter from "./route/languageRoute.js";
+import transactionRouter from "./route/transactionRoute.js";
 
 import user from './db/models/user.js';
 import club from './db/models/club.js';
@@ -45,6 +47,7 @@ app.use('/api/v1/user', userRouter)
 app.use('/api/v1/book', bookRouter)
 app.use('/api/v1/category', categoryRouter)
 app.use('/api/v1/language', languageRouter)
+app.use('/api/v1/transaction', transactionRouter)
 
 // Error handler
 
@@ -72,10 +75,10 @@ const port = process.env.PORT || 3000;
 // Database Relation Area (!!!!!!!!!DO NOT CHANGE!!!!!!!!)
 
 user.hasMany(clubuser);
-user.hasMany(transaction);
+// user.hasMany(transaction);
 club.hasMany(clubuser);
 club.hasMany(transaction);
-clubuser.hasMany(location);
+club.hasMany(location);
 user.hasMany(book);
 club.hasMany(book);
 language.hasMany(book);

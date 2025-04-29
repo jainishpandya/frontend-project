@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import axios from "axios";
 import { SquarePlus, Edit } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -99,7 +99,7 @@ function UserBookList() {
       ></Box>
 
       {loading ? (
-        <Box className="p-4 text-center">Loading books...</Box>
+        <Box className="p-4 text-center"><CircularProgress /></Box>
       ) : error ? (
         <Box className="p-4 text-center text-red-600">{error}</Box>
       ) : books.length === 0 ? (

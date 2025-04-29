@@ -17,23 +17,25 @@ const transaction = sequelize.define('transaction',{
         },
         onUpdate: 'CASCADE',
     },
-    LenderId: {
+    lenderId: {
         type: DataTypes.INTEGER,
         references: {
             model: 'user',
             key: 'id'
         },
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
     },
-    BorrowerId: {
+    borrowerId: {
         type: DataTypes.INTEGER,
         references: {
             model: 'user',
             key: 'id'
         },
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
     },
-    ClubId: {
+    clubId: {
         type: DataTypes.INTEGER,
         references: {
             model: 'club',
