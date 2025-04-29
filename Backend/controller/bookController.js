@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
 import Book from '../db/models/book.js';
-import Language from '../db/models/language.js';
-import Category from '../db/models/category.js';
+import language from '../db/models/language.js';
+import category from '../db/models/category.js';
 import jwt from '../jwt.js';
 
 const bookController = {
@@ -51,13 +51,11 @@ const bookController = {
         attributes: ['id', 'userId', 'title', 'ISBN', 'author', 'IsAvailable'],
         include: [
           {
-            model: Category,
-            as: 'category',
+            model: category,
             attributes: ['CategoryName']
           },
           {
-            model: Language,
-            as: 'language',
+            model: language,
             attributes: ['LanguageName']
           }
         ],
@@ -195,11 +193,6 @@ const bookController = {
         message: "Internal Server Error"
       });
     }
-
-
-
-
-
   }
 };
 

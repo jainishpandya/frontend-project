@@ -15,6 +15,7 @@ const BookListing = () => {
   });
 
   const handleFilterChange = (newFilters) => {
+    // console.log("Filters changed:", newFilters);
     setFilters(newFilters);
   };
 

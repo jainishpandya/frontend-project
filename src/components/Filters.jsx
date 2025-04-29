@@ -87,7 +87,7 @@ const Filters = ({onFilterChange}) => {
             
             const { data } = await axios.get('/api/v1/category/getall');
 
-            console.log(data);
+            // console.log(data);
             if (data.success) {
                 console.log(data.categories.count);
                 await setCategories(data.categories.rows)
@@ -157,6 +157,7 @@ const Filters = ({onFilterChange}) => {
                 .filter(([_, isChecked]) => isChecked)
                 .map(([id, _]) => parseInt(id))
         };
+        // console.log("Active Filters: ", activeFilters);
         onFilterChange(activeFilters);
     }, [selectedStatus, selectedCategories, selectedLanguages]);
 
