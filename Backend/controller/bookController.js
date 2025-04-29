@@ -1,8 +1,7 @@
-import React from 'react';
 import { Op } from 'sequelize';
-import book from '../db/models/book.js';
-import language from '../db/models/language.js';
-import category from '../db/models/category.js';
+import Book from '../db/models/book.js';
+import Language from '../db/models/language.js';
+import Category from '../db/models/category.js';
 import jwt from '../jwt.js';
 
 const bookController = {
@@ -13,12 +12,9 @@ const bookController = {
       const offset = (page - 1) * limit;
       const search = req.query.search || '';
       const status = req.query.status || 'all';
-      const category = req.query.category ? JSON.parse(req.query.categories) : [];
+      const categories = req.query.categories ? JSON.parse(req.query.categories) : [];
       const languages = req.query.languages ? JSON.parse(req.query.languages) : [];
       const clubId = req.params.clubId;
-
-      const token = req.body.token || req.query.token || req.headers['authorization']?.split(' ')[1];
-      console.log("Token:", token);
 
       if (!clubId) {
         return res.status(400).json({
@@ -38,9 +34,9 @@ const bookController = {
         ...(status !== 'all' && {
           IsAvailable: status === 'available'
         }),
-        ...(category.length > 0 && {
+        ...(categories.length > 0 && {
           categoryId: {
-            [Op.in]: category
+            [Op.in]: categories
           }
         }),
         ...(languages.length > 0 && {
@@ -50,17 +46,19 @@ const bookController = {
         }),
       };
 
-      const { count, rows: books } = await book.findAndCountAll({
+      const { count, rows: books } = await Book.findAndCountAll({
         where: whereClause,
         attributes: ['id', 'userId', 'title', 'ISBN', 'author', 'IsAvailable'],
         include: [
           {
-            model: category,
-            attributes: ['CategoryName'],
+            model: Category,
+            as: 'category',
+            attributes: ['CategoryName']
           },
           {
-            model: language,
-            attributes: ['LanguageName'],
+            model: Language,
+            as: 'language',
+            attributes: ['LanguageName']
           }
         ],
         order: [['title', 'ASC']],
@@ -106,7 +104,7 @@ const bookController = {
         });
       }
 
-      const newBook = await book.create({
+      const newBook = await Book.create({
         title: title,
         author: author,
         ISBN: ISBN,
@@ -131,6 +129,77 @@ const bookController = {
         message: "Internal Server Error"
       });
     }
+  },
+
+  myBooks: async (req, res) => {
+
+    try{
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const offset = (page - 1) * limit;
+      const search = req.query.search || '';
+      const status = req.query.status || 'all';
+      const categories = req.query.categories ? JSON.parse(req.query.categories) : [];
+      const languages = req.query.languages ? JSON.parse(req.query.languages) : [];
+      const clubId = req.params.clubId;
+      
+
+      const token = req.query.token;
+      if (!token) {
+        return res.status(400).json({
+          success: false,
+          message: "Token is required"
+        });
+      }
+      const userId = jwt.getUserIdFromToken(token)
+      console.log("User Id : ",userId)
+
+      const whereClause = {
+        clubId: clubId,
+        userId: userId,
+        ...(search.trim() !== '' && {
+          [Op.or]: [
+            { title: { [Op.iLike]: `%${search}%` } },
+            { author: { [Op.iLike]: `%${search}%` } }
+          ]
+        }),
+        
+      };
+
+      const {count, rows: books} = await Book.findAndCountAll({
+        where: whereClause,
+        attributes: ['id','userId','title','ISBN','author','IsAvailable'],
+        order: [['title', 'ASC']],
+        offset: offset,
+        limit: limit
+
+        
+      });
+
+      const response ={
+        success:true,
+        total:count,
+        page:page,
+        limit:limit,
+        books:books
+        
+      };
+      res.status(200).json(response);
+
+    
+    }
+    catch(error){
+      console.error('Error fetching book details:', error);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error"
+      });
+    }
+
+
+
+
+
   }
 };
 
