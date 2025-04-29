@@ -1,11 +1,55 @@
 import { useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import { FaStar } from "react-icons/fa";
+import DialogBox from "./DialogBox";
+import axios from "axios";
 import BookDetails from "./BookDetails";
+import { useSelector } from "react-redux";
 
 const BookCard = ({ title, author, coverUrl, isAvailable, rating, category, language }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  const clubId = useSelector((state => state.club.id))
+  const token = localStorage.getItem('token')
+  // console.log("token:", token);
+
+  const handleOpenDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
+
+  const handleConfirm = async () => {
+    // console.log(isAvailable ? "Borrowing the book" : "Requesting to borrow the book");
+
+    try {
+      const response = await axios.post(`http://localhost:3000/api/v1/transaction/request`, {
+        body: {
+          bookId: id,
+          clubId: clubId,
+          token: token
+        },
+      }
+      );
+      const data = response.data;
+
+      if (data.success) {
+        console.log("book has been added")
+      } else {
+        setError("Failed to add book");
+      }
+    } catch (error) {
+      setError("Error Adding book");
+      console.error(error);
+    } finally{
+      setIsDialogOpen(false);
+    }
+  };
 
   return (
     <div className="bg-white rounded-[var(--br-radius)] w-full p-4 hover:shadow-lg transition-shadow duration-300 border border-br-gray-light hover:cursor-pointer flex flex-col ">
@@ -37,11 +81,10 @@ const BookCard = ({ title, author, coverUrl, isAvailable, rating, category, lang
             {[...Array(5)].map((_, index) => (
               <FaStar
                 key={index}
-                className={`w-4 h-4 ${
-                  index < Math.floor(rating)
+                className={`w-4 h-4 ${index < Math.floor(rating)
                     ? "text-yellow-400"
                     : "text-gray-300"
-                }`}
+                  }`}
               />
             ))}
             <span className="text-gray-500 text-sm">({rating})</span>
@@ -51,21 +94,21 @@ const BookCard = ({ title, author, coverUrl, isAvailable, rating, category, lang
             className={`w-full bg-br-blue-medium 2xl:text-base xl:text-sm lg:text-sm hover:bg-br-blue-dark 
               text-white py-2 rounded-lg transition-colors duration-200`}
             disabled={!isAvailable}
-            onClick={() => navigate("/home/books/book-details",{
-            state : {
-              title,
-              author,
-              coverUrl,
-              isAvailable,
-              rating
-            }
-            })}
+            onClick={handleOpenDialog}
           >
             {isAvailable ? 'Borrow Now' : 'Request To Borrow'}
-            {/* onClick={BookDetails} */}
           </Button>
         </div>
       </div>
+
+      <DialogBox
+        open={isDialogOpen}
+        onClose={handleCloseDialog}
+        title={isAvailable ? "Borrow Book" : "Request to Borrow"}
+        description={`Are you sure you want to ${isAvailable ? "borrow" : "request to borrow"} "${title}" ?`}
+        onConfirm={handleConfirm}
+      />
+       {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );
 };

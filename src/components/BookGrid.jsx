@@ -42,7 +42,7 @@ function BookGrid({ searchQuery, filters }) {
       }
       );
       const data = response.data;
-      console.log("dekhle", data);
+      // console.log("dekhle", data);
 
       if (data.success) {
         setTotalCount(data.total);
