@@ -25,7 +25,7 @@ const signup = async (req, res) => {
         }
     });
 
-    console.log(response);
+    // console.log(response);
 
     if (response) {
         return res.status(409).json({
@@ -105,7 +105,7 @@ const signup = async (req, res) => {
 const setPassword = async (req, res) => {
     try {
         const { password, token } = req.body;
-        
+
 
 
         const result = await user.findOne({
@@ -256,4 +256,71 @@ const mfa = async (req, res) => {
     }
 }
 
-export default { signup, login, setPassword, mfa };
+const resetPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        const result = await user.findOne({
+            where: {
+                email: email
+            },
+            attributes: ['id', 'email', 'name']
+        });
+
+        // console.log('Reset Password result: ', result);
+        if (!result) {
+            return res.status(404).json({
+                status: "fail",
+                message: "User not found"
+            });
+        }
+
+        const resetPasswordToken = await crypto.randomBytes(32).toString("hex");
+
+        // Update user with reset token
+        const updateResult = await user.update({
+            setPasswordToken: resetPasswordToken,
+            setPasswordTokenExpiry: Date.now() + 24 * 60 * 60 * 1000
+        }, {
+            where: {
+                id: result.id
+            }
+        });
+
+        if (!updateResult) {
+            return res.status(500).json({
+                status: "fail",
+                message: "Failed to update reset token"
+            });
+        }
+
+        const emailOptions = mailOptions(
+            result.email,
+            "Reset Your Password - BookCircle",
+            `Reset Your Password to Login`,
+            emailTemplate.resetPassword(process.env.FRONTEND_URL + '/reset-password?token=' + resetPasswordToken, result.name),
+        );
+        transporter.sendMail(emailOptions, (error, info) => {
+            if (error) {
+                console.error(`Email sending failed`, error);
+                return res.status(500).json({
+                    status: "fail",
+                    message: "Failed to send reset email"
+                });
+            }
+            // console.log("Reset password email sent successfully:", info.response);
+            return res.status(200).json({
+                status: "success",
+                message: "Reset password link has been sent to your email"
+            });
+        })
+    } catch (error) {
+        console.error('Reset Password Error:', error);
+        return res.status(500).json({
+            status: "fail",
+            message: "Internal server error"
+        });
+    }
+}
+
+export default { signup, login, setPassword, mfa , resetPassword};

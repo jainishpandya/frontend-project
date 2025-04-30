@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { BsEyeSlash, BsEye } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 function Form(props) {
 
@@ -13,6 +14,8 @@ function Form(props) {
 
     const [emailError, setEmailError] = useState();
     const [passwordError, setPasswordError] = useState();
+
+    const navigate = useNavigate();
 
     const validateEmail = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -72,6 +75,10 @@ function Form(props) {
         }
     }
 
+    const handleResetPassword = () => {
+        navigate("/forgot-password")
+    }
+
     return (
         <div className='flex flex-col justify-center px-28 w-full h-screen rounded-2xl bg-br-blue-light mt-4'>
             <p className='font-medium text-2xl text-br-blue-medium mt-4'>Welcome back!</p>
@@ -105,11 +112,13 @@ function Form(props) {
                     <p className='text-red-500 text-xs'>{passwordError}</p>
                 </div>
                 <div className='mt-4 flex flex-col gap-y-4'>
-                    <button className='py-3 rounded-xl bg-br-blue-medium text-white text-md font-bold' onClick={submitHandler}>
+                    <button className='py-3 rounded-xl cursor-pointer bg-br-blue-medium text-white text-md font-bold' onClick={submitHandler}>
                         Sign In
                     </button>
                 </div>
-                <button className='text-md text-br-blue-medium font-semibold mt-4'>Forgot Password? Reset Here</button>
+                <button className='text-md text-br-blue-medium font-semibold mt-4 cursor-pointer'
+                    onClick={handleResetPassword}
+                >Forgot Password? Reset Here</button>
             </div>
         </div>
     )
