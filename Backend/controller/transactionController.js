@@ -9,9 +9,10 @@ const TransactionController = {
             
             const { bookId, clubId, token } = req.body;
 
-            const BorrowerId = jwt.getUserIdFromToken(token);
+            console.log('token', token);
+            const borrowerId = jwt.getUserIdFromToken(token);
 
-            if (!BorrowerId) {
+            if (!borrowerId) {
                console.log("Error in authenticating User");
                return res.status(403).json({
                     success: false,
@@ -20,7 +21,7 @@ const TransactionController = {
             }
 
 
-            if (!bookId || !BorrowerId) {
+            if (!bookId || !borrowerId) {
                 return res.status(400).json({
                     success: false,
                     message: "Book ID and User ID are required"
@@ -42,7 +43,7 @@ const TransactionController = {
             }
 
             // Transaction when the book is at the owner.
-            if (checkbook.IsAvailable === true && checkbook.locationId == null) {
+            if (checkbook.IsAvailable === true && checkbook.locationId == null) {                
                 
                 const NewTransaction = await transaction.create({
                     bookId: checkbook.id,
@@ -50,7 +51,7 @@ const TransactionController = {
                     borrowerId: borrowerId,
                     clubId: clubId,
                     status: 1,
-                    requestDate: new Date() 
+                    RequestDate: await new Date()
                 })
 
                 if (!NewTransaction) {
@@ -73,7 +74,7 @@ const TransactionController = {
                 const NewTransaction = await transaction.create({
                     bookId: checkbook.id,
                     lenderId: checkbook.userId,
-                    borrowerId: BorrowerId,
+                    borrowerId: borrowerId,
                     clubId: clubId,
                     status: 4,
                     RequestDate: new Date() 
@@ -105,11 +106,11 @@ const TransactionController = {
 
                 const NewTransaction = await transaction.create({
                     bookId: checkbook.id,
-                    LenderId: checkbook.userId,
-                    BorrowerId: BorrowerId,
+                    lenderId: checkbook.userId,
+                    borrowerId: borrowerId,
                     clubId: clubId,
                     status: 1,
-                    requestDate: new Date() 
+                    RequestDate: new Date() 
                 })
 
                 if (!NewTransaction) {
@@ -137,6 +138,8 @@ const TransactionController = {
             });
         }
     },
+
+
     RequestApproval: async (req, res) => {
         try {
             const { transactionId } = req.body;

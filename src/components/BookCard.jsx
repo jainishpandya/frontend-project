@@ -7,13 +7,13 @@ import axios from "axios";
 import BookDetails from "./BookDetails";
 import { useSelector } from "react-redux";
 
-const BookCard = ({ title, author, coverUrl, isAvailable, rating, category, language }) => {
+const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, language }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const clubId = useSelector((state => state.club.id))
-  const token = localStorage.getItem('token')
+  
   // console.log("token:", token);
 
   const handleOpenDialog = () => {
@@ -25,15 +25,20 @@ const BookCard = ({ title, author, coverUrl, isAvailable, rating, category, lang
   };
 
   const handleConfirm = async () => {
-    // console.log(isAvailable ? "Borrowing the book" : "Requesting to borrow the book");
+
+    const token = await localStorage.getItem('token');
+    console.log("token:", token);
+
+    if (!token) {
+      console.error("Token not found");
+      return;
+    }
 
     try {
       const response = await axios.post(`http://localhost:3000/api/v1/transaction/request`, {
-        body: {
           bookId: id,
           clubId: clubId,
           token: token
-        },
       }
       );
       const data = response.data;
