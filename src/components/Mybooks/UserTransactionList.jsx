@@ -188,7 +188,7 @@ function UserTransactionList() {
       ) : error ? (
         <Box className="p-4 text-center text-red-600">{error}</Box>
       ) : BorrowedBooks.length === 0 ? (
-        <Box className="p-4 text-center">No books found.</Box>
+        <Box className="p-4 text-center">No Books found.</Box>
       ) : (
         BorrowedBooks.map((book, index) => (
           <React.Fragment key={book._id || index}>
@@ -250,7 +250,7 @@ function UserTransactionList() {
       ) : error ? (
         <Box className="p-4 text-center text-red-600">{error}</Box>
       ) : LendedBooks.length === 0 ? (
-        <Box className="p-4 text-center">No BorrowedBooks found.</Box>
+        <Box className="p-4 text-center">No Books found.</Box>
       ) : (
         LendedBooks.map((book, index) => (
           <React.Fragment key={book._id || index}>

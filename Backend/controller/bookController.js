@@ -135,59 +135,34 @@ const bookController = {
   myBooks: async (req, res) => {
 
     try{
-      const page = parseInt(req.query.page) || 1;
-      const limit = parseInt(req.query.limit) || 10;
-      const offset = (page - 1) * limit;
-      const search = req.query.search || '';
-      const status = req.query.status || 'all';
-      const categories = req.query.categories ? JSON.parse(req.query.categories) : [];
-      const languages = req.query.languages ? JSON.parse(req.query.languages) : [];
-      const clubId = req.params.clubId;
-      
-
+      const clubId = parseInt(req.query.clubId);
       const token = req.query.token;
+
       if (!token) {
         return res.status(400).json({
           success: false,
           message: "Token is required"
         });
       }
-      const userId = jwt.getUserIdFromToken(token)
-      console.log("User Id : ",userId)
 
-      const whereClause = {
-        clubId: clubId,
-        userId: userId,
-        ...(search.trim() !== '' && {
-          [Op.or]: [
-            { title: { [Op.iLike]: `%${search}%` } },
-            { author: { [Op.iLike]: `%${search}%` } }
-          ]
-        }),
-        
-      };
+      const userId = parseInt(jwt.getUserIdFromToken(token));
 
-      const {count, rows: books} = await Book.findAndCountAll({
-        where: whereClause,
-        attributes: ['id','userId','title','ISBN','author','IsAvailable'],
-        order: [['title', 'ASC']],
-        offset: offset,
-        limit: limit
+      console.log("User Id : ",userId);
+      console.log("userid type : ", typeof(userId));
 
-        
+      const fetchedbooks = await Book.findAll({
+        where: {
+          clubId: clubId,
+          userId: userId,
+        }
       });
 
       const response ={
-        success:true,
-        total:count,
-        page:page,
-        limit:limit,
-        books:books
-        
+        success: true,
+        books: fetchedbooks
       };
       res.status(200).json(response);
 
-    
     }
     catch(error){
       console.error('Error fetching book details:', error);

@@ -50,7 +50,7 @@ const TransactionController = {
                     borrowerId: borrowerId,
                     clubId: clubId,
                     status: 1,
-                     requestDate: new Date() 
+                    requestDate: new Date() 
                 })
 
                 if (!NewTransaction) {
@@ -109,7 +109,7 @@ const TransactionController = {
                     BorrowerId: BorrowerId,
                     clubId: clubId,
                     status: 1,
-                     requestDate: new Date() 
+                    requestDate: new Date() 
                 })
 
                 if (!NewTransaction) {

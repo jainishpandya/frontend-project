@@ -18,7 +18,7 @@ function UserBookList() {
 
       axios.defaults.baseURL = "http://localhost:3000/";
 
-      const clubId = localStorage.getItem("clubId");
+      const clubId = await localStorage.getItem("clubId");
       if (!clubId) {
         setError("Club ID is not available in local storage.");
         return;
@@ -30,10 +30,10 @@ function UserBookList() {
         return;
       }
 
-      const { data } = await axios.get(`api/v1/book/myBooks/${clubId}`,{
-        
-        params:{
-        token : token
+      const { data } = await axios.get(`api/v1/book/myBooks/`, {
+        params: {
+          token: token,
+          clubId: clubId
         }
       });
       console.log(data);
@@ -41,7 +41,7 @@ function UserBookList() {
       if (data.success) {
         // Check if response is an array or single object and handle accordingly
         if (Array.isArray(data.books)) {
-          setBooks(data.books|| []);
+          setBooks(data.books || []);
         } else if (data.book) {
           // If it's a single book, put it in an array
           setBooks([data.books]);
@@ -116,13 +116,12 @@ function UserBookList() {
               <div className="w-2/12 truncate">{book.categoryId || "N/A"}</div>
               <div className="w-1/12">
                 <span
-                  className={`px-2 py-1 rounded-full text-xs ${
-                    book.IsAvailable
+                  className={`px-2 py-1 rounded-full text-xs ${book.IsAvailable
                       ? "bg-green-100 text-green-800"
                       : "bg-red-100 text-red-800"
-                  }`}
+                    }`}
                 >
-                  {book.IsAvailable ? "Availabe": "Not Available"}
+                  {book.IsAvailable ? "Availabe" : "Not Available"}
                 </span>
               </div>
               <div className="w-2/12 text-right">
