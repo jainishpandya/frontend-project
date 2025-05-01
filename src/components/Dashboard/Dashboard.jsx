@@ -5,11 +5,17 @@ import Header from '../Homepage/Header';
 import Footer from '../Homepage/Footer';
 import Databox from '../Databox';
 import BasicLineChart from './LineChart';
+import { useSelector } from 'react-redux';
 
 function Dashboard() {
   const [user, setUser] = useState();
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
+
+  const userBookCount = async () => {
+    const userId = useSelector((state) => state.user.id);
+
+  }
 
 
   return (

@@ -171,7 +171,66 @@ const bookController = {
         message: "Internal Server Error"
       });
     }
-  }
+  },
+
+  dashboardData: async (req, res) => {
+    try {
+      const clubId = parseInt(req.query.clubId);
+      const token = req.query.token;
+
+      if (!token) {
+        return res.status(400).json({
+          success: false,
+          message: "Token is required"
+        });
+      }
+
+      if (!clubId) {
+        return res.status(400).json({
+          success: false,
+          message: "Club ID is required"
+        });
+      }
+
+      const userId = parseInt(jwt.getUserIdFromToken(token));
+
+      const booksReadCount = await Book.count({
+        where: {
+          userId: userId,
+          clubId: clubId,
+          IsAvailable: true
+        }
+      });
+
+      const booksListedCount = await Book.count({
+        where: {
+          userId: userId,
+          clubId: clubId
+        }
+      });
+
+      const booksBorrowedCount = await Book.count({
+        where: {
+          userId: userId,
+          clubId: clubId,
+          IsAvailable: false
+        }
+      });
+
+      res.status(200).json({
+        success: true,
+        booksReadCount,
+        booksListedCount,
+        booksBorrowedCount
+      });
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error"
+      });
+    }
+  },
 };
 
 export default bookController;
