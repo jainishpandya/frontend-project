@@ -45,7 +45,7 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
       if (data.success) {
         console.log("book has been added")
         setSuccess(true);
-        // setTimeout(()=> setSuccess(false), 3000)
+        setTimeout(()=> setSuccess(false), 3000)
       } else {
         setError("Failed to add book");
       }

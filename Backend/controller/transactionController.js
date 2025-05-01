@@ -510,11 +510,6 @@ const TransactionController = {
         }
     },
 
-
-
-
-
-
     getBorrowingTransactionList: async (req, res) => {
         try {
             const { token } = req.body;
