@@ -11,8 +11,6 @@ const TransactionController = {
         try {
 
             const { bookId, clubId, token } = req.body;
-
-            console.log('token', token);
             const borrowerId = jwt.getUserIdFromToken(token);
 
             if (!borrowerId) {
@@ -36,7 +34,7 @@ const TransactionController = {
                     id: bookId,
                 }
             });
-            console.log("Checkbook", checkbook);
+            // console.log("Checkbook", checkbook);
 
             if (!checkbook) {
                 return res.status(404).json({

@@ -6,15 +6,16 @@ import DialogBox from "./DialogBox";
 import axios from "axios";
 import BookDetails from "./BookDetails";
 import { useSelector } from "react-redux";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, language }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   const clubId = useSelector((state => state.club.id))
-  
-  // console.log("token:", token);
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -25,9 +26,7 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
   };
 
   const handleConfirm = async () => {
-
     const token = await localStorage.getItem('token');
-    console.log("token:", token);
 
     if (!token) {
       console.error("Token not found");
@@ -45,6 +44,8 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
 
       if (data.success) {
         console.log("book has been added")
+        setSuccess(true);
+        // setTimeout(()=> setSuccess(false), 3000)
       } else {
         setError("Failed to add book");
       }
@@ -113,6 +114,41 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
         description={`Are you sure you want to ${isAvailable ? "borrow" : "request to borrow"} "${title}" ?`}
         onConfirm={handleConfirm}
       />
+
+      {/* Success Alert */}
+      {success && (
+        <div
+        style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "30%",
+          zIndex: 1000, 
+        }}
+      >
+        <Alert severity="success" className="h-30 justify-center shadow-2xl items-center"
+        sx={{
+          '& .MuiAlert-icon': {
+            fontSize: '4rem'
+          },
+          '& .MuiAlert-message': {
+            fontSize: '1.2rem'
+          },
+          '& .MuiAlert-action': {
+            alignItems: 'center'
+          },
+          borderRadius: '16px',
+          border: '1px solid #81C784',
+          backgroundColor: '#FFF',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        }}>
+          <AlertTitle>Success</AlertTitle>
+          The book request has been successfully sent!
+        </Alert>
+      </div>
+      )}
+
        {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );

@@ -79,7 +79,7 @@ function VerificationForm(props) {
         </div>
         <div className="mt-4 flex flex-col gap-y-4">
           <button
-            className="py-3 rounded-xl bg-br-blue-medium text-white text-md font-bold"
+            className="py-3 cursor-pointer rounded-xl bg-br-blue-medium text-white text-md font-bold"
             onClick={submitHandler}
           >
             Sign In
