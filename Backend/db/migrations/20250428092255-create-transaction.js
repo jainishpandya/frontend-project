@@ -43,7 +43,7 @@ export default {
         onUpdate: 'CASCADE'
       },
       status: {
-        type: Sequelize.ENUM('1', '2', '3', '4', '5', '6'),
+        type: Sequelize.ENUM('1', '2', '3', '4', '5', '6', '7'),
         allowNull: false,
       },
       RequestDate: {

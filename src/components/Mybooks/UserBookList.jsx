@@ -112,8 +112,8 @@ function UserBookList() {
               <div className="w-1/12 truncate">{book.author || "N/A"}</div>
               <div className="w-2/12 truncate">{book.ISBN || "N/A"}</div>
               <div className="w-1/12">{book.rating || 0}</div>
-              <div className="w-1/12 truncate">{book.languageId || "N/A"}</div>
-              <div className="w-2/12 truncate">{book.categoryId || "N/A"}</div>
+              <div className="w-1/12 truncate">{book.language.LanguageName || "N/A"}</div>
+              <div className="w-2/12 truncate">{book.category.CategoryName || "N/A"}</div>
               <div className="w-1/12">
                 <span
                   className={`px-2 py-1 rounded-full text-xs ${book.IsAvailable
