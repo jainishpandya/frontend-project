@@ -154,7 +154,19 @@ const bookController = {
         where: {
           clubId: clubId,
           userId: userId,
-        }
+        },
+          include: [
+            {
+                model: category,
+                as: 'category',
+                attributes: ['id', 'CategoryName']
+            },
+            {
+                model: language,
+                as: 'language',
+                attributes: ['id', 'LanguageName']
+            }
+        ]
       });
 
       const response ={
