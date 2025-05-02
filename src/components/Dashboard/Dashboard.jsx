@@ -35,7 +35,7 @@ function Dashboard() {
           token
         }
       });
-      console.log(data);
+      // console.log(data);
       if (data.success) {
         setBooksRead(data.booksReadCount || 0);
         setBooksListed(data.booksListedCount || 0);

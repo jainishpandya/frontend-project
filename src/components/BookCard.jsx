@@ -18,7 +18,7 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
 
   const clubId = useSelector((state => state.club.id));
   const role = localStorage.getItem('Role');
-  console.log("dekhle role:", role)
+  // console.log("dekhle role:", role)
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -48,7 +48,7 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
       const data = response.data;
 
       if (data.success) {
-        console.log("book has been added")
+        // console.log("book has been added")
         setSuccess(true);
         setTimeout(() => setSuccess(false), 3000)
       } else {
