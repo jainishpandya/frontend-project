@@ -8,6 +8,7 @@ import BookDetails from "./BookDetails";
 import { useSelector } from "react-redux";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import { MdDeleteForever } from "react-icons/md";
 
 const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, language }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -15,7 +16,9 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
-  const clubId = useSelector((state => state.club.id))
+  const clubId = useSelector((state => state.club.id));
+  const role = localStorage.getItem('Role');
+  console.log("dekhle role:", role)
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -24,6 +27,8 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
   };
+
+  const handleDeleteBook = async () => { }
 
   const handleConfirm = async () => {
     const token = await localStorage.getItem('token');
@@ -35,9 +40,9 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
 
     try {
       const response = await axios.post(`http://localhost:3000/api/v1/transaction/request`, {
-          bookId: id,
-          clubId: clubId,
-          token: token
+        bookId: id,
+        clubId: clubId,
+        token: token
       }
       );
       const data = response.data;
@@ -45,14 +50,14 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
       if (data.success) {
         console.log("book has been added")
         setSuccess(true);
-        setTimeout(()=> setSuccess(false), 3000)
+        setTimeout(() => setSuccess(false), 3000)
       } else {
         setError("Failed to add book");
       }
     } catch (error) {
       setError("Error Adding book");
       console.error(error);
-    } finally{
+    } finally {
       setIsDialogOpen(false);
     }
   };
@@ -88,22 +93,35 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
               <FaStar
                 key={index}
                 className={`w-4 h-4 ${index < Math.floor(rating)
-                    ? "text-yellow-400"
-                    : "text-gray-300"
+                  ? "text-yellow-400"
+                  : "text-gray-300"
                   }`}
               />
             ))}
             <span className="text-gray-500 text-sm">({rating})</span>
           </div>
 
-          <Button
-            className={`w-full bg-br-blue-medium 2xl:text-base xl:text-sm lg:text-sm hover:bg-br-blue-dark 
-              text-white py-2 rounded-lg transition-colors duration-200`}
-            disabled={!isAvailable}
-            onClick={handleOpenDialog}
-          >
-            {isAvailable ? 'Borrow Now' : 'Request To Borrow'}
-          </Button>
+          {(role === "0" || role === "1") ? (
+            <Button
+              className={`w-full cursor-pointer flex justify-center items-center bg-red-500 2xl:text-base xl:text-sm lg:text-sm hover:bg-red-600 
+        text-white py-2 rounded-lg transition-colors duration-200`}
+              onClick={handleDeleteBook}
+            >
+              <MdDeleteForever className="w-4 h-4 md:w-5 md:h-5 lg:w-7 lg:h-6 text-white" />
+              <div className="flex items-center ml-3">
+                <span className="font-bold">Delete Book</span>
+              </div>
+            </Button>
+          ) : (
+            <Button
+              className={`w-full bg-br-blue-medium 2xl:text-base xl:text-sm lg:text-sm hover:bg-br-blue-dark 
+        text-white py-2 rounded-lg transition-colors duration-200`}
+              disabled={!isAvailable}
+              onClick={handleOpenDialog}
+            >
+              {isAvailable ? 'Borrow Now' : 'Request To Borrow'}
+            </Button>
+          )}
         </div>
       </div>
 
@@ -118,38 +136,38 @@ const BookCard = ({ id, title, author, coverUrl, isAvailable, rating, category, 
       {/* Success Alert */}
       {success && (
         <div
-        style={{
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "30%",
-          zIndex: 1000, 
-        }}
-      >
-        <Alert severity="success" className="h-30 justify-center shadow-2xl items-center"
-        sx={{
-          '& .MuiAlert-icon': {
-            fontSize: '4rem'
-          },
-          '& .MuiAlert-message': {
-            fontSize: '1.2rem'
-          },
-          '& .MuiAlert-action': {
-            alignItems: 'center'
-          },
-          borderRadius: '16px',
-          border: '1px solid #81C784',
-          backgroundColor: '#FFF',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-        }}>
-          <AlertTitle>Success</AlertTitle>
-          The book request has been successfully sent!
-        </Alert>
-      </div>
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "30%",
+            zIndex: 1000,
+          }}
+        >
+          <Alert severity="success" className="h-30 justify-center shadow-2xl items-center"
+            sx={{
+              '& .MuiAlert-icon': {
+                fontSize: '4rem'
+              },
+              '& .MuiAlert-message': {
+                fontSize: '1.2rem'
+              },
+              '& .MuiAlert-action': {
+                alignItems: 'center'
+              },
+              borderRadius: '16px',
+              border: '1px solid #81C784',
+              backgroundColor: '#FFF',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            }}>
+            <AlertTitle>Success</AlertTitle>
+            The book request has been successfully sent!
+          </Alert>
+        </div>
       )}
 
-       {error && <p className="text-red-500 mt-2">{error}</p>}
+      {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );
 };

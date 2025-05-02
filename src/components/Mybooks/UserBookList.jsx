@@ -70,7 +70,7 @@ function UserBookList() {
       <Box className="flex flex-row rounded-xl py-4 px-6 items-center">
         <div className="text-lg font-bold">My Books</div>
         <button
-          className="bg-br-blue-regular text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center ml-auto font-bold"
+          className="bg-br-blue-regular cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-br-blue-medium flex items-center ml-auto font-bold"
           onClick={() => navigate("/home/mybooks/add-book")}
         >
           <SquarePlus className="mr-2" />
