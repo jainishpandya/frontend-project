@@ -1,4 +1,12 @@
-import { Box } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions, 
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
 import axios from "axios";
 import { SquarePlus, Edit } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -8,6 +16,23 @@ function UserBookList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [books, setBooks] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  // Form states
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [ISBN, setIsbn] = useState("");
+
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
+  const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
+
+  const [languages, setLanguages] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -30,18 +55,17 @@ function UserBookList() {
         return;
       }
 
-      const { data } = await axios.get(`api/v1/book/myBooks/${clubId}`,{
-        
-        params:{
-        token : token
-        }
+      const { data } = await axios.get(`api/v1/book/myBooks/${clubId}`, {
+        params: {
+          token: token,
+        },
       });
       console.log(data);
 
       if (data.success) {
         // Check if response is an array or single object and handle accordingly
         if (Array.isArray(data.books)) {
-          setBooks(data.books|| []);
+          setBooks(data.books || []);
         } else if (data.book) {
           // If it's a single book, put it in an array
           setBooks([data.books]);
@@ -65,18 +89,257 @@ function UserBookList() {
     navigate(`/home/mybooks/edit-book/${bookId}`);
   };
 
+  const handleAddBook = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const clubId = localStorage.getItem("clubId");
+
+      const { data } = await axios.post(
+        "http://localhost:3000/api/v1/book/addbook",
+        {
+          title,
+          author,
+          ISBN,
+          clubId,
+          token,
+          categoryId: selectedCategory.id, // Replace with actual IDs
+          languageId: selectedLanguage.id,
+          isAvailable: true,
+        }
+      );
+
+      if (data.success) {
+        alert("Book added!");
+        setOpenDialog(false);
+        setTitle("");
+        setAuthor("");
+        setIsbn("");
+        getBookData(); // Refresh list
+      } else {
+        alert("Failed to add book.");
+      }
+    } catch (error) {
+      console.error("Add book error:", error);
+      alert("Error adding book.");
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:3000/api/v1/category/getall");
+      if (data.success) {
+        setCategories(data.categories.rows);
+        console.log("Categories:", data.categories.rows);
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  const fetchLanguages = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:3000/api/v1/language/getall");
+      if (data.success) {
+        setLanguages(data.languages.rows);
+        console.log("Languages:", data.languages.rows);
+      }
+    } catch (error) {
+      console.error("Error fetching languages:", error);
+    }
+  };
+
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+      await Promise.all([fetchCategories(), fetchLanguages()]);
+      setIsLoading(false);
+    };
+    loadData();
+  }, []);
+
   return (
     <Box className="bg-br-white rounded-xl p-0 w-full">
       <Box className="flex flex-row rounded-xl py-4 px-6 items-center">
         <div className="text-lg font-bold">My Books</div>
         <button
           className="bg-br-blue-regular text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center ml-auto font-bold"
-          onClick={() => navigate("/home/mybooks/add-book")}
+          onClick={() => setOpenDialog(true)}
         >
           <SquarePlus className="mr-2" />
           Add Book
         </button>
       </Box>
+
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} fullWidth>
+        <DialogTitle>Add a New Book</DialogTitle>
+        <DialogContent dividers>
+          <div className="mb-4">
+            <label
+              htmlFor="title"
+              className="block text-sm font-bold mb-2 text-br-blue-medium"
+            >
+              Title
+            </label>
+            <input
+              id="title"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="bg-white border border-br-gray-dark rounded-xl py-3 px-4 w-full"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="author"
+              className="block text-sm font-bold mb-2 text-br-blue-medium"
+            >
+              Author Name
+            </label>
+            <input
+              id="author"
+              type="text"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+              className="bg-white border border-br-gray-dark rounded-xl py-3 px-4 w-full"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="isbn"
+              className="block text-sm font-bold mb-2 text-br-blue-medium"
+            >
+              ISBN Number
+            </label>
+            <input
+              id="isbn"
+              type="text"
+              value={ISBN}
+              onChange={(e) => setIsbn(e.target.value)}
+              className="bg-white border border-br-gray-dark rounded-xl py-3 px-4 w-full"
+            />
+          </div>
+
+          <div className="mb-4 flex gap-4 w-full">
+            {/* Language Dropdown */}
+            <div className="w-1/2 relative">
+              <label className="block text-sm font-bold mb-2 text-br-blue-medium">
+                Language
+              </label>
+              <button
+                type="button"
+                className="bg-white border border-br-gray-dark rounded-xl py-3 px-4 w-full text-left flex justify-between items-center"
+                onClick={() => setLanguageDropdownOpen((prev) => !prev)}
+                onBlur={() =>
+                  setTimeout(() => setLanguageDropdownOpen(false), 200)
+                }
+              >
+                {selectedLanguage
+                  ? selectedLanguage.LanguageName
+                  : "Select a language"}
+                <svg
+                  className="w-4 h-4 ml-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+              {languageDropdownOpen && (
+                <div className="absolute top-full left-0 w-full border border-br-gray-light rounded-lg bg-white z-10 mt-1 max-h-48 overflow-y-auto">
+                  {languages.length > 0 ? (
+                    languages.map((language) => (
+                      <div
+                        key={language.LanguageName}
+                        className="p-3 hover:bg-br-blue-light cursor-pointer"
+                        onClick={() => {
+                          setSelectedLanguage(language);
+                          setLanguageDropdownOpen(false);
+                        }}
+                      >
+                        {language.LanguageName}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-3 text-gray-500">
+                      No languages available
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Category Dropdown */}
+            <div className="w-1/2 relative">
+              <label className="block text-sm font-bold mb-2 text-br-blue-medium">
+                Category
+              </label>
+              <button
+                type="button"
+                className="bg-white border border-br-gray-dark rounded-xl py-3 px-4 w-full text-left flex justify-between items-center"
+                onClick={() => setCategoryDropdownOpen((prev) => !prev)}
+                onBlur={() =>
+                  setTimeout(() => setCategoryDropdownOpen(false), 200)
+                }
+              >
+                {selectedCategory
+                  ? selectedCategory.CategoryName
+                  : "Select a category"}
+                <svg
+                  className="w-4 h-4 ml-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+              {categoryDropdownOpen && (
+                <div className="absolute top-full left-0 w-full border border-br-gray-light rounded-lg bg-white z-10 mt-1 max-h-48 overflow-y-auto">
+                  {categories.length > 0 ? (
+                    categories.map((category) => (
+                      <div
+                        key={category.id}
+                        className="p-3 hover:bg-br-blue-light cursor-pointer"
+                        onClick={() => {
+                          setSelectedCategory(category);
+                          setCategoryDropdownOpen(false);
+                        }}
+                      >
+                        {category.CategoryName}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-3 text-gray-500">
+                      No categories available
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+          {/* You can add dropdowns for category and language here later */}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
+          <Button onClick={handleAddBook} variant="contained" color="primary">
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Box
         sx={{ borderBottom: 3, borderColor: "divider" }}
         className="w-full"
@@ -122,7 +385,7 @@ function UserBookList() {
                       : "bg-red-100 text-red-800"
                   }`}
                 >
-                  {book.IsAvailable ? "Availabe": "Not Available"}
+                  {book.IsAvailable ? "Availabe" : "Not Available"}
                 </span>
               </div>
               <div className="w-2/12 text-right">
