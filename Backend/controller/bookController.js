@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, where } from 'sequelize';
 import Book from '../db/models/book.js';
 import language from '../db/models/language.js';
 import category from '../db/models/category.js';
@@ -126,6 +126,79 @@ const bookController = {
       }
     } catch (error) {
       console.error('Error adding book:', error);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error"
+      });
+    }
+  },
+
+  EditBook: async (req, res) => {
+    try{
+      const {title, author, ISBN, clubId, token, categoryId, languageId } = req.body;
+      // console.log("request body:", req.body);
+
+      const bookId = req.params.bookId;
+
+      if (!title || !author || !ISBN || !categoryId || !languageId || !clubId || !token) {
+        return res.status(400).json({
+          success: false,
+          message: "All fields are required"
+        });
+      }
+      if (!bookId) {
+        return res.status(400).json({
+          success: false,
+          message: "Book ID is required"
+        });
+      }
+      const userId = jwt.getUserIdFromToken(token);
+
+      const existingBook = await Book.findOne({
+        where: {
+          id: bookId,
+          userId: userId,
+          clubId: clubId
+        }
+      });
+
+      if (!existingBook) {
+        return res.status(404).json({
+          success: false,
+          message: "Book not found"
+        });
+      }
+
+      const updatedBook = await Book.update({ 
+        title: title,
+        author: author,
+        ISBN: ISBN,
+        categoryId: categoryId,
+        languageId: languageId,
+      },{
+        where: {
+          id: bookId,
+          userId: userId,
+          clubId: clubId
+        },
+        returning: true
+      })
+
+      if(!updatedBook[0]) {
+        return res.status(400).json({
+          success: false,
+          message: "Failed to update book"
+        });
+      }
+
+      return res.status(200).json({ 
+        success: true,
+        message: "Book updated successfully",
+        book: updatedBook[1][0]
+      });
+
+    }catch(error){
+      console.error('Error editing book:', error);
       res.status(500).json({
         success: false,
         message: "Internal Server Error"
