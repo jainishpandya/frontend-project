@@ -17,23 +17,25 @@ const transaction = sequelize.define('transaction',{
         },
         onUpdate: 'CASCADE',
     },
-    LenderId: {
+    lenderId: {
         type: DataTypes.INTEGER,
         references: {
             model: 'user',
             key: 'id'
         },
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
     },
-    BorrowerId: {
+    borrowerId: {
         type: DataTypes.INTEGER,
         references: {
             model: 'user',
             key: 'id'
         },
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
     },
-    ClubId: {
+    clubId: {
         type: DataTypes.INTEGER,
         references: {
             model: 'club',
@@ -42,7 +44,7 @@ const transaction = sequelize.define('transaction',{
         onUpdate: 'CASCADE'
     },
     status: {
-        type: DataTypes.ENUM('1', '2', '3', '4', '5', '6'),
+        type: DataTypes.ENUM('1', '2', '3', '4', '5', '6', '7'),
         allowNull: false,
     },
     RequestDate: {

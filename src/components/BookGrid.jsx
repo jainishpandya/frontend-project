@@ -42,7 +42,7 @@ function BookGrid({ searchQuery, filters }) {
       }
       );
       const data = response.data;
-      console.log("dekhle", data);
+      // console.log("dekhle", data);
 
       if (data.success) {
         setTotalCount(data.total);
@@ -147,6 +147,7 @@ function BookGrid({ searchQuery, filters }) {
           books.map((book) => (
             <BookCard
               key={book.id}
+              id={book.id}
               title={book.title}
               author={book.author}
               category={book.category.CategoryName}

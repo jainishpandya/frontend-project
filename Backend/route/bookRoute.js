@@ -4,6 +4,7 @@ import bookController from '../controller/bookController.js';
 const router = express.Router();
 router.get('/bookDetails/:clubId', bookController.bookDetails);
 router.post('/addbook', bookController.AddBooks);
-router.get('/myBooks/:clubId', bookController.myBooks);
+router.get('/myBooks', bookController.myBooks);
+router.get('/dashboardData', bookController.dashboardData);
 
 export default router;

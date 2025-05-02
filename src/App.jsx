@@ -15,6 +15,8 @@ import ClubList from "./components/Clubs/ClubList";
 import SetPassword from "./components/Authentication/SetPassword";
 import BookDetails from "./components/BookDetails";
 import AddBookModal from "./components/Mybooks/AddBookModal";
+import EnterEmail from "./components/Authentication/EnterEmail";
+import ResetPassword from "./components/Authentication/ResetPassword";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/signin" Component={LoginPage} />
         <Route path="club-selection" Component={ClubSelection} />
         <Route path="/set-password" Component={SetPassword} />
+        <Route path="/forgot-password" Component={EnterEmail} />
+        <Route path="/reset-password" Component={ResetPassword} />
 
         <Route path="/home" Component={Homepage}>
           <Route index element={<Dashboard />} />

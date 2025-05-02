@@ -1,8 +1,9 @@
+import { CircularProgress } from "@mui/material";
 import {
   Box,
   Button,
   Dialog,
-  DialogActions, 
+  DialogActions,
   DialogContent,
   DialogTitle,
   TextField,
@@ -43,7 +44,7 @@ function UserBookList() {
 
       axios.defaults.baseURL = "http://localhost:3000/";
 
-      const clubId = localStorage.getItem("clubId");
+      const clubId = await localStorage.getItem("clubId");
       if (!clubId) {
         setError("Club ID is not available in local storage.");
         return;
@@ -55,9 +56,10 @@ function UserBookList() {
         return;
       }
 
-      const { data } = await axios.get(`api/v1/book/myBooks/${clubId}`, {
+      const { data } = await axios.get(`api/v1/book/myBooks/`, {
         params: {
           token: token,
+          clubId: clubId,
         },
       });
       console.log(data);
@@ -65,6 +67,7 @@ function UserBookList() {
       if (data.success) {
         // Check if response is an array or single object and handle accordingly
         if (Array.isArray(data.books)) {
+          setBooks(data.books || []);
           setBooks(data.books || []);
         } else if (data.book) {
           // If it's a single book, put it in an array
@@ -126,7 +129,9 @@ function UserBookList() {
 
   const fetchCategories = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/api/v1/category/getall");
+      const { data } = await axios.get(
+        "http://localhost:3000/api/v1/category/getall"
+      );
       if (data.success) {
         setCategories(data.categories.rows);
         console.log("Categories:", data.categories.rows);
@@ -138,7 +143,9 @@ function UserBookList() {
 
   const fetchLanguages = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/api/v1/language/getall");
+      const { data } = await axios.get(
+        "http://localhost:3000/api/v1/language/getall"
+      );
       if (data.success) {
         setLanguages(data.languages.rows);
         console.log("Languages:", data.languages.rows);
@@ -362,7 +369,9 @@ function UserBookList() {
       ></Box>
 
       {loading ? (
-        <Box className="p-4 text-center">Loading books...</Box>
+        <Box className="p-4 text-center">
+          <CircularProgress />
+        </Box>
       ) : error ? (
         <Box className="p-4 text-center text-red-600">{error}</Box>
       ) : books.length === 0 ? (
@@ -375,8 +384,12 @@ function UserBookList() {
               <div className="w-1/12 truncate">{book.author || "N/A"}</div>
               <div className="w-2/12 truncate">{book.ISBN || "N/A"}</div>
               <div className="w-1/12">{book.rating || 0}</div>
-              <div className="w-1/12 truncate">{book.languageId || "N/A"}</div>
-              <div className="w-2/12 truncate">{book.categoryId || "N/A"}</div>
+              <div className="w-1/12 truncate">
+                {book.language.LanguageName || "N/A"}
+              </div>
+              <div className="w-2/12 truncate">
+                {book.category.CategoryName || "N/A"}
+              </div>
               <div className="w-1/12">
                 <span
                   className={`px-2 py-1 rounded-full text-xs ${
