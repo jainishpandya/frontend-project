@@ -26,7 +26,7 @@ function Homepage() {
       const token = localStorage.getItem("token");
 
       if (token) {
-        console.log("Token:", token);
+        // console.log("Token:", token);
 
         axios.defaults.baseURL = "http://localhost:3000/";
         const params = JSON.stringify({
@@ -44,7 +44,7 @@ function Homepage() {
 
         // console.log(data);
         if (data.success) {
-          console.log(data);
+          // console.log(data);
 
           dispatch(
             login({
@@ -70,7 +70,7 @@ function Homepage() {
       const clubId = localStorage.getItem("clubId");
 
       if (clubId) {
-        console.log("Club ID:", clubId);
+        // console.log("Club ID:", clubId);
 
         axios.defaults.baseURL = "http://localhost:3000/";
         const params = JSON.stringify({
@@ -86,9 +86,9 @@ function Homepage() {
           config
         );
 
-        console.log(data);
+        // console.log(data);
         if (data.success) {
-          console.log(data.club);
+          // console.log(data.club);
 
           dispatch(
             clubin({

@@ -8,61 +8,7 @@ import { CircularProgress, Skeleton } from '@mui/material';
 const Status_Options = [
     { id: 'all', label: 'All' },
     { id: 'borrowed', label: 'Borrowed' },
-    { id: 'available', label: 'Available' },
-    
-];
-const Categories_Options = [
-    { id: 'action_adventure', label: 'Action & Adventure' },
-    { id: 'arts_film_photography', label: 'Arts, Film & Photography' },
-    { id: 'biographies', label: 'Biographies, Diaries & True Accounts' },
-    { id: 'business_economics', label: 'Business & Economics' },
-    { id: 'children', label: 'Children\'s Books' },
-    { id: 'comics_mangas', label: 'Comics & Mangas' },
-    { id: 'computers_internet', label: 'Computers & Internet' },
-    { id: 'crafts_hobbies', label: 'Crafts, Hobbies & Home' },
-    { id: 'crime_thriller', label: 'Crime, Thriller & Mystery' },
-    { id: 'engineering', label: 'Engineering' },
-    { id: 'exam_preparation', label: 'Exam Preparation' },
-    { id: 'health_family', label: 'Health, Family & Personal Development' },
-    { id: 'health_fitness', label: 'Health, Fitness & Nutrition' },
-    { id: 'historical_fiction', label: 'Historical Fiction' },
-    { id: 'history', label: 'History' },
-    { id: 'humour', label: 'Humour' },
-    { id: 'language_linguistics', label: 'Language, Linguistics & Writing' },
-    { id: 'law', label: 'Law' },
-    { id: 'literature_fiction', label: 'Literature & Fiction' },
-    { id: 'maps_atlases', label: 'Maps & Atlases' },
-    { id: 'medicine_textbooks', label: 'Medicine and Health Sciences Textbooks' },
-    { id: 'politics', label: 'Politics' },
-    { id: 'reference', label: 'Reference' },
-    { id: 'religion_spirituality', label: 'Religion & Spirituality' },
-    { id: 'romance', label: 'Romance' },
-    { id: 'school_books', label: 'School Books' },
-    { id: 'science_math_textbooks', label: 'Science and Mathematics Textbooks' },
-    { id: 'scifi_fantasy', label: 'Science Fiction & Fantasy' },
-    { id: 'science_tech_medicine', label: 'Sciences, Technology & Medicine' },
-    { id: 'society_social', label: 'Society & Social Sciences' },
-    { id: 'sports', label: 'Sports' },
-    { id: 'teen_young_adult', label: 'Teen & Young Adult' },
-    { id: 'textbooks_study', label: 'Textbooks & Study Guides' },
-    { id: 'travel_tourism', label: 'Travel & Tourism' }
-];
-const Languages_Options = [
-    { id: 'english', label: 'English' },
-    { id: 'hindi', label: 'Hindi' },
-    { id: 'marathi', label: 'Marathi' },
-    { id: 'tamil', label: 'Tamil' },
-    { id: 'telugu', label: 'Telugu' },
-    { id: 'bengali', label: 'Bengali' },
-    { id: 'malayalam', label: 'Malayalam' },
-    { id: 'sanskrit', label: 'Sanskrit' },
-    { id: 'urdu', label: 'Urdu' },
-    { id: 'kannada', label: 'Kannada' },
-    { id: 'punjabi', label: 'Punjabi' },
-    { id: 'oriya', label: 'Oriya' },
-    { id: 'gujarati', label: 'Gujarati' },
-    { id: 'sindhi', label: 'Sindhi' },
-    { id: 'assamese', label: 'Assamese' }
+    { id: 'available', label: 'Available' },   
 ];
 
 const Filters = ({onFilterChange}) => {
@@ -89,7 +35,7 @@ const Filters = ({onFilterChange}) => {
 
             // console.log(data);
             if (data.success) {
-                console.log(data.categories.count);
+                // console.log(data.categories.count);
                 await setCategories(data.categories.rows)
             }
             
@@ -107,9 +53,9 @@ const Filters = ({onFilterChange}) => {
             
             const { data } = await axios.get('/api/v1/language/getall');
 
-            console.log(data);
+            // console.log(data);
             if (data.success) {
-                console.log(data.languages.count);
+                // console.log(data.languages.count);
                 await setLanguages(data.languages.rows)
             }
             
