@@ -718,6 +718,59 @@ const TransactionController = {
         }
     },
 
+    requestcancel: async (req, res) => {
+        try {
+            const { transactionId, token } = req.body;
+            const userId = jwt.getUserIdFromToken(token);
+            if (!userId) {
+                console.log("Error in authenticating User");
+                return res.status(403).json({
+                    success: false,
+                    message: "Access forbidden"
+                })
+            }
+            if (!transactionId) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Transaction ID are required"
+                });
+            }
+            const transactionToUpdate = await transaction.findOne({
+                where: {
+                    id: transactionId
+                }
+            });
+            // Check if the user is the borrower of the transaction
+            if (transactionToUpdate.borrowerId !== userId) {
+
+                return res.status(403).json({
+                    success: false,
+                    message: "You are not authorized to cancel this transaction"
+                });
+            }
+            transactionToUpdate.status = 3; // Assuming 3 is the status for cancelled
+            const updatedTransaction = await transactionToUpdate.save();
+            if (updatedTransaction) {
+                res.status(200).json({
+                    success: true,
+                    message: "Transaction status updated successfully",
+                    transaction: updatedTransaction
+                });
+            } else {
+                res.status(500).json({
+                    success: false,
+                    message: "Internal Server Error"
+                });
+            }
+        } catch (error) {
+            console.log("Error in updating transaction status", error);
+            res.status(500).json({
+                success: false,
+                message: "Internal Server Error"
+            });
+        }
+    },
+
     initiateReturnBook: async (req, res) => {
         try {
             const { transactionId, token } = req.body;
@@ -741,7 +794,7 @@ const TransactionController = {
                 }
             });
             // Check if the user is the lender of the transaction
-            if (transactionToUpdate.lenderId !== userId) {
+            if (transactionToUpdate.borrowerId !== userId) {
                 return res.status(403).json({
                     success: false,
                     message: "You are not authorized to approve this transaction"
@@ -752,7 +805,7 @@ const TransactionController = {
 
             const updatedTransaction = await transactionToUpdate.save();
 
-            if (updatedTransaction && updatedBook) {
+            if (updatedTransaction) {
                 res.status(200).json({
                     success: true,
                     message: "Transaction status updated successfully",
@@ -837,27 +890,55 @@ const TransactionController = {
             }
 
 
-            bookinfo.locationId = locationinfo.id; // setting the book location to central Location of the club
-            bookinfo.IsAvailable = true; // setting the book location to central Location of the club
+             // Fetch all pending requests for this book where the current user is the lender
+        const pendingRequests = await transaction.findAll({
+            where: {
+                bookId: bookinfo.id,
+                lenderId: userId,
+                status: {
+                    [Op.in]: ['1', '2', '4'] // Pending, Approved, or Book Dropped
+                } // Requested
+            },
+            order: [['RequestDate', 'ASC']] // Oldest first
+        });
 
-            transactionToUpdate.status = 7; // Assuming 7 it to return the book
-            transactionToUpdate.returnDate = new Date();
+        if (pendingRequests.length > 0) {
+            const oldestRequest = pendingRequests[0];
 
-            const updatedTransaction = await transactionToUpdate.save();
-            const updatedBook = await bookinfo.save();
+            // Update the oldest request
+            oldestRequest.status = 4; // Dropped at central location
+            await oldestRequest.save();
 
-            if (updatedTransaction && updatedBook) {
-                res.status(200).json({
-                    success: true,
-                    message: "Transaction status updated successfully",
-                    transaction: updatedTransaction
-                });
-            } else {
-                res.status(500).json({
-                    success: false,
-                    message: "Internal Server Error"
-                });
+            // Update book info
+            bookinfo.locationId = locationinfo.id;
+            bookinfo.IsAvailable = false;
+            await bookinfo.save();
+
+            // Update all other requests
+            const otherRequests = pendingRequests.slice(1);
+            for (const req of otherRequests) {
+                req.lenderId = oldestRequest.borrowerId;
+                await req.save();
             }
+
+        } else {
+            // No requests – return to central location and mark as available
+            bookinfo.locationId = locationinfo.id;
+            bookinfo.IsAvailable = true;
+            await bookinfo.save();
+        }
+
+        // Finalize the return
+        transactionToUpdate.status = 7; // Returned
+        transactionToUpdate.returnDate = new Date();
+        await transactionToUpdate.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Transaction status updated successfully",
+            transaction: transactionToUpdate
+        });
+
 
         } catch (error) {
             console.log("Error in updating transaction status", error);

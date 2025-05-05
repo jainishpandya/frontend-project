@@ -1,6 +1,6 @@
 import { Box, CircularProgress } from "@mui/material";
 import axios from "axios";
-import { SquarePlus, Edit, Redo2 } from "lucide-react";
+import { SquarePlus, Edit, Redo2, CornerDownLeft, Undo2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -95,6 +95,87 @@ function UserBorrowedList() {
     navigate(`/home/mybooks/edit-book/${bookId}`);
   };
 
+
+  const initiateReturn = async (transactionId) => {
+    try {
+      const token = await localStorage.getItem("token");
+
+      axios.defaults.baseURL = "http://localhost:3000/"
+
+      console.log(token)
+      console.log(transactionId)
+
+      const { data } = await axios.post(`api/v1/transaction/initiatereturn`, {
+        transactionId,
+        token
+      });
+
+      console.log(data);
+      if (data.success) {
+        console.log("Initiated the Return");
+        getBookData();
+        getBorrowingHistory();
+      }
+    } catch (error) {
+      console.error("Error in initiating the return", error);
+    }
+  }
+
+  const handleReturn = async (transactionId) => {
+    try {
+      const token = await localStorage.getItem("token");
+
+      axios.defaults.baseURL = "http://localhost:3000/"
+
+      console.log(token);
+      console.log(transactionId);
+
+      const { data } = await axios.post(`api/v1/transaction/return`, {
+        transactionId,
+        token
+      });
+
+      console.log(data);
+      if (data.success) {
+        console.log("Book Returned Successfully");
+        getBookData();
+        getBorrowingHistory();
+      }
+    } catch (error) {
+      console.error("Error in returning Book", error);
+    }
+  }
+
+  const renderActionButtonLender = (status, transactionId) => {
+    switch (status) {
+      case '5': // Requested
+        return (
+          <button
+            className="text-blue-600 hover:bg-br-blue-dark flex flex-row items-center justify-end  bg-br-blue-medium gap-1 p-2 rounded-lg text-sm text-white"
+            onClick={() => initiateReturn(transactionId)}
+          >
+            <CornerDownLeft size={18} />
+            Initiate Return
+          </button>
+        );
+      case '6': // Approved
+        return (
+          <button
+            className="text-blue-600 hover:bg-br-blue-dark flex flex-row items-center justify-end  bg-br-blue-medium gap-1 p-2 rounded-lg text-sm text-white"
+            onClick={() => handleReturn(transactionId)}
+          >
+            <Undo2 size={18} />
+            Return
+          </button>
+        );
+      default:
+        return null;
+    }
+  };
+
+
+
+
   return (
     <Box className="bg-br-white rounded-xl p-0 w-full">
       <Box className="flex flex-row rounded-xl py-4 px-6 items-center">
@@ -149,7 +230,7 @@ function UserBorrowedList() {
                 </span>
               </div>
               <div className="w-2/12 text-right justify-end flex flex-row items-center gap-2">
-                
+                {renderActionButtonLender(book.status, book.id)}
               </div>
             </Box>
             <Box
@@ -218,7 +299,7 @@ function UserBorrowedList() {
                 </span>
               </div>
               <div className="w-2/12 text-right justify-end flex flex-row items-center gap-2">
-                
+
               </div>
             </Box>
             <Box
