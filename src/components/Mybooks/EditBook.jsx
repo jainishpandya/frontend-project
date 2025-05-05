@@ -141,7 +141,7 @@ const EditBook = ({ onClose, onSuccess, bookData }) => {
                                     <label className="block text-sm font-bold mb-2 text-br-blue-medium">Language</label>
                                     <button
                                         type="button"
-                                        className="bg-white border border-br-gray-dark rounded-xl py-3 px-4 w-full text-left flex justify-between items-center"
+                                        className="bg-white cursor-pointer border border-br-gray-dark rounded-xl py-3 px-4 w-full text-left flex justify-between items-center"
                                         onClick={() => setLanguageDropdownOpen((prev) => !prev)}
                                         onBlur={() => setTimeout(() => setLanguageDropdownOpen(false), 200)}
                                     >
@@ -177,7 +177,7 @@ const EditBook = ({ onClose, onSuccess, bookData }) => {
                                     <label className="block text-sm font-bold mb-2 text-br-blue-medium">Category</label>
                                     <button
                                         type="button"
-                                        className="bg-white border border-br-gray-dark rounded-xl py-3 px-4 w-full text-left flex justify-between items-center"
+                                        className="bg-white cursor-pointer border border-br-gray-dark rounded-xl py-3 px-4 w-full text-left flex justify-between items-center"
                                         onClick={() => setCategoryDropdownOpen((prev) => !prev)}
                                         onBlur={() => setTimeout(() => setCategoryDropdownOpen(false), 200)}
                                     >

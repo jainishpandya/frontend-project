@@ -47,15 +47,15 @@ function BookGrid({ searchQuery, filters }) {
       if (data.success) {
         setTotalCount(data.total);
 
-         // If search is active and no results found
-        if(searchQuery && data.total === 0) {
+        // If search is active and no results found
+        if (searchQuery && data.total === 0) {
           setBooks([]);
           setError("No books found matching your search");
           return;
         }
 
         // If no books in club
-        if(data.total === 0) {
+        if (data.total === 0) {
           setBooks([]);
           setError("No books found in this club. Start adding books to build your collection!");
           return;
@@ -78,7 +78,7 @@ function BookGrid({ searchQuery, filters }) {
     } catch (error) {
       setError("Error fetching books");
       console.error(error);
-    } 
+    }
   }
 
 
@@ -112,27 +112,27 @@ function BookGrid({ searchQuery, filters }) {
   if (error) return <div className="text-center py-8">Error: {error}</div>;
 
   return (
-    <div className="w-full  bg-br-blue-light flex flex-col space-y-1">
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-4 base:py-10 px-4 py-8 w-full flex-grow bg-white">
+    <div className="w-full h-full bg-br-blue-light flex flex-col space-y-1">
+      <div className="grid auto-rows-[410px] min-h-[901px] md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-4 px-4 py-8 w-full bg-white">
         {loading ? (
           // Skeleton loader when loading is true
           [...Array(resultsPerPage)].map((_, i) => (
             <div className="p-4 rounded-xl border border-br-gray-light shadow-sm w-full bg-white" style={{ minHeight: "410px" }}>
-            {/* Image placeholder */}
-            <Skeleton variant="rectangular" height={210} className="w-full rounded-md" />
-      
-            {/* Title */}
-            <Skeleton variant="text" height={28} width="80%" className="mt-4" />
-      
-            {/* Author */}
-            <Skeleton variant="text" height={20} width="60%" />
-      
-            {/* Rating */}
-            <Skeleton variant="text" height={20} width="40%" />
-      
-            {/* Button */}
-            <Skeleton variant="rectangular" height={36} className="mt-4 rounded-md w-full" />
-          </div>
+              {/* Image placeholder */}
+              <Skeleton variant="rectangular" height={210} className="w-full rounded-md" />
+
+              {/* Title */}
+              <Skeleton variant="text" height={28} width="80%" className="mt-4" />
+
+              {/* Author */}
+              <Skeleton variant="text" height={20} width="60%" />
+
+              {/* Rating */}
+              <Skeleton variant="text" height={20} width="40%" />
+
+              {/* Button */}
+              <Skeleton variant="rectangular" height={36} className="mt-4 rounded-md w-full" />
+            </div>
           ))
         ) : error ? (
           <div className="col-span-5 text-center py-8">
@@ -143,7 +143,7 @@ function BookGrid({ searchQuery, filters }) {
               </button>
             )}
           </div>
-        ): (
+        ) : (
           books.map((book) => (
             <BookCard
               key={book.id}
@@ -161,12 +161,12 @@ function BookGrid({ searchQuery, filters }) {
       </div>
 
       {totalCount > 0 && (
-      <Pagination
-        currentPage={currentPage}
-        totalResults={totalCount}
-        onPageChange={handlePageChange}
-      />
-    )}
+        <Pagination
+          currentPage={currentPage}
+          totalResults={totalCount}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
 
   );

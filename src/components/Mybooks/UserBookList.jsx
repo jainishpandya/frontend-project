@@ -9,13 +9,13 @@ import {
   TextField,
 } from "@mui/material";
 import axios from "axios";
-import { SquarePlus, Edit } from "lucide-react";
+import { SquarePlus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EditBook from "./EditBook";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import { get } from "lodash";
+import { MdOutlineEdit } from "react-icons/md";
 
 function UserBookList() {
   const [loading, setLoading] = useState(true);
@@ -109,7 +109,7 @@ function UserBookList() {
           ISBN,
           clubId,
           token,
-          categoryId: selectedCategory.id, // Replace with actual IDs
+          categoryId: selectedCategory.id,
           languageId: selectedLanguage.id,
           isAvailable: true,
         }
@@ -169,7 +169,7 @@ function UserBookList() {
     setTimeout(() => {
       setEditSuccess(false);
     }, 3000);
-    getBookData(); 
+    getBookData();
   };
 
   useEffect(() => {
@@ -376,7 +376,7 @@ function UserBookList() {
                 setEditDialogOpen(false);
               }}
               // getBookData(); 
-              onSuccess={handleEditSuccess} 
+              onSuccess={handleEditSuccess}
               bookData={selectedBook}
             />
           )}
@@ -440,7 +440,9 @@ function UserBookList() {
                     onClick={() => handleEdit(book)}
                     className="text-blue-600 cursor-pointer hover:text-blue-800"
                   >
-                    <Edit size={18} />
+                    <div className="">
+                      <MdOutlineEdit className="p-2 bg-br-blue-dark text-white rounded-lg hover:bg-br-blue-medium transition-colors duration-200" size={30} />
+                    </div>
                   </button>
                 </div>
               </Box>
