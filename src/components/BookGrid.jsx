@@ -18,10 +18,11 @@ function BookGrid({ searchQuery, filters }) {
   const token = localStorage.getItem("token");
 
   async function fetchBooks() {
+    debugger;
     try {
 
       if (!clubId) {
-        setLoading(false);
+        
         return;
       }
 
@@ -83,9 +84,12 @@ function BookGrid({ searchQuery, filters }) {
 
 
   useEffect(() => {
-    fetchBooks();
+    debugger;
+    if(clubId) {
+      fetchBooks();
+    }
     setLoading(true); // Set loading state
-  }, [currentPage, clubId, searchQuery, filters]);
+  }, [clubId, currentPage, searchQuery, filters]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);

@@ -157,6 +157,30 @@ function UserTransactionList() {
     }
   }
 
+  const CancelRequest = async (transactionId) => {
+    try {
+      const token = await localStorage.getItem("token");
+      
+      axios.defaults.baseURL = "http://localhost:3000/"
+
+      console.log(token)
+      console.log(transactionId)
+
+      const { data } = await axios.post(`api/v1/transaction/cancel`, {
+        transactionId,
+        token
+      });
+
+      console.log(data);
+      if (data.success){
+        console.log("Cancelled the request");
+        getLendingBookData();
+      }
+    } catch (error) {
+      console.error("Error in cancelling the request the request", error);
+    }
+  }
+
 
   useEffect(() => {
     getBorrowingBookData();
@@ -203,7 +227,9 @@ function UserTransactionList() {
     switch (status) {
       case '1': // Requested
         return (
-          <button className="text-blue-600 hover:bg-br-blue-dark flex flex-row items-center justify-end  bg-br-blue-medium gap-1 p-2 rounded-lg text-sm text-white">
+          <button className="text-blue-600 hover:bg-br-blue-dark flex flex-row items-center justify-end  bg-br-blue-medium gap-1 p-2 rounded-lg text-sm text-white"
+          onClick={() => CancelRequest(transactionId)}
+          >
             <X  size={18} />
             Cancel
           </button>
