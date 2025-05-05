@@ -17,6 +17,8 @@ import BookDetails from "./components/BookDetails";
 import AddBookModal from "./components/Mybooks/AddBookModal";
 import EnterEmail from "./components/Authentication/EnterEmail";
 import ResetPassword from "./components/Authentication/ResetPassword";
+import UserBorrowedList from "./components/Mybooks/UserBorrowedList";
+import UserBookList from "./components/Mybooks/UserBookList";
 
 function App() {
   return (
@@ -36,12 +38,14 @@ function App() {
 
           <Route path="mybooks" element={<MyBooks />} />
           <Route path="mybooks/add-book" element={<AddBookModal/>} />
+          <Route path="borrowed" element={<UserBorrowedList />} />
 
           <Route path="members" element={<MemberList />} />
           <Route path="transactions" element={<TransactionList />} />
           <Route path="reviews" element={<ReviewList />} />
           <Route path="clubs" element={<ClubList />} />
           <Route path="profile" element={<ProfilePage />} />
+
         </Route>
       </Routes>
     </>

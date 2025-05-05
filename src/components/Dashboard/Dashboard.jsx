@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../Homepage/Sidebar';
-import Header from '../Homepage/Header';
-import Footer from '../Homepage/Footer';
 import Databox from '../Databox';
 import BasicLineChart from './LineChart';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import UserBorrowedList from '../Mybooks/UserBorrowedList';
 
 function Dashboard() {
   const [error, setError] = useState(null);
@@ -54,13 +52,13 @@ function Dashboard() {
   return (
     <div className='w-full h-auto space-y-4'>
       <div className='flex w-full items-center justify-between space-x-4'>
-        <div className="flex-1">
+        <div className="flex-1 cursor-pointer" onClick={() => navigate('/home/borrowed')}>
           <Databox number={booksRead} label="Books Read" />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 cursor-pointer" onClick={() => navigate('/home/mybooks')}>
           <Databox number={booksListed} label="Books Listed" />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 cursor-pointer" onClick={() => navigate('/home/borrowed')}>
           <Databox number={booksBorrowed} label="Books Borrowed" />
         </div>
       </div>
