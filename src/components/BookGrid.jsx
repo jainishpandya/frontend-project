@@ -18,7 +18,7 @@ function BookGrid({ searchQuery, filters }) {
   const token = localStorage.getItem("token");
 
   async function fetchBooks() {
-    debugger;
+    // debugger;
     try {
 
       if (!clubId) {
@@ -84,7 +84,7 @@ function BookGrid({ searchQuery, filters }) {
 
 
   useEffect(() => {
-    debugger;
+    // debugger;
     if(clubId) {
       fetchBooks();
     }

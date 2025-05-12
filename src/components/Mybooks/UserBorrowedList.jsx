@@ -21,8 +21,7 @@ function UserBorrowedList() {
 
       axios.defaults.baseURL = "http://localhost:3000/";
 
-
-      console.log(token);
+      // console.log(token);
 
       const { data } = await axios.post(`api/v1/transaction/getborrowedlist/`, {
         token: token
@@ -173,7 +172,35 @@ function UserBorrowedList() {
     }
   };
 
+  const calculateDueDate = (pickupDate) => {
+    if (!pickupDate) return "N/A";
 
+    const pickUp = new Date(pickupDate);
+    const dueDate = new Date(pickUp);
+    dueDate.setDate(pickUp.getDate() + 30); // Assuming a 7-day borrowing period
+
+    const today = new Date();
+    const isOverdue = today > dueDate;
+
+    return {
+      date: dueDate.toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      }),
+      isOverdue
+    };
+  }
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
+  };
 
 
   return (
@@ -220,14 +247,16 @@ function UserBorrowedList() {
               <div className="w-1/12 truncate">{book.book.languageId || "N/A"}</div>
               <div className="w-2/12 truncate">{book.book.categoryId || "N/A"}</div>
               <div className="w-1/12">
-                <span
-                  className={`px-2 py-1 rounded-full text-xs ${book.IsAvailable
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800"
-                    }`}
-                >
-                  {book.IsAvailable ? "Availabe" : "Not Available"}
-                </span>
+                {book.pickupDate && (
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs ${calculateDueDate(book.pickupDate).isOverdue
+                        ? "bg-red-100 text-red-800"
+                        : "bg-green-100 text-green-800"
+                      }`}
+                  >
+                    {calculateDueDate(book.pickupDate).date}
+                  </span>
+                )}
               </div>
               <div className="w-2/12 text-right justify-end flex flex-row items-center gap-2">
                 {renderActionButtonLender(book.status, book.id)}
@@ -263,7 +292,7 @@ function UserBorrowedList() {
         <div className="w-1/12">Rating</div>
         <div className="w-1/12">Language</div>
         <div className="w-2/12">Category</div>
-        <div className="w-1/12">Due Date</div>
+        <div className="w-1/12">Return Date</div>
         <div className="w-2/12 text-right"></div>
       </Box>
 
@@ -290,12 +319,9 @@ function UserBorrowedList() {
               <div className="w-2/12 truncate">{book.book.category.CategoryName || "N/A"}</div>
               <div className="w-1/12">
                 <span
-                  className={`px-2 py-1 rounded-full text-xs ${book.IsAvailable
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800"
-                    }`}
+                  className='px-2 py-1 rounded-full text-xs'
                 >
-                  {book.IsAvailable ? "Availabe" : "Not Available"}
+                  {formatDate(book.returnDate)}
                 </span>
               </div>
               <div className="w-2/12 text-right justify-end flex flex-row items-center gap-2">

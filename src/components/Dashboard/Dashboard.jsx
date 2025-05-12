@@ -4,14 +4,14 @@ import Databox from '../Databox';
 import BasicLineChart from './LineChart';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import UserBorrowedList from '../Mybooks/UserBorrowedList';
+import WeeklyTopReads from './WeeklyTopReads';
 
 function Dashboard() {
   const [error, setError] = useState(null);
   const [booksRead, setBooksRead] = useState(0);
   const [booksListed, setBooksListed] = useState(0);
   const [booksBorrowed, setBooksBorrowed] = useState(0);
-  
+
   const clubId = useSelector((state) => state.club.id);
   const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ function Dashboard() {
 
   useEffect(() => {
     dashboardData();
-  }, [clubId]); 
+  }, [clubId]);
 
   return (
     <div className='w-full h-auto space-y-4'>
@@ -62,8 +62,13 @@ function Dashboard() {
           <Databox number={booksBorrowed} label="Books Borrowed" />
         </div>
       </div>
-      <div className='bg-white p-4 rounded-[var(--br-radius)] shadow w-1/2'>
-        <BasicLineChart />
+      <div className='flex space-x-4'>
+        <div className='bg-white h-fit p-4 rounded-[var(--br-radius)] shadow w-1/2'>
+          <BasicLineChart />
+        </div>
+        <div className='bg-white p-4 rounded-[var(--br-radius)] shadow w-1/2'>
+          <WeeklyTopReads />
+        </div>
       </div>
     </div>
   )

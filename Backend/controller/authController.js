@@ -106,8 +106,6 @@ const setPassword = async (req, res) => {
     try {
         const { password, token } = req.body;
 
-
-
         const result = await user.findOne({
             where: {
                 setPasswordToken: token,
