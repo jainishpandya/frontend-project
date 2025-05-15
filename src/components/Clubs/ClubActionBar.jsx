@@ -4,22 +4,23 @@ import Button from '../Button'
 import { FaSortAmountDown } from "react-icons/fa"
 import TuneIcon from '@mui/icons-material/Tune';
 import ClubSortBy from './ClubSortBy';
+import ClubFilters from './ClubFilters';
 
-const ClubActionBar = () => {
+const ClubActionBar = ({ onSearch, onSort, onFilter, currentSort, currentFilters }) => {
   const [isSortByOpen, setIsSortByOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const handleSortClick = () => {
-    setIsSortByOpen(!isSortByOpen);
+  const handleSearch = (query) => {
+    onSearch(query);
   };
 
   const handleFilterClick = () => {
+    setIsSortByOpen(false);
     setIsFilterOpen(!isFilterOpen);
   };
-
-  const handleClose = () => {
-    setIsSortByOpen(false);
+  const handleSortClick = () => {
     setIsFilterOpen(false);
+    setIsSortByOpen(!isSortByOpen);
   };
 
   return (
@@ -29,6 +30,7 @@ const ClubActionBar = () => {
         <div className='flex-grow'>
           <SearchBar
             placeholder="Search by Club Name, Location"
+            onSearch={handleSearch}
           />
         </div>
 
@@ -58,26 +60,29 @@ const ClubActionBar = () => {
       {/* Sort Dropdown */}
       {isSortByOpen && (
         <>
-          <div className="right-0 w-auto absolute top-full mt-4 z-50 bg-white shadow-lg rounded-lg">
-            <ClubSortBy onClose={handleClose} />
+          <div className="right-1 w-auto absolute top-full mt-2 z-50 ">
+            <ClubSortBy
+              onClose={(sortValue) => {
+                onSort(sortValue);
+                setIsSortByOpen(false);
+              }}
+              initialSort={currentSort} />
           </div>
-          {/* <div
-            className="fixed inset-0 z-40"
-            onClick={handleClose}
-          ></div> */}
         </>
       )}
 
       {/* Filter Dropdown */}
       {isFilterOpen && (
         <>
-          <div className="right-0 w-auto absolute top-full mt-4 z-50 bg-white shadow-lg rounded-lg">
-            {/* Add your filter options here */}
+          <div className="right-33 w-auto absolute top-full mt-2 z-50">
+            <ClubFilters
+              onClose={(filters) => {
+                onFilter(filters);
+                setIsFilterOpen(false);
+              }}
+              initialFilters={currentFilters}
+            />
           </div>
-          <div
-            className="fixed inset-0 z-40"
-            onClick={handleClose}
-          ></div>
         </>
       )}
     </div>

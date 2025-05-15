@@ -38,6 +38,7 @@ const listusers = async (req, res) => {
     }
 }
 
+// For fetching user details and store it to Redux store
 const userDetail = async (req, res) => {
     try {
         const token = req.body.token;

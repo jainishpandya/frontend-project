@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Pagination as MUIPagination } from '@mui/material';
 
-const Pagination = ({ currentPage, totalResults, onPageChange }) => {
+const Pagination = ({ currentPage, totalResults, onPageChange, className }) => {
     const [page, setPage] = useState(1);
     const resultsPerPage = 10;
 
@@ -13,7 +13,7 @@ const Pagination = ({ currentPage, totalResults, onPageChange }) => {
     const endRange = Math.min(currentPage * resultsPerPage, totalResults);
 
     return (
-        <div className="flex justify-between items-center p-5 py-8 pb-9 rounded-br-[var(--br-radius)] bg-white h-fill">
+        <div className={`flex justify-between items-center p-5 py-8 pb-9 rounded-br-[var(--br-radius)] bg-white h-fill" ${className || ''}`}>
             <div className="flex items-center space-x-2">
                 <h1 className="font-semibold">
                     Showing {startRange}-{endRange} of {totalResults} Results
