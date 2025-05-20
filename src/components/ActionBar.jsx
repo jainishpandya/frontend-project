@@ -4,14 +4,17 @@ import SortBy from './SortBy'
 import Button from './Button'
 import { FaSortAmountDown } from "react-icons/fa";
 
-const ActionBar = ({ onSearch }) => {
+const ActionBar = ({ onSearch ,onSort, currentSort}) => {
     const [isSortByOpen, setIsSortByOpen] = useState(false);
 
     const handleSortClick = () => {
         setIsSortByOpen(!isSortByOpen);
     };
 
-    const handleClose = () => {
+    const handleSortClose = (sortValue) => {
+        if (sortValue) {
+            onSort(sortValue);
+        }
         setIsSortByOpen(false);
     };
 
@@ -34,7 +37,7 @@ const ActionBar = ({ onSearch }) => {
                     {isSortByOpen && (
                         <>
                             <div className="right-0 w-auto absolute top-full mt-4 z-50 bg-white shadow-lg rounded-lg">
-                                <SortBy onClose={handleClose} />
+                                <SortBy onClose={handleSortClose} initialSort={currentSort} />
                             </div>
                             <div
                                 className="fixed inset-0 z-40"

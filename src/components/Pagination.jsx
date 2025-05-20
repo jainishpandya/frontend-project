@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Pagination as MUIPagination } from '@mui/material';
 
 const Pagination = ({ currentPage, totalResults, onPageChange, className }) => {
-    const [page, setPage] = useState(1);
     const resultsPerPage = 10;
 
     const handleChange = (event, value) => {

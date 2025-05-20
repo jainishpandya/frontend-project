@@ -144,22 +144,43 @@ const reviveClub = async (req, res) => {
 
 const listClub = async (req, res) => {
     try {
-        const page = parseInt(req.query.page) - 1 || 0;
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10;
+        const offset = (page - 1) * limit;
         const search = req.query.search || "";
         const sortField = req.query.sortField || "club_name";
         const sortOrder = req.query.sortOrder || "ASC";
         const status = req.query.status;
         const memberCount = req.query.memberCount;
         const bookCount = req.query.bookCount;
-        const limit = 10;
 
-        const listclub = await club.findAndCountAll({
-            where: {
-                [Op.or]: [
-                    { club_name: { [Op.iLike]: `%${search}%` } },
-                    { club_location: { [Op.iLike]: `%${search}%` } }
-                ]
-            },
+        const whereClause = {
+            [Op.and]: [
+                {
+                    [Op.or]: [
+                        { club_name: { [Op.iLike]: `%${search}%` } },
+                        { club_location: { [Op.iLike]: `%${search}%` } }
+                    ]
+                }
+            ]
+        };
+        
+        if (status) {
+            const statusValues = status.split(',');
+            if (
+                !(statusValues.includes('active') && statusValues.includes('inactive')) &&
+                statusValues.length > 0
+            ) {
+                if (statusValues.includes('active')) {
+                    whereClause[Op.and].push({ club_status: 'true' });
+                } else if (statusValues.includes('inactive')) {
+                    whereClause[Op.and].push({ club_status: 'false' });
+                }
+            }
+        }        
+
+        const allClubs = await club.findAll({
+            where: whereClause,
             include: [
                 {
                     model: clubuser,
@@ -182,31 +203,11 @@ const listClub = async (req, res) => {
             },
             group: ['club.id'],
             order: [[sortField, sortOrder]],
-            limit: limit,
-            offset: page * limit,
             subQuery: false
         });
 
+        let filteredClubs = [...allClubs];
 
-        // Apply filters after fetching
-        let filteredClubs = [...listclub.rows];
-
-        // Status filter
-        if (status) {
-            // Check if we have multiple status values (comma-separated)
-            const statusValues = status.split(',');
-            if (
-                (statusValues.includes('active') && statusValues.includes('inactive')) ||
-                statusValues.length === 0
-            ) {
-            } else if (statusValues.includes('active')) {
-                filteredClubs = filteredClubs.filter(club => club.club_status);
-            } else if (statusValues.includes('inactive')) {
-                filteredClubs = filteredClubs.filter(club => !club.club_status);
-            }
-        }
-
-        // Member count filter
         if (memberCount) {
             filteredClubs = filteredClubs.filter(club => {
                 const count = parseInt(club.get('total_members'));
@@ -219,7 +220,6 @@ const listClub = async (req, res) => {
             });
         }
 
-        // Book count filter
         if (bookCount) {
             filteredClubs = filteredClubs.filter(club => {
                 const count = parseInt(club.get('total_books'));
@@ -232,27 +232,30 @@ const listClub = async (req, res) => {
             });
         }
 
-        const response = {
-            success: true,
-            page: page + 1,
-            limit,
-            total: filteredClubs.length,
-            listclub: {
-                count: filteredClubs.length,
-                rows: filteredClubs
-            }
-        };
+        const totalFiltered = filteredClubs.length;
 
-        res.status(200).json(response);
+        const paginatedClubs = filteredClubs.slice(offset, offset + limit);
+
+        res.status(200).json({
+            success: true,
+            page,
+            limit,
+            total: totalFiltered,
+            listclub: {
+                count: totalFiltered,
+                rows: paginatedClubs
+            }
+        });
 
     } catch (error) {
-        console.log('Club Listing Error', error);
+        console.error('Club Listing Error:', error);
         res.status(500).json({
             success: false,
             message: "Internal Server Error"
         });
     }
 };
+
 
 
 const memberList = async (req, res) => {
