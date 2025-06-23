@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from './Button';
 
-const SortBy = ({onClose}) => {
+const SortBy = ({ onClose, initialSort }) => {
+  const [sortValue, setSortValue] = useState({
+    field: initialSort?.field || 'title',
+    order: initialSort?.order || 'ASC'
+  });
+
+  const handleSortChange = (field, order) => {
+    setSortValue({ field, order });
+  };
+
   const handleSeeResults = () => {
-    onClose(); 
+    onClose(sortValue);
   };
   return (
     <div className="w-49 p-5 px-8 bg-white rounded-[var(--br-radius)] space-y-3">
@@ -16,11 +25,23 @@ const SortBy = ({onClose}) => {
         <p className="text-lg font-semibold">Title</p>
         <div className="flex flex-col space-y-2">
           <div className="flex items-center space-x-2">
-            <input type="radio" id="titleAsc" name="sortTitle" value="asc" />
+            <input
+              type="radio"
+              id="titleAsc"
+              name="sort"
+              onChange={() => handleSortChange('title', 'ASC')}
+              checked={sortValue.field === 'title' && sortValue.order === 'ASC'}
+            />
             <label htmlFor="titleAsc">A-Z</label>
           </div>
           <div className="flex items-center space-x-2">
-            <input type="radio" id="titleDesc" name="sortTitle" value="desc" />
+            <input
+              type="radio"
+              id="titleDesc"
+              name="sort"
+              onChange={() => handleSortChange('title', 'DESC')}
+              checked={sortValue.field === 'title' && sortValue.order === 'DESC'}
+            />
             <label htmlFor="titleDesc" >Z-A</label>
           </div>
         </div>
@@ -33,20 +54,32 @@ const SortBy = ({onClose}) => {
         <p className="text-lg font-semibold ">Book</p>
         <div className="flex flex-col space-y-2">
           <div className="flex items-center space-x-2">
-            <input type="radio" id="recentlyAdded" name="sortBook" value="recentlyAdded" />
+            <input
+              type="radio"
+              id="recentlyAdded"
+              name="sort"
+              onChange={() => handleSortChange('createdAt', 'DESC')}
+              checked={sortValue.field === 'createdAt' && sortValue.order === 'DESC'}
+            />
             <label htmlFor="recentlyAdded">Recently Added</label>
           </div>
-          <div className="flex items-center space-x-2">
-            <input type="radio" id="mostRead" name="sortBook" value="mostRead" />
+          {/* <div className="flex items-center space-x-2">
+            <input
+              type="radio"
+              id="recentlyAdded"
+              name="sort"
+              onChange={() => handleSortChange('createdAt', 'DESC')}
+              checked={sortValue.field === 'createdAt' && sortValue.order === 'DESC'}
+            />
             <label htmlFor="mostRead">Most Read</label>
-          </div>
+          </div> */}
         </div>
       </div>
 
-      <hr class="border-t-2 border-br-gray-light" />
+      {/* <hr class="border-t-2 border-br-gray-light" /> */}
 
       {/* Book Rating Sorting */}
-      <div className="sort-section space-y-2">
+      {/* <div className="sort-section space-y-2">
         <p className="text-lg font-semibold">Book Rating</p>
         <div className="flex flex-col space-y-2">
           <div className="flex items-center space-x-2">
@@ -70,10 +103,10 @@ const SortBy = ({onClose}) => {
             <label htmlFor="oneStar">&gt; 1 Star</label>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <Button className="bg-br-blue-medium text-white px-2 py-2 rounded-lg transition hover:bg-br-blue-dark w-full"
-       onClick={handleSeeResults}>
+        onClick={handleSeeResults}>
         See Results
       </Button>
     </div>
