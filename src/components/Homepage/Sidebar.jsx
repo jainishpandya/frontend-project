@@ -6,29 +6,29 @@ import { NavLink, useLocation } from 'react-router-dom'
 function Sidebar(props) {
 
   const { activeOption, setActiveOption } = props;
-  
+
   const role = localStorage.getItem("Role");
 
   const location = useLocation();
 
-React.useEffect(() => {
-  // Map routes to their corresponding option names
-  const pathToOption = {
-    '/home': 'Dashboard',
-    '/home/books': 'BookList',
-    '/home/books/book-details': 'BookList',
-    '/home/mybooks': 'MyBooks',
-    '/home/members': 'MyBooks',
-    '/home/Transactions': 'transactions',
-    '/home/reviews': 'reviews',
-    '/home/clubs': 'clubs',
-  };
+  React.useEffect(() => {
+    // Map routes to their corresponding option names
+    const pathToOption = {
+      '/home': 'Dashboard',
+      '/home/books': 'BookList',
+      '/home/books/book-details': 'BookList',
+      '/home/mybooks': 'MyBooks',
+      '/home/members': 'MyBooks',
+      '/home/Transactions': 'transactions',
+      '/home/reviews': 'reviews',
+      '/home/clubs': 'clubs',
+    };
 
-  const currentOption = pathToOption[location.pathname];
-  if (currentOption) {
-    setActiveOption(currentOption);
-  }
-}, [location.pathname]);
+    const currentOption = pathToOption[location.pathname];
+    if (currentOption) {
+      setActiveOption(currentOption);
+    }
+  }, [location.pathname]);
 
 
   const getItemClass = (option) => {
@@ -80,9 +80,31 @@ React.useEffect(() => {
         </NavLink>
       )}
 
-      {(role === "0" || role === "1") && ( // Super Admin
+      {(role === "0") && ( // Super Admin
         <NavLink
-          to={"/home/members"}
+          to={"/home/clubs"}
+          className={getItemClass("clubs")}
+          onClick={() => setActiveOption("clubs")}>
+          <Flag className="flex-shrink-0" />
+          <div className={`whitespace-nowrap flex-shrink-0 text-md font-semibold overflow-hidden transition-all duration-300 ${props.barstate ? "w-32 opacity-100" : "w-0 opacity-0"}`}>
+            Club List
+          </div>
+        </NavLink>
+      )}
+      {(role === "0") && ( // Super Admin
+        <NavLink
+          to={"/home/allmembers"}
+          className={getItemClass("MyBooks")}
+          onClick={() => setActiveOption("MyBooks")}>
+          <UsersRound className="flex-shrink-0" />
+          <div className={`whitespace-nowrap flex-shrink-0 text-md font-semibold overflow-hidden transition-all duration-300 ${props.barstate ? "w-32 opacity-100" : "w-0 opacity-0"}`}>
+            Member List
+          </div>
+        </NavLink>
+      )}
+      {(role === "1") && ( // Club Admin
+        <NavLink
+          to={"/home/clubmembers"}
           className={getItemClass("MyBooks")}
           onClick={() => setActiveOption("MyBooks")}>
           <UsersRound className="flex-shrink-0" />
@@ -115,17 +137,6 @@ React.useEffect(() => {
         </NavLink>
       )}
 
-      {(role === "0") && ( // Super Admin
-        <NavLink
-          to={"/home/clubs"}
-          className={getItemClass("clubs")}
-          onClick={() => setActiveOption("clubs")}>
-          <Flag className="flex-shrink-0" />
-          <div className={`whitespace-nowrap flex-shrink-0 text-md font-semibold overflow-hidden transition-all duration-300 ${props.barstate ? "w-32 opacity-100" : "w-0 opacity-0"}`}>
-            Club List
-          </div>
-        </NavLink>
-      )}
     </div>
 
   )

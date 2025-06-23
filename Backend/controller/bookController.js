@@ -15,17 +15,29 @@ const bookController = {
       const status = req.query.status || 'all';
       const categories = req.query.categories ? JSON.parse(req.query.categories) : [];
       const languages = req.query.languages ? JSON.parse(req.query.languages) : [];
-      const clubId = req.params.clubId;
+      const clubId = parseInt(req.query.clubId);
+      const role = req.body.role;
+      const sortField = req.query.sortField || 'title';
+      const sortOrder = req.query.sortOrder || 'ASC';
+      
+      const allowedSortFields = ['title', 'createdAt', 'IsAvailable'];
+      const allowedSortOrders = ['ASC', 'DESC'];
 
-      if (!clubId) {
+
+      if (!allowedSortFields.includes(sortField)) {
         return res.status(400).json({
           success: false,
-          message: "Club id is required"
+          message: "Invalid sort field"
         });
       }
 
-      const whereClause = {
-        clubId: clubId,
+      if (!allowedSortOrders.includes(sortOrder)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid sort order"
+        });
+      }
+      let whereClause = {
         ...(search.trim() !== '' && {
           [Op.or]: [
             { title: { [Op.iLike]: `%${search}%` } },
@@ -47,9 +59,22 @@ const bookController = {
         }),
       };
 
+      if (role != 0) {
+        if (!clubId) {
+          return res.status(400).json({
+            success: false,
+            message: "Club ID is required"
+          });
+        }
+        whereClause = {
+          ...whereClause,
+          clubId: clubId
+        };
+      }
+
       const { count, rows: books } = await Book.findAndCountAll({
         where: whereClause,
-        attributes: ['id', 'userId', 'title', 'ISBN', 'author', 'IsAvailable'],
+        attributes: ['id', 'userId', 'title', 'ISBN', 'author', 'IsAvailable', 'createdAt'],
         include: [
           {
             model: category,
@@ -60,29 +85,21 @@ const bookController = {
             attributes: ['LanguageName']
           }
         ],
-        order: [['title', 'ASC']],
+        order: [[sortField, sortOrder]],
         offset: offset,
         limit: limit
       });
 
-      if (!books.length) {
-        return res.status(200).json({
-          success: true,
-          total: count,
-          page: page,
-          limit: limit,
-          books: [],
-        });
-      }
-
-      const response = {
+      return res.status(200).json({
         success: true,
         total: count,
         page: page,
         limit: limit,
-        books: books,
-      };
-      res.status(200).json(response);
+        sortField: sortField,
+        sortOrder: sortOrder,
+        books: books
+      });
+
     } catch (error) {
       console.error('Error fetching book details:', error);
       res.status(500).json({
@@ -104,7 +121,7 @@ const bookController = {
       }
 
       const userId = jwt.getUserIdFromToken(token);
-      
+
 
       const newBook = await Book.create({
         title: title,
@@ -134,8 +151,8 @@ const bookController = {
   },
 
   EditBook: async (req, res) => {
-    try{
-      const {title, author, ISBN, clubId, token, categoryId, languageId } = req.body;
+    try {
+      const { title, author, ISBN, clubId, token, categoryId, languageId } = req.body;
       // console.log("request body:", req.body);
 
       const bookId = req.params.bookId;
@@ -169,13 +186,13 @@ const bookController = {
         });
       }
 
-      const updatedBook = await Book.update({ 
+      const updatedBook = await Book.update({
         title: title,
         author: author,
         ISBN: ISBN,
         categoryId: categoryId,
         languageId: languageId,
-      },{
+      }, {
         where: {
           id: bookId,
           userId: userId,
@@ -184,20 +201,20 @@ const bookController = {
         returning: true
       })
 
-      if(!updatedBook[0]) {
+      if (!updatedBook[0]) {
         return res.status(400).json({
           success: false,
           message: "Failed to update book"
         });
       }
 
-      return res.status(200).json({ 
+      return res.status(200).json({
         success: true,
         message: "Book updated successfully",
         book: updatedBook[1][0]
       });
 
-    }catch(error){
+    } catch (error) {
       console.error('Error editing book:', error);
       res.status(500).json({
         success: false,
@@ -208,7 +225,7 @@ const bookController = {
 
   myBooks: async (req, res) => {
 
-    try{
+    try {
       const clubId = parseInt(req.query.clubId);
       const token = req.query.token;
 
@@ -221,36 +238,36 @@ const bookController = {
 
       const userId = parseInt(jwt.getUserIdFromToken(token));
 
-      console.log("User Id : ",userId);
-      console.log("userid type : ", typeof(userId));
+      console.log("User Id : ", userId);
+      console.log("userid type : ", typeof (userId));
 
       const fetchedbooks = await Book.findAll({
         where: {
           clubId: clubId,
           userId: userId,
         },
-          include: [
-            {
-                model: category,
-                as: 'category',
-                attributes: ['id', 'CategoryName']
-            },
-            {
-                model: language,
-                as: 'language',
-                attributes: ['id', 'LanguageName']
-            }
+        include: [
+          {
+            model: category,
+            as: 'category',
+            attributes: ['id', 'CategoryName']
+          },
+          {
+            model: language,
+            as: 'language',
+            attributes: ['id', 'LanguageName']
+          }
         ]
       });
 
-      const response ={
+      const response = {
         success: true,
         books: fetchedbooks
       };
       res.status(200).json(response);
 
     }
-    catch(error){
+    catch (error) {
       console.error('Error fetching book details:', error);
       res.status(500).json({
         success: false,
@@ -260,67 +277,67 @@ const bookController = {
   },
 
   dashboardData: async (req, res) => {
-        try {
-          const clubId = parseInt(req.query.clubId);
-          const token = req.query.token;
-    
-          if (!token) {
-            return res.status(400).json({
-              success: false,
-              message: "Token is required"
-            });
-          }
-    
-          if (!clubId) {
-            return res.status(400).json({
-              success: false,
-              message: "Club ID is required"
-            });
-          }
-    
-          const userId = parseInt(jwt.getUserIdFromToken(token));
-    
-          const booksReadCount = await transaction.count({
-            where: {
-                borrowerId: userId,
-                status: '7'
-            }   
-          });
-          // console.log("Books Read Count : ", booksReadCount);
-    
-          const booksListedCount = await Book.count({
-            where: {
-              userId: userId,
-              clubId: clubId
-            }
-          });
-          // console.log("Books Listed Count : ", booksListedCount);
-    
-          const booksBorrowedCount = await transaction.count({
-            where: {
-              borrowerId: userId,
-              clubId: clubId,
-              status: {
-                [Op.in]: ['5', '6']
-            }
-            }
-          });
-          // console.log("Books Borrowed Count : ", booksBorrowedCount);
-    
-          return res.status(200).json({
-            success: true,
-            booksReadCount,
-            booksListedCount,
-            booksBorrowedCount
-          });
-        } catch (error) {
-          console.error('Error fetching dashboard data:', error);
-          res.status(500).json({
-            success: false,
-            message: "Internal Server Error"
-          });
+    try {
+      const clubId = parseInt(req.query.clubId);
+      const token = req.query.token;
+
+      if (!token) {
+        return res.status(400).json({
+          success: false,
+          message: "Token is required"
+        });
+      }
+
+      if (!clubId) {
+        return res.status(400).json({
+          success: false,
+          message: "Club ID is required"
+        });
+      }
+
+      const userId = parseInt(jwt.getUserIdFromToken(token));
+
+      const booksReadCount = await transaction.count({
+        where: {
+          borrowerId: userId,
+          status: '7'
         }
-      },
+      });
+      // console.log("Books Read Count : ", booksReadCount);
+
+      const booksListedCount = await Book.count({
+        where: {
+          userId: userId,
+          clubId: clubId
+        }
+      });
+      // console.log("Books Listed Count : ", booksListedCount);
+
+      const booksBorrowedCount = await transaction.count({
+        where: {
+          borrowerId: userId,
+          clubId: clubId,
+          status: {
+            [Op.in]: ['5', '6']
+          }
+        }
+      });
+      // console.log("Books Borrowed Count : ", booksBorrowedCount);
+
+      return res.status(200).json({
+        success: true,
+        booksReadCount,
+        booksListedCount,
+        booksBorrowedCount
+      });
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error"
+      });
+    }
+  },
 };
 
 export default bookController;

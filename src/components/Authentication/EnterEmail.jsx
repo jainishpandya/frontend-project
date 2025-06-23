@@ -43,9 +43,16 @@ function EnterEmail() {
                 // Navigate to reset password page with token
                 navigate(`/reset-password?token=${response.data.token}`);
             }
+            if (response.data.status === 'fail') {
+                // Navigate to reset password page with token
+                // navigate(`/reset-password?token=${response.data.token}`);
+                console.log("dekhle",response.data.message)
+                setEmailError(response.data.message)
+            }
         } catch (error) {
             console.error("Error requesting password reset:", error);
             setEmailError("Failed to process reset password request");
+            // setEmailError(response.data.message || "An error occurred. Please try again.");
         }
     }
 

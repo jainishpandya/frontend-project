@@ -8,7 +8,8 @@ import BookListing from "./components/BookListing";
 import Homepage from "./components/Homepage/Homepage";
 import MyBooks from "./components/Mybooks/MyBooks";
 import ProfilePage from "./components/ProfilePage";
-import MemberList from "./components/Member/MemberList";
+import ClubMemberList from "./components/Member/ClubMemberList";
+import AllMemberList from "./components/Member/AllMemberList";
 import TransactionList from "./components/Transactions/TransactionList";
 import ReviewList from "./components/Review/ReviewList";
 import ClubList from "./components/Clubs/ClubList";
@@ -17,6 +18,8 @@ import BookDetails from "./components/BookDetails";
 import AddBookModal from "./components/Mybooks/AddBookModal";
 import EnterEmail from "./components/Authentication/EnterEmail";
 import ResetPassword from "./components/Authentication/ResetPassword";
+import UserBorrowedList from "./components/Mybooks/UserBorrowedList";
+import UserBookList from "./components/Mybooks/UserBookList";
 
 function App() {
   return (
@@ -36,12 +39,15 @@ function App() {
 
           <Route path="mybooks" element={<MyBooks />} />
           <Route path="mybooks/add-book" element={<AddBookModal/>} />
+          <Route path="borrowed" element={<UserBorrowedList />} />
 
-          <Route path="members" element={<MemberList />} />
+          <Route path="clubmembers" element={<ClubMemberList />} />
+          <Route path="allmembers" element={<AllMemberList />} />
           <Route path="transactions" element={<TransactionList />} />
           <Route path="reviews" element={<ReviewList />} />
           <Route path="clubs" element={<ClubList />} />
           <Route path="profile" element={<ProfilePage />} />
+
         </Route>
       </Routes>
     </>

@@ -115,7 +115,7 @@ const Filters = ({onFilterChange}) => {
                 {/* Status Filters */}
                 <div className='space-y-2'>
                     <div
-                        className='flex items-center justify-between bg-white rounded-lg sticky top-0 bg-white z-10 cursor-pointer'
+                        className='flex items-center justify-between rounded-lg sticky top-0 bg-white z-10 cursor-pointer'
                         onClick={() => setIsStatusVisible(!isStatusVisible)}
                     >
                         <h2 className='font-semibold'>Status</h2>
@@ -141,7 +141,7 @@ const Filters = ({onFilterChange}) => {
                 {/* Categories Filters */}
                 <div className='space-y-2 '>
                     <div
-                        className='flex items-center justify-between bg-white rounded-lg sticky top-0 bg-white z-10 cursor-pointer'
+                        className='flex items-center justify-between rounded-lg sticky top-0 bg-white z-10 cursor-pointer'
                         onClick={() => setIsCategoriesVisible(!isCategoriesVisible)}
                     >
                         <h2 className='font-semibold'>Categories</h2>
@@ -173,7 +173,7 @@ const Filters = ({onFilterChange}) => {
                 {/* Languages Filters */}
                 <div className='space-y-2'>
                     <div
-                        className='flex items-center justify-between bg-white rounded-lg sticky top-0 bg-white z-10 cursor-pointer'
+                        className='flex items-center justify-between rounded-lg sticky top-0 bg-white z-10 cursor-pointer'
                         onClick={() => setIsLanguagesVisible(!isLanguagesVisible)}
                     >
                         <h2 className='font-semibold'>Languages</h2>

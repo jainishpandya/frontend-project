@@ -4,9 +4,8 @@ import BookCard from './BookCard'
 import Pagination from "./Pagination";
 import { useSelector } from "react-redux";
 import { Skeleton } from "@mui/material";
-import { Box } from "lucide-react";
 
-function BookGrid({ searchQuery, filters }) {
+function BookGrid({ searchQuery, filters, sortOptions }) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,9 +15,10 @@ function BookGrid({ searchQuery, filters }) {
 
   const clubId = useSelector((state => state.club.id));
   const token = localStorage.getItem("token");
+  const role = localStorage.getItem("Role");
 
   async function fetchBooks() {
-    debugger;
+    // debugger;
     try {
 
       if (!clubId) {
@@ -26,8 +26,10 @@ function BookGrid({ searchQuery, filters }) {
         return;
       }
 
-      const response = await axios.get(
-        `http://localhost:3000/api/v1/book/bookDetails/${clubId}`, {
+      const response = await axios.post(
+        'http://localhost:3000/api/v1/book/bookDetails',{
+          role: role  
+        } ,{
         params: {
           page: currentPage,
           limit: resultsPerPage,
@@ -35,8 +37,10 @@ function BookGrid({ searchQuery, filters }) {
           status: filters.status,
           categories: JSON.stringify(filters.categories),
           languages: JSON.stringify(filters.languages),
-        }
-        ,
+          clubId: clubId,
+          sortField: sortOptions.field, 
+          sortOrder: sortOptions.order,
+        },
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -84,12 +88,12 @@ function BookGrid({ searchQuery, filters }) {
 
 
   useEffect(() => {
-    debugger;
+    // debugger;
     if(clubId) {
       fetchBooks();
     }
     setLoading(true); // Set loading state
-  }, [clubId, currentPage, searchQuery, filters]);
+  }, [clubId, currentPage, searchQuery, filters, sortOptions]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -158,7 +162,7 @@ function BookGrid({ searchQuery, filters }) {
               language={book.language.LanguageName}
               coverUrl={book.coverUrl}
               isAvailable={book.IsAvailable}
-              rating={4.5}
+              rating={110}
             />
           ))
         )}
