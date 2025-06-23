@@ -1,15 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ClubSelection from "../ClubSelection/ClubSelection";
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/slices/user/userSlice";
 
 function VerificationForm(props) {
   const [code, setCode] = useState();
   const [userId, setUserId] = useState(props.userId);
-
-  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
